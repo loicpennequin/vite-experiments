@@ -1,4 +1,4 @@
-import { useQuery, UseQueryOptions } from 'vue-query';
+import { useQuery, UseQueryOptions, UseQueryReturnType } from 'vue-query';
 import { QueryKey } from 'react-query';
 import { useRoute, RouteLocationNormalized } from 'vue-router';
 import queryClient from './query-client.service';
@@ -27,7 +27,9 @@ export const createLoader = (
       const route = useRoute();
 
       const entries = Object.entries(queries).flatMap(([key, queryDef]) => {
-        const query = useQuery(computed(() => queryDef(route)) as Ref<UseQueryOptions>);
+        const query = useQuery(
+          computed(() => queryDef(route)) as Ref<UseQueryOptions>
+        );
         const data = computed(() => query.data.value);
 
         return [
