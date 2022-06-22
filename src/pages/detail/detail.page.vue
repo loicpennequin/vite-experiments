@@ -1,23 +1,9 @@
 <script lang="ts" setup>
 import { computed } from 'vue';
 import { useLoader } from '../../composables/use-loader';
-import { STATS } from '../../constants';
 
 const { pokemonQuery } = useLoader();
 const { isLoading, isError, data: pokemon } = pokemonQuery;
-
-const getLabel = (stat: any) => {
-  const name: keyof typeof STATS = stat.stat.name;
-
-  return STATS[name];
-};
-
-const getStatStyle = (stat: any) => {
-  return {
-    '--width': (stat.base_stat * 100) / 200 + '%',
-    '--hue': (stat.base_stat * 120) / 200
-  };
-};
 
 const typeLabel = computed(() =>
   pokemon.value.types?.map((t: any) => t.type.name).join(' / ')
@@ -25,25 +11,33 @@ const typeLabel = computed(() =>
 </script>
 
 <template>
-  <div v-if="isLoading">Loading</div>
-  <div v-if="isError">An error as occured.</div>
-  <div v-else-if="pokemon">
-    <h2 text="3xl" font-bold capitalize>{{ pokemon.name }}</h2>
+  <Surface v-if="isLoading" flex items-center justify-center>Loading</Surface>
+  <Surface v-if="isError" flex items-center justify-center>Error</Surface>
 
-    <div flex items="center">
-      <Image :src="pokemon.sprites.front_default" />
+  <div v-else-if="pokemon" space-y="4">
+    <Surface is="h2" text="3xl" font-bold capitalize rounded="lg">
+      {{ pokemon.name }}
+    </Surface>
 
-      <ul grid grid-cols="2" gap="2">
-        <StatBar
-          v-for="stat in pokemon.stats"
-          :key="stat.stat.name"
-          is="li"
-          :stat="stat"
-        />
-      </ul>
-    </div>
+    <Surface rounded="lg">
+      <div flex items="center" flex-wrap>
+        <Image :src="pokemon.sprites.front_default" />
 
-    <div uppercase>{{ typeLabel }}</div>
+        <ul grid grid-cols="1 lg:2  " gap="2">
+          <StatBar
+            v-for="stat in pokemon.stats"
+            :key="stat.stat.name"
+            is="li"
+            :stat="stat"
+          />
+        </ul>
+      </div>
+      <div uppercase>{{ typeLabel }}</div>
+    </Surface>
+
+    <Surface rounded="lg">
+      <div p="3">{{ pokemon.description }}</div>
+    </Surface>
   </div>
 </template>
 

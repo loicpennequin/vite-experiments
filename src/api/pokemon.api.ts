@@ -26,7 +26,16 @@ export const getAllPokemons = async ({
 };
 
 export const getPokemonByName = async (name: string) => {
-  const { data } = await http.get(`pokemon/${name}`);
+  const { data: pokemon } = await http.get(`pokemon/${name}`);
 
-  return data;
+  const { data: species } = await http.get(pokemon.species.url);
+  pokemon.species = species;
+
+  return {
+    ...pokemon,
+    species: species,
+    description: species.flavor_text_entries.find(
+      (entry: any) => entry.language.name === 'en'
+    ).flavor_text
+  };
 };

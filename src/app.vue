@@ -8,12 +8,10 @@ provide('loaders', loaders);
 <template>
   <div class="layout" font="sans" bg="red-400" grid>
     <Header sticky top="0" col-span-full />
-    <Sidebar class="layout__sidebar" overflow-y-auto min-w="15rem" />
+    <Sidebar class="layout__sidebar" overflow-y-auto />
 
-    <main flex justify-center bg="blue-1">
-      <div p="6" bg="white">
-        <router-view />
-      </div>
+    <main flex justify-center bg="blue-1" p-y="8">
+      <router-view />
     </main>
   </div>
 </template>

@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { getAllPokemons } from '../api/pokemon.api';
-import { onServerPrefetch, ref } from 'vue';
+import { onServerPrefetch, ref, watch } from 'vue';
 import { useInfiniteQuery } from 'vue-query';
+import { useMediaQuery } from '@vueuse/core';
 
 const {
   data: pokemons,
-  isLoading,
   fetchNextPage,
   hasNextPage,
   suspense
@@ -30,35 +30,64 @@ const onLoadMore = () => {
 };
 
 const scrollRoot = ref<HTMLElement>();
+
+const isExpanded = ref(true);
+const isLargeScreen = useMediaQuery('(min-width: 1024px)');
+watch(isLargeScreen, isLargeScreen => {
+  isExpanded.value = isLargeScreen;
+});
 </script>
 
 <template>
-  <nav ref="scrollRoot" p-y="3">
-    <InfiniteScroll @load-more="onLoadMore" :root="scrollRoot" :buffer="100">
-      <div v-if="isLoading">Loading pokemons...</div>
-      <ul v-if="pokemons">
-        <template v-for="(page, pageIndex) in pokemons.pages" :key="pageIndex">
-          <li v-for="(pokemon, index) in page.results" :key="pokemon.name">
-            <Link
-              :to="{ name: 'Detail', params: { name: pokemon.name } }"
-              prefetch
-              capitalize
-              space-x="1"
-              p="3"
-              block
+  <nav
+    ref="scrollRoot"
+    p-y="3"
+    transition-all
+    duration-300
+    min-w="3rem"
+    :class="{ expanded: isExpanded }"
+  >
+    <button md="hidden" @click="isExpanded = !isExpanded">List</button>
+    <transition name="pkmn-list">
+      <div v-if="isExpanded">
+        <InfiniteScroll
+          @load-more="onLoadMore"
+          :root="scrollRoot"
+          :buffer="100"
+        >
+          <ul v-if="pokemons">
+            <template
+              v-for="(page, pageIndex) in pokemons.pages"
+              :key="pageIndex"
             >
-              <span>{{ pageIndex * 50 + index + 1 }} -</span>
-              {{ pokemon.name }}
-            </Link>
-          </li>
-        </template>
-      </ul>
-    </InfiniteScroll>
+              <li v-for="(pokemon, index) in page.results" :key="pokemon.name">
+                <Link
+                  :to="{ name: 'Detail', params: { name: pokemon.name } }"
+                  prefetch
+                  capitalize
+                  space-x="1"
+                  p="3"
+                  block
+                  @click="isExpanded = false"
+                >
+                  <span>{{ pageIndex * 50 + index + 1 }} -</span>
+                  {{ pokemon.name }}
+                </Link>
+              </li>
+            </template>
+          </ul>
+        </InfiniteScroll>
+      </div>
+    </transition>
   </nav>
 </template>
 
-<style>
+<style scoped>
 .router-link-exact-active {
   --at-apply: 'bg-red-500';
+}
+
+.expanded {
+  --at-apply: 'min-w-15rem';
 }
 </style>
