@@ -1,5 +1,5 @@
 import { getPokemonByName } from '../../api/pokemon.api';
-import { createLoader } from '../../services/loader.factory';
+import { createLoader } from '../../factories/loader.factory';
 
 export default createLoader('Detail', {
   pokemon(route) {

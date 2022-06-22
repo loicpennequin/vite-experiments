@@ -2,27 +2,27 @@ import { createApp } from 'vue';
 import { VueQueryPlugin } from 'vue-query';
 import { createRouter, createWebHistory } from 'vue-router';
 import App from './app.vue';
-import queryClient from './services/query-client.service';
+import { createLoader } from './factories/loader.factory';
+import { createQueryClient } from './factories/query-client.factory';
+import { routes } from './routes';
 
+type LoaderModule = {
+  default: ReturnType<typeof createLoader>;
+};
+
+const queryClient = createQueryClient();
 const app = createApp(App)
   .use(VueQueryPlugin, { queryClient })
   .use(
     createRouter({
       history: createWebHistory(),
-      routes: [
-        {
-          name: 'Home',
-          path: '/',
-          component: () => import('./pages/home/home.page.vue')
-        },
-        {
-          name: 'Detail',
-          path: '/:name',
-          component: () => import('./pages/detail/detail.page.vue')
-        }
-      ]
+      routes
     })
   );
 
-const loaders = import.meta.globEager('./**/*.loader.ts');
+const loaders = import.meta.globEager<LoaderModule>('./**/*.loader.ts');
+Object.values(loaders).forEach(module => {
+  module.default(queryClient);
+});
+
 app.mount('#app');

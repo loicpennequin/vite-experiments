@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { provide } from 'vue';
-import { loaders } from './services/loader.factory';
+import { loaders } from './factories/loader.factory';
 import { useRouter } from 'vue-router';
 import Sidebar from './components/sidebar.vue';
 
@@ -8,6 +8,8 @@ provide('loaders', loaders);
 
 const router = useRouter();
 router.beforeEach((to, from, next) => {
+  if (!to.name) return next();
+
   loaders.get(to.name)?.preload(to);
 
   next();
