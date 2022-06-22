@@ -1,28 +1,22 @@
 import { createApp } from 'vue';
-import { VueQueryPlugin } from 'vue-query';
-import { createRouter, createWebHistory } from 'vue-router';
+import { dehydrate, hydrate, VueQueryPlugin } from 'vue-query';
+import { createRouter, createWebHistory, Router } from 'vue-router';
 import App from './app.vue';
-import { createLoader } from './factories/loader.factory';
+import { loaders, createLoader } from './factories/loader.factory';
 import { createQueryClient } from './factories/query-client.factory';
 import { routes } from './routes';
+import vitedge from 'vitedge';
+import { VitedgePluginContext } from './types';
 
-type LoaderModule = {
-  default: ReturnType<typeof createLoader>;
-};
+export default vitedge(App, { routes }, baseCtx => {
+  const ctx: VitedgePluginContext = { ...baseCtx, meta: {} };
 
-const queryClient = createQueryClient();
-const app = createApp(App)
-  .use(VueQueryPlugin, { queryClient })
-  .use(
-    createRouter({
-      history: createWebHistory(),
-      routes
-    })
-  );
+  const pluginModules = import.meta.globEager('./**/*.plugin.ts');
 
-const loaders = import.meta.globEager<LoaderModule>('./**/*.loader.ts');
-Object.values(loaders).forEach(module => {
-  module.default(queryClient);
+  Object.values(pluginModules)
+    .map(p => p.default)
+    .sort((a, b) => b.priority - a.priority)
+    .forEach(plugin => {
+      plugin.install?.(ctx);
+    });
 });
-
-app.mount('#app');

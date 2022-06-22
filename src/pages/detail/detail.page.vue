@@ -3,8 +3,8 @@ import { useLoader } from '../../composables/use-loader';
 import Image from '../../components/image.vue';
 import { STATS } from '../../constants';
 
-const { pokemon, pokemonQuery } = useLoader();
-const { isLoading, isError } = pokemonQuery;
+const { pokemonQuery } = useLoader();
+const { isLoading, isError, data: pokemon } = pokemonQuery;
 
 const getLabel = (stat: any) => {
   const name: keyof typeof STATS = stat.stat.name;
@@ -23,7 +23,7 @@ const getStatStyle = (stat: any) => {
 <template>
   <div v-if="isLoading">Loading</div>
   <div v-if="isError">An error as occured.</div>
-  <div v-else>
+  <div v-else-if="pokemon">
     <h2>{{ pokemon.name }}</h2>
 
     <div class="infos-wrapper">

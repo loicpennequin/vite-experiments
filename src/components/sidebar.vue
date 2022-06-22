@@ -1,18 +1,19 @@
 <script setup lang="ts">
-import { useInfiniteQuery } from 'vue-query';
 import { getAllPokemons } from '../api/pokemon.api';
 import Link from './link.vue';
 import InfiniteScroll from './infinite-scroll.vue';
-import { ref } from 'vue';
+import { onServerPrefetch, ref } from 'vue';
+import { useInfiniteQuery } from 'vue-query';
 
 const {
   data: pokemons,
   isLoading,
   fetchNextPage,
-  hasNextPage
+  hasNextPage,
+  suspense
 } = useInfiniteQuery(
-  'pokemons',
-  ({ pageParam }) => getAllPokemons({ limit: 30, offset: pageParam }),
+  ['pokemons'],
+  ({ pageParam }) => getAllPokemons({ limit: 50, offset: pageParam }),
   {
     getNextPageParam: lastPage => {
       if (!lastPage.next) return;
@@ -22,9 +23,11 @@ const {
   }
 );
 
+onServerPrefetch(suspense);
+
 const onLoadMore = () => {
   if (hasNextPage?.value) {
-    fetchNextPage.value();
+    fetchNextPage();
   }
 };
 

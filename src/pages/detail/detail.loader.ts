@@ -6,7 +6,9 @@ export default createLoader('Detail', {
     return {
       queryKey: ['pokemon', route.params.name],
       queryFn: () => getPokemonByName(route.params.name as string),
-      staleTime: 30_000
+      staleTime: 30_000,
+      ssrPrefetch: true,
+      waitUntilPreloaded: true
     };
   }
 });

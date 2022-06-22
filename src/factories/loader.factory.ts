@@ -1,50 +1,86 @@
-import { useQuery, UseQueryOptions, QueryClient } from 'vue-query';
+import {
+  UseQueryOptions,
+  QueryClient,
+  useQuery,
+  UseQueryReturnType
+} from 'vue-query';
 import { QueryKey } from 'react-query';
 import { useRoute, RouteLocationNormalized } from 'vue-router';
-import { computed, Ref } from 'vue';
+import { computed, onServerPrefetch, Ref } from 'vue';
 
 type RouteQueryMapFn = (
   nextRoute: RouteLocationNormalized
-) => UseQueryOptions & { queryKey: QueryKey; queryFn: any };
+) => UseQueryOptions & {
+  queryKey: QueryKey;
+  queryFn: any;
+  ssrPrefetch?: boolean;
+  waitUntilPreloaded?: boolean;
+};
 
-type Loader = {
-  preload(nextRoute: RouteLocationNormalized): void;
+export type Loader = {
+  preload(nextRoute: RouteLocationNormalized): Promise<any[]>;
   getQueries(): Record<string, any>;
 };
-export const loaders = new Map<string | symbol, Loader>();
+
+type ExtendedQuery = UseQueryReturnType<unknown, unknown> & {
+  ssrPrefetch: boolean;
+};
+
+export type LoaderMap = Map<string | symbol, Loader>;
+export const loaders: LoaderMap = new Map();
 
 export const createLoader =
-  (name: string, queries: Record<string, RouteQueryMapFn>) =>
+  (name: string, queriesOptions: Record<string, RouteQueryMapFn>) =>
   (queryClient: QueryClient) => {
     const loader: Loader = {
       preload(nextRoute) {
-        Object.values(queries).forEach(queryDef => {
-          const { queryKey, queryFn, staleTime, cacheTime } =
-            queryDef(nextRoute);
+        const promises: Promise<any>[] = [];
 
-          queryClient.prefetchQuery(queryKey, queryFn, {
+        Object.values(queriesOptions).forEach(queryDef => {
+          const {
+            queryKey,
+            queryFn,
+            staleTime,
+            cacheTime,
+            waitUntilPreloaded
+          } = queryDef(nextRoute);
+
+          const promise = queryClient.prefetchQuery(queryKey, queryFn, {
             staleTime,
             cacheTime
           });
+          if (waitUntilPreloaded) promises.push(promise);
         });
+
+        return Promise.all(promises);
       },
 
       getQueries() {
         const route = useRoute();
 
-        const entries = Object.entries(queries).flatMap(([key, queryDef]) => {
+        const entries = Object.entries(queriesOptions).flatMap<
+          [string, ExtendedQuery]
+        >(([key, queryDef]) => {
           const query = useQuery(
-            computed(() => queryDef(route)) as Ref<UseQueryOptions>
+            computed(() => ({
+              ...queryDef(route),
+              enabled: name === route.name
+            }))
           );
-          const data = computed(() => query.data.value);
+          query.ssrPrefetch = queryDef(route).ssrPrefetch;
 
-          return [
-            [`${key}Query`, query],
-            [key, data]
-          ];
+          return [[`${key}Query`, query]];
         });
 
-        return Object.fromEntries(entries);
+        const queries = Object.fromEntries(entries);
+        onServerPrefetch(() =>
+          Promise.allSettled(
+            Object.values(queries)
+              .filter(q => q.ssrPrefetch)
+              .map(q => q.suspense())
+          )
+        );
+        return queries;
       }
     };
 

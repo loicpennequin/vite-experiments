@@ -1,29 +1,15 @@
 <script setup lang="ts">
 import { provide } from 'vue';
 import { loaders } from './factories/loader.factory';
-import { useRouter } from 'vue-router';
 import Sidebar from './components/sidebar.vue';
+import Header from './components/header.vue';
 
 provide('loaders', loaders);
-
-const router = useRouter();
-router.beforeEach((to, from, next) => {
-  if (!to.name) return next();
-
-  loaders.get(to.name)?.preload(to);
-
-  next();
-});
 </script>
 
 <template>
   <div class="layout">
-    <header>
-      <h1>
-        <router-link :to="{ name: 'Home' }">Pokédex</router-link>
-      </h1>
-    </header>
-
+    <Header />
     <Sidebar class="layout__sidebar" />
 
     <main>
