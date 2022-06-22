@@ -1,7 +1,5 @@
 <script setup lang="ts">
 import { getAllPokemons } from '../api/pokemon.api';
-import Link from './link.vue';
-import InfiniteScroll from './infinite-scroll.vue';
 import { onServerPrefetch, ref } from 'vue';
 import { useInfiniteQuery } from 'vue-query';
 
@@ -35,16 +33,21 @@ const scrollRoot = ref<HTMLElement>();
 </script>
 
 <template>
-  <nav ref="scrollRoot">
+  <nav ref="scrollRoot" p-y="3">
     <InfiniteScroll @load-more="onLoadMore" :root="scrollRoot" :buffer="100">
       <div v-if="isLoading">Loading pokemons...</div>
       <ul v-if="pokemons">
-        <template v-for="(page, index) in pokemons.pages" :key="index">
-          <li v-for="pokemon in page.results" :key="pokemon.name">
+        <template v-for="(page, pageIndex) in pokemons.pages" :key="pageIndex">
+          <li v-for="(pokemon, index) in page.results" :key="pokemon.name">
             <Link
               :to="{ name: 'Detail', params: { name: pokemon.name } }"
               prefetch
+              capitalize
+              space-x="1"
+              p="3"
+              block
             >
+              <span>{{ pageIndex * 50 + index + 1 }} -</span>
               {{ pokemon.name }}
             </Link>
           </li>
@@ -54,18 +57,8 @@ const scrollRoot = ref<HTMLElement>();
   </nav>
 </template>
 
-<style lang="scss" scoped>
-nav {
-  padding: 1em;
-}
-
-nav ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-
-  > li:not(:last-child) {
-    margin-bottom: 0.5rem;
-  }
+<style>
+.router-link-exact-active {
+  --at-apply: 'bg-red-500';
 }
 </style>

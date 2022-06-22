@@ -1,68 +1,50 @@
 <script setup lang="ts">
 import { provide } from 'vue';
 import { loaders } from './factories/loader.factory';
-import Sidebar from './components/sidebar.vue';
-import Header from './components/header.vue';
 
 provide('loaders', loaders);
 </script>
 
 <template>
-  <div class="layout">
-    <Header />
-    <Sidebar class="layout__sidebar" />
+  <div class="layout" font="sans" bg="red-400" grid>
+    <Header sticky top="0" col-span-full />
+    <Sidebar class="layout__sidebar" overflow-y-auto min-w="15rem" />
 
-    <main>
-      <router-view />
+    <main flex justify-center bg="blue-1">
+      <div p="6" bg="white">
+        <router-view />
+      </div>
     </main>
   </div>
 </template>
 
-<style lang="scss">
-:root {
-  --separator: solid 1px #ccc;
-}
-
-body {
-  margin: 0;
-  font-family: Helvetica;
-
-  a {
-    text-decoration: none;
-    color: inherit;
-  }
-}
-
-* {
-  box-sizing: border-box;
-}
-
+<style lang="scss" scoped>
 .layout {
-  --header-height: 50px;
-  display: grid;
-  grid-template-columns: 200px 3fr;
-  grid-template-rows: var(--header-height) 1fr;
-  grid-column-gap: 1rem;
-
-  > header {
-    grid-column: 1 / -1;
-    position: sticky;
-    top: 0;
-    background-color: white;
-    display: flex;
-    align-items: center;
-    padding-left: 1rem;
-    border-bottom: var(--separator);
-
-    > h1 {
-      margin: 0;
-    }
-  }
+  grid-template-columns: auto 1fr;
 }
 
 .layout__sidebar {
-  border-right: var(--separator);
-  height: calc(100vh - var(--header-height));
-  overflow-y: auto;
+  height: calc(100vh - 56px);
+}
+</style>
+
+<style lang="scss">
+* {
+  /* Firefox */
+  scrollbar-color: #666;
+  scrollbar-width: 12px;
+  /* Chrome */
+  ::-webkit-scrollbar {
+    --at-apply: 'bg-blue-300';
+    width: 10px;
+    height: 10px;
+    border-radius: 4px;
+    overflow-x: hidden;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    --at-apply: 'bg-blue-400';
+    border-radius: 10px;
+  }
 }
 </style>

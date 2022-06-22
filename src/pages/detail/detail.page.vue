@@ -1,6 +1,6 @@
 <script lang="ts" setup>
+import { computed } from 'vue';
 import { useLoader } from '../../composables/use-loader';
-import Image from '../../components/image.vue';
 import { STATS } from '../../constants';
 
 const { pokemonQuery } = useLoader();
@@ -18,61 +18,39 @@ const getStatStyle = (stat: any) => {
     '--hue': (stat.base_stat * 120) / 200
   };
 };
+
+const typeLabel = computed(() =>
+  pokemon.value.types?.map((t: any) => t.type.name).join(' / ')
+);
 </script>
 
 <template>
   <div v-if="isLoading">Loading</div>
   <div v-if="isError">An error as occured.</div>
   <div v-else-if="pokemon">
-    <h2>{{ pokemon.name }}</h2>
+    <h2 text="3xl" font-bold capitalize>{{ pokemon.name }}</h2>
 
-    <div class="infos-wrapper">
+    <div flex items="center">
       <Image :src="pokemon.sprites.front_default" />
 
-      <ul>
-        <li v-for="stat in pokemon.stats" :key="stat.stat.name">
-          <span>{{ getLabel(stat) }}</span>
-          <div>{{ stat.base_stat }}</div>
-          <div class="stat-bar" :style="getStatStyle(stat)" />
-        </li>
+      <ul grid grid-cols="2" gap="2">
+        <StatBar
+          v-for="stat in pokemon.stats"
+          :key="stat.stat.name"
+          is="li"
+          :stat="stat"
+        />
       </ul>
     </div>
 
-    <pre>{{ pokemon.types }}</pre>
+    <div uppercase>{{ typeLabel }}</div>
   </div>
 </template>
 
 <style scoped lang="scss">
-h2 {
-  text-transform: capitalize;
-}
-
-.infos-wrapper {
-  display: flex;
-  align-items: center;
-
-  ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0.5rem;
-  }
-
-  li {
-    display: grid;
-    grid-template-columns: 7ch auto 100px;
-    grid-gap: 0.5rem;
-  }
-
-  .stat-bar {
-    flex-grow: 1;
-    display: flex;
-    align-items: center;
-    background-color: hsl(var(--hue), 80%, 60%);
-    width: var(--width);
-    transition: all 0.5s;
-  }
+.stat-bar {
+  background-color: hsl(var(--hue), 80%, 60%);
+  width: var(--width);
+  transition: all 0.5s;
 }
 </style>

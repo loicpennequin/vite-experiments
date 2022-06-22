@@ -12,7 +12,7 @@ const props = withDefaults(
 const { resolve } = useRouter();
 const loaders = inject('loaders', new Map());
 
-let timeout: number;
+let timeout: NodeJS.Timeout;
 
 const onMouseEnter = () => {
   if (!props.prefetch) return;
@@ -35,6 +35,8 @@ const onMouseLeave = () => {
 <template>
   <router-link
     :to="props.to"
+    un-no-underline
+    un-color="inherit"
     @mouseenter="onMouseEnter"
     @mouseleave="onMouseLeave"
   >

@@ -1,5 +1,7 @@
 <script lang="ts" setup></script>
 
 <template>
-  <p>Click a pokemon to see its detail.</p>
+  <p flex items="center" justify="center" h-full min-w="40rem">
+    Click a pokemon to see its detail.
+  </p>
 </template>

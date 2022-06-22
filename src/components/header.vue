@@ -1,20 +1,13 @@
-<script setup lang="ts"></script>
-
 <template>
-  <header>
-    <h1>
-      <router-link :to="{ name: 'Home' }">Pokédex</router-link>
+  <header flex items="center" p="3" bg="red-400" shadow="lg">
+    <h1 un-m="0" text="2xl">
+      <Link :to="{ name: 'Home' }">Pokédex</Link>
     </h1>
   </header>
 </template>
 
 <style lang="scss">
 header {
-  background-color: white;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding-left: 1rem;
   border-bottom: var(--separator);
 
   > h1 {
