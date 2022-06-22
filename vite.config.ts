@@ -16,10 +16,13 @@ export default defineConfig({
       transformers: [transformerDirective()]
     }),
     Components({
-      dts: true,
+      dts: 'src/typings/components.d.ts',
       include: [/\.vue$/, /\.vue\?vue/, /\.md$/],
-      directoryAsNamespace: true,
       directives: true
     })
-  ]
+  ],
+  test: {
+    globals: true,
+    environment: 'jsdom'
+  }
 });

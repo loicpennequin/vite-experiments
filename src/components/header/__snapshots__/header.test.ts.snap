@@ -1,0 +1,7 @@
+// Vitest Snapshot v1
+
+exports[`mount component 1`] = `
+"<header flex=\\"\\" items=\\"center\\" p=\\"3\\" bg=\\"red-400\\" shadow=\\"lg\\">
+  <h1 un-m=\\"0\\" text=\\"2xl\\"><a aria-current=\\"page\\" href=\\"/\\" class=\\"router-link-active router-link-exact-active\\" un-no-underline=\\"\\" un-color=\\"inherit\\">Pokédex</a></h1>
+</header>"
+`;
