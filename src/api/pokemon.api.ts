@@ -1,7 +1,8 @@
 import axios from 'axios';
+import { POKEMON_API_URL } from '../constants';
 
 const http = axios.create({
-  baseURL: 'https://pokeapi.co/api/v2/',
+  baseURL: POKEMON_API_URL,
   responseType: 'json'
   // withCredentials: true
 });

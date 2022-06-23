@@ -6,3 +6,5 @@ export const STATS = {
   'special-defense': 'SPDEF',
   speed: 'SPD'
 };
+
+export const POKEMON_API_URL = 'https://pokeapi.co/api/v2';

@@ -1,8 +1,11 @@
 import nock from 'nock';
-import { renderWithPlugins } from '../../__test__/utils';
+import {
+  httpMock,
+  renderWithPlugins,
+  setDeviceWidth
+} from '../../__test__/utils';
 import Sidebar from './sidebar.vue';
 import { waitFor, fireEvent } from '@testing-library/vue';
-import { MockedFunction } from 'vitest';
 
 type PokemonEntry = {
   name: String;
@@ -18,25 +21,16 @@ async function renderWithLoadedList({
   isDesktop = false
 }: RenderWithLoadedListOptions = {}) {
   if (isDesktop) {
-    (window.matchMedia as MockedFunction<any>).mockReturnValueOnce({
-      matches: true,
-      addListener: vi.fn(),
-      removeListener: vi.fn(),
-      addEventListener: vi.fn(),
-      removeEventListener: vi.fn()
-    });
+    setDeviceWidth(1920);
   }
 
-  const scope = nock('https://pokeapi.co/api/v2')
-    .defaultReplyHeaders({
-      'access-control-allow-origin': '*',
-      'access-control-allow-credentials': 'true'
-    })
-    .get('/pokemon?limit=50&offset=0')
-    .reply(200, {
+  const scope = httpMock({
+    url: '/pokemon?limit=50&offset=0',
+    response: {
       count: 50,
       results
-    });
+    }
+  });
 
   expect(Sidebar).toBeTruthy();
 
