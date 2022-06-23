@@ -1,11 +1,13 @@
 import { render } from '@testing-library/vue';
-import { Component } from 'vue';
+import { App, Component } from 'vue';
 import { VueQueryPlugin } from 'vue-query';
 import { createRouter, createWebHistory } from 'vue-router';
 import { routes as defaultRoutes } from '../routes';
 import nock, { Body } from 'nock';
 import { POKEMON_API_URL } from '../constants';
 import { MockedFunction } from 'vitest';
+import { createQueryClient } from '../factories/query-client.factory';
+import { PluginModule } from '../types';
 
 export const renderWithPlugins = (
   component: Component,
@@ -16,9 +18,30 @@ export const renderWithPlugins = (
     routes
   });
 
+  const queryClient = createQueryClient();
+  queryClient.mount();
+
+  const pluginModules = import.meta.globEager<PluginModule>('./**/*.plugin.ts');
+  Object.values(pluginModules)
+    .map(p => p.default)
+    .sort((a, b) => b.priority - a.priority)
+    .forEach(plugin => {
+      plugin.install?.({
+        app: {} as App,
+        router,
+        isClient: true,
+        initialState: undefined,
+        initialRoute: undefined,
+        meta: {}
+      });
+    });
+
   return render(component, {
     global: {
-      plugins: [router, VueQueryPlugin]
+      plugins: [router],
+      provide: {
+        VUE_QUERY_CLIENT: queryClient
+      }
     }
   });
 };

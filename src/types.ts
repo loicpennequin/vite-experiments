@@ -9,3 +9,10 @@ export type VitedgePluginContext = {
   initialRoute: any;
   meta: Record<string, any>;
 };
+
+export type PluginModule = {
+  default: {
+    install(ctx: VitedgePluginContext): void;
+    priority: number;
+  };
+};

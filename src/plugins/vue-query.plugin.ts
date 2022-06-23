@@ -5,6 +5,8 @@ import { VitedgePluginContext } from '../types';
 export default {
   priority: 10,
   install: ({ app, meta, initialState }: VitedgePluginContext) => {
+    if (import.meta.env.TEST) return;
+
     const queryClient = createQueryClient();
     meta.queryClient = queryClient;
     app.use(VueQueryPlugin, { queryClient });
