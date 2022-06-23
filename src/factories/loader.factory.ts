@@ -85,6 +85,5 @@ export const createLoader =
     };
 
     loaders.set(name, loader);
-
     return loader;
   };

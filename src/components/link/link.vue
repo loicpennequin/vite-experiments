@@ -12,7 +12,7 @@ const props = withDefaults(
 const { resolve } = useRouter();
 const loaders = inject('loaders', new Map());
 
-let timeout: NodeJS.Timeout;
+let timeout: ReturnType<typeof setTimeout>;
 
 const onMouseEnter = () => {
   if (!props.prefetch) return;
@@ -21,7 +21,6 @@ const onMouseEnter = () => {
     if (!name) return;
 
     const loader = loaders.get(name);
-
     loader?.preload(resolve(props.to));
   }, 250);
 };

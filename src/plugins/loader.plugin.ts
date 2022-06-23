@@ -11,6 +11,7 @@ const bootstrapModules = (queryClient: QueryClient) => {
   const loaderModules = import.meta.globEager<LoaderModule>(
     '../**/*.loader.ts'
   );
+
   Object.values(loaderModules).forEach(module => {
     module.default(queryClient);
   });

@@ -24,7 +24,7 @@ async function renderWithLoadedList({
     setDeviceWidth(1920);
   }
 
-  const scope = httpMock({
+  const request = httpMock({
     url: '/pokemon?limit=50&offset=0',
     response: {
       count: 50,
@@ -32,16 +32,15 @@ async function renderWithLoadedList({
     }
   });
 
-  expect(Sidebar).toBeTruthy();
-
   const wrapper = renderWithPlugins(Sidebar);
-  await waitFor(() => expect(scope.isDone()).toBeTruthy());
+  await waitFor(() => expect(request.isDone()).toBeTruthy());
 
   return wrapper;
 }
 
 describe('Sidebar Component', () => {
   test('should mount component', async () => {
+    expect(Sidebar).toBeTruthy();
     const { html } = await renderWithLoadedList({ isDesktop: true });
 
     expect(html()).toMatchSnapshot();

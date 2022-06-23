@@ -8,10 +8,11 @@ import { POKEMON_API_URL } from '../constants';
 import { MockedFunction } from 'vitest';
 import { createQueryClient } from '../factories/query-client.factory';
 import { PluginModule } from '../types';
+import { loaders } from '../factories/loader.factory';
 
 export const renderWithPlugins = (
   component: Component,
-  { routes = defaultRoutes } = {}
+  { routes = defaultRoutes, slots = {}, props = {} } = {}
 ) => {
   const router = createRouter({
     history: createWebHistory(),
@@ -21,7 +22,9 @@ export const renderWithPlugins = (
   const queryClient = createQueryClient();
   queryClient.mount();
 
-  const pluginModules = import.meta.globEager<PluginModule>('./**/*.plugin.ts');
+  const pluginModules = import.meta.globEager<PluginModule>(
+    '../**/*.plugin.ts'
+  );
   Object.values(pluginModules)
     .map(p => p.default)
     .sort((a, b) => b.priority - a.priority)
@@ -32,7 +35,9 @@ export const renderWithPlugins = (
         isClient: true,
         initialState: undefined,
         initialRoute: undefined,
-        meta: {}
+        meta: {
+          queryClient
+        }
       });
     });
 
@@ -40,16 +45,19 @@ export const renderWithPlugins = (
     global: {
       plugins: [router],
       provide: {
-        VUE_QUERY_CLIENT: queryClient
+        VUE_QUERY_CLIENT: queryClient,
+        loaders
       }
-    }
+    },
+    slots,
+    props
   });
 };
 
 type HttpMockOptions<T> = {
   url: string;
   statusCode?: number;
-  response: T;
+  response?: T;
   method?: 'get' | 'post' | 'put' | 'delete';
 };
 
