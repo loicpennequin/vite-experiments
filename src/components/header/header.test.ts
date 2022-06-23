@@ -1,20 +1,18 @@
-import { mount } from '@vue/test-utils';
-import { createRouter, createWebHistory } from 'vue-router';
-import { routes } from '../../routes';
+import { renderWithPlugins } from '../../__test__/utils';
 import Header from './header.vue';
 
-test('mount component', async () => {
-  const router = createRouter({
-    history: createWebHistory(),
-    routes: routes
+describe('Header Component', () => {
+  test('should mount component', async () => {
+    expect(Header).toBeTruthy();
+
+    const { html } = renderWithPlugins(Header);
+    expect(html()).toMatchSnapshot();
   });
 
-  router.push('/');
-  await router.isReady();
-  expect(Header).toBeTruthy();
+  test('should have link to home page', async () => {
+    const { getByText } = renderWithPlugins(Header);
 
-  const wrapper = mount(Header, { global: { plugins: [router] } });
-
-  expect(wrapper.text()).toContain('Pokédex');
-  expect(wrapper.html()).toMatchSnapshot();
+    const link = getByText('Pokédex');
+    expect(link).toHaveAttribute('href', '/');
+  });
 });

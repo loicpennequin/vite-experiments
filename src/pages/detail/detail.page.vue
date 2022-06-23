@@ -14,7 +14,7 @@ const typeLabel = computed(() =>
   <Surface v-if="isLoading" flex items-center justify-center>Loading</Surface>
   <Surface v-if="isError" flex items-center justify-center>Error</Surface>
 
-  <div v-else-if="pokemon" space-y="4">
+  <div v-else-if="pokemon" space-y="4" w="screen-sm" max-w="full">
     <Surface is="h2" text="3xl" font-bold capitalize rounded="lg">
       {{ pokemon.name }}
     </Surface>

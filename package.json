@@ -28,12 +28,17 @@
     "vue-router": "^4.0.16"
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^5.16.4",
+    "@testing-library/vue": "^6.6.0",
     "@unocss/preset-wind": "^0.39.3",
     "@unocss/reset": "^0.39.3",
     "@unocss/transformer-directives": "^0.39.3",
     "@vitejs/plugin-vue": "^2.3.3",
+    "@vitest/ui": "^0.15.2",
     "@vue/test-utils": "^2.0.0",
+    "jest-serializer-vue": "^2.0.2",
     "jsdom": "^20.0.0",
+    "nock": "^13.2.7",
     "sass": "^1.52.3",
     "ts-node": "^10.8.1",
     "typescript": "^4.5.4",

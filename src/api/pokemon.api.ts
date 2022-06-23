@@ -34,8 +34,8 @@ export const getPokemonByName = async (name: string) => {
   return {
     ...pokemon,
     species: species,
-    description: species.flavor_text_entries.find(
-      (entry: any) => entry.language.name === 'en'
-    ).flavor_text
+    description: species.flavor_text_entries
+      .find((entry: any) => entry.language.name === 'en')
+      .flavor_text.replace('\u000C', ' ')
   };
 };

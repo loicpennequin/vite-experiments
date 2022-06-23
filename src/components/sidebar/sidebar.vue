@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { getAllPokemons } from '../api/pokemon.api';
+import { getAllPokemons } from '../../api/pokemon.api';
 import { onServerPrefetch, ref, watch } from 'vue';
 import { useInfiniteQuery } from 'vue-query';
 import { useMediaQuery } from '@vueuse/core';
@@ -31,11 +31,8 @@ const onLoadMore = () => {
 
 const scrollRoot = ref<HTMLElement>();
 
-const isExpanded = ref(true);
 const isLargeScreen = useMediaQuery('(min-width: 1024px)');
-watch(isLargeScreen, isLargeScreen => {
-  isExpanded.value = isLargeScreen;
-});
+const isExpanded = ref(isLargeScreen.value);
 </script>
 
 <template>
@@ -45,11 +42,17 @@ watch(isLargeScreen, isLargeScreen => {
     transition-all
     duration-300
     min-w="3rem"
-    :class="{ expanded: isExpanded }"
+    :class="{ expanded: isLargeScreen || isExpanded }"
   >
-    <button md="hidden" @click="isExpanded = !isExpanded">List</button>
+    <button
+      :title="isExpanded ? 'Hide list' : 'Show list'"
+      md="hidden"
+      @click="isExpanded = !isExpanded"
+    >
+      List {{ isExpanded }}
+    </button>
     <transition name="pkmn-list">
-      <div v-if="isExpanded">
+      <div v-if="isExpanded || isLargeScreen">
         <InfiniteScroll
           @load-more="onLoadMore"
           :root="scrollRoot"
@@ -63,7 +66,6 @@ watch(isLargeScreen, isLargeScreen => {
               <li v-for="(pokemon, index) in page.results" :key="pokemon.name">
                 <Link
                   :to="{ name: 'Detail', params: { name: pokemon.name } }"
-                  prefetch
                   capitalize
                   space-x="1"
                   p="3"

@@ -6,11 +6,11 @@ provide('loaders', loaders);
 </script>
 
 <template>
-  <div class="layout" font="sans" bg="red-400" grid>
+  <div class="layout" font="sans" bg="red-400" grid max-w="screen">
     <Header sticky top="0" col-span-full />
     <Sidebar class="layout__sidebar" overflow-y-auto />
 
-    <main flex justify-center bg="blue-1" p-y="8">
+    <main flex justify-center bg="blue-1" p-y="8" p-x="2">
       <router-view />
     </main>
   </div>
@@ -18,7 +18,7 @@ provide('loaders', loaders);
 
 <style lang="scss" scoped>
 .layout {
-  grid-template-columns: auto 1fr;
+  grid-template-columns: auto minmax(0, 1fr);
 }
 
 .layout__sidebar {

@@ -1,0 +1,14 @@
+// Vitest Snapshot v1
+
+exports[`Sidebar Component > should mount component 1`] = `
+<nav p-y="3" transition-all="" duration-300="" min-w="3rem" class="expanded" data-v-9a5c856e=""><button title="Show list" md="hidden" data-v-9a5c856e=""> List false</button>
+  <transition-stub data-v-9a5c856e="">
+    <div data-v-9a5c856e="">
+      <ul data-v-9a5c856e="">
+        <li data-v-9a5c856e=""><a href="/foo" class="" no-underline="" color="inherit" capitalize="" space-x="1" p="3" block="" data-v-9a5c856e=""><span data-v-9a5c856e="">1 -</span> foo</a></li>
+      </ul>
+      <div class="infinite-scroll-trigger" data-v-9a123074=""></div>
+    </div>
+  </transition-stub>
+</nav>
+`;
