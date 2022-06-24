@@ -49,7 +49,7 @@ const isExpanded = ref(isLargeScreen.value);
       md="hidden"
       @click="isExpanded = !isExpanded"
     >
-      List {{ isExpanded }}
+      List
     </button>
     <transition name="pkmn-list">
       <div v-if="isExpanded || isLargeScreen">
@@ -67,6 +67,7 @@ const isExpanded = ref(isLargeScreen.value);
                 <Link
                   :to="{ name: 'Detail', params: { name: pokemon.name } }"
                   capitalize
+                  prefetch
                   space-x="1"
                   p="3"
                   block

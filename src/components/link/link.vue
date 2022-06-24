@@ -3,7 +3,7 @@ import { inject } from 'vue';
 import { LocationAsRelativeRaw, useRouter } from 'vue-router';
 
 const props = withDefaults(
-  defineProps<{ prefetch?: boolean; to: LocationAsRelativeRaw }>(),
+  defineProps<{ prefetch?: boolean | number; to: LocationAsRelativeRaw }>(),
   {
     prefetch: false
   }
@@ -16,13 +16,15 @@ let timeout: ReturnType<typeof setTimeout>;
 
 const onMouseEnter = () => {
   if (!props.prefetch) return;
+  const duration = typeof props.prefetch === 'number' ? props.prefetch : 200;
+
   timeout = setTimeout(() => {
     const { name } = props.to;
     if (!name) return;
 
     const loader = loaders.get(name);
     loader?.preload(resolve(props.to));
-  }, 250);
+  }, duration);
 };
 
 const onMouseLeave = () => {

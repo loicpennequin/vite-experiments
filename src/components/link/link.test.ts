@@ -30,8 +30,8 @@ describe('Link Component', () => {
     });
 
     const link = getByText('Pikachu');
-    vi.useFakeTimers();
 
+    vi.useFakeTimers();
     await fireEvent.mouseEnter(link);
     vi.runAllTimers();
 
