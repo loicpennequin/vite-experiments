@@ -6,7 +6,8 @@ import {
 } from 'vue-query';
 import { QueryKey } from 'react-query';
 import { useRoute, RouteLocationNormalized } from 'vue-router';
-import { computed, onServerPrefetch, Ref } from 'vue';
+import { computed, onServerPrefetch, ref, Ref } from 'vue';
+import { Loader } from '../plugins/loader.plugin';
 
 type RouteQueryMapFn = (
   nextRoute: RouteLocationNormalized
@@ -17,23 +18,16 @@ type RouteQueryMapFn = (
   waitUntilPreloaded?: boolean;
 };
 
-export type Loader = {
-  preload(nextRoute: RouteLocationNormalized): Promise<any[]>;
-  getQueries(): Record<string, any>;
-};
-
 type ExtendedQuery = UseQueryReturnType<unknown, unknown> & {
   ssrPrefetch: boolean;
 };
 
-export type LoaderMap = Map<string | symbol, Loader>;
-export const loaders: LoaderMap = new Map();
-
 export const createLoader =
   (name: string, queriesOptions: Record<string, RouteQueryMapFn>) =>
-  (queryClient: QueryClient) => {
-    const loader: Loader = {
-      preload(nextRoute) {
+  (queryClient: QueryClient): Loader => {
+    return {
+      name,
+      async preload(nextRoute) {
         const promises: Promise<any>[] = [];
 
         Object.values(queriesOptions).forEach(queryDef => {
@@ -83,7 +77,4 @@ export const createLoader =
         return queries;
       }
     };
-
-    loaders.set(name, loader);
-    return loader;
   };

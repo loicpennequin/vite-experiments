@@ -6,7 +6,7 @@ import '@vue/runtime-core'
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     Header: typeof import('./../components/header/header.vue')['default']
-    Image: typeof import('./../components/image.vue')['default']
+    Image: typeof import('./../components/image/image.vue')['default']
     InfiniteScroll: typeof import('./../components/infinite-scroll.vue')['default']
     Link: typeof import('./../components/link/link.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']

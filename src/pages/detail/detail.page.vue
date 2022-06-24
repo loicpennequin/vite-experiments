@@ -21,7 +21,7 @@ const typeLabel = computed(() =>
 
     <Surface rounded="lg">
       <div flex items="center" flex-wrap>
-        <Image :src="pokemon.sprites.front_default" />
+        <Image :src="pokemon.sprites.front_default" :alt="pokemon.name" />
 
         <ul grid grid-cols="1 lg:2  " gap="2">
           <StatBar

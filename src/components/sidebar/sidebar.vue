@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { getAllPokemons } from '../../api/pokemon.api';
-import { onServerPrefetch, ref, watch } from 'vue';
+import { onServerPrefetch, ref, computed } from 'vue';
 import { useInfiniteQuery } from 'vue-query';
 import { useMediaQuery } from '@vueuse/core';
 
@@ -32,7 +32,7 @@ const onLoadMore = () => {
 const scrollRoot = ref<HTMLElement>();
 
 const isLargeScreen = useMediaQuery('(min-width: 1024px)');
-const isExpanded = ref(isLargeScreen.value);
+const isExpanded = ref(isLargeScreen.value || import.meta.env.SSR);
 </script>
 
 <template>
@@ -67,10 +67,10 @@ const isExpanded = ref(isLargeScreen.value);
                 <Link
                   :to="{ name: 'Detail', params: { name: pokemon.name } }"
                   capitalize
-                  prefetch
                   space-x="1"
                   p="3"
                   block
+                  prefetch
                   @click="isExpanded = false"
                 >
                   <span>{{ pageIndex * 50 + index + 1 }} -</span>

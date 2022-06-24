@@ -1,14 +1,18 @@
 import { render } from '@testing-library/vue';
-import { App, Component } from 'vue';
+import { App, Component, ref } from 'vue';
 import { VueQueryPlugin } from 'vue-query';
 import { createRouter, createWebHistory } from 'vue-router';
 import { routes as defaultRoutes } from '../routes';
 import nock, { Body } from 'nock';
-import { POKEMON_API_URL } from '../constants';
+import {
+  IS_PRELOADING_INJECTION_KEY,
+  LOADERS_INJECTION_KEY,
+  POKEMON_API_URL
+} from '../constants';
 import { MockedFunction } from 'vitest';
 import { createQueryClient } from '../factories/query-client.factory';
 import { PluginModule } from '../types';
-import { loaders } from '../factories/loader.factory';
+import { loaders } from '../plugins/loader.plugin';
 
 export const renderWithPlugins = (
   component: Component,
@@ -46,7 +50,8 @@ export const renderWithPlugins = (
       plugins: [router],
       provide: {
         VUE_QUERY_CLIENT: queryClient,
-        loaders
+        [LOADERS_INJECTION_KEY]: loaders,
+        [IS_PRELOADING_INJECTION_KEY]: ref(false)
       }
     },
     slots,

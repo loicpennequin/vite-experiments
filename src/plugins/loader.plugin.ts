@@ -1,11 +1,26 @@
 import { VitedgePluginContext } from '../types';
-import { loaders, createLoader } from '../factories/loader.factory';
+import { createLoader } from '../factories/loader.factory';
 import { QueryClient } from 'vue-query';
-import { Router } from 'vue-router';
+import { RouteLocationNormalized, Router } from 'vue-router';
+import {
+  IS_PRELOADING_INJECTION_KEY,
+  LOADERS_INJECTION_KEY
+} from '../constants';
+import { Ref, ref } from 'vue';
 
 type LoaderModule = {
   default: ReturnType<typeof createLoader>;
 };
+
+export type Loader = {
+  name: symbol | string;
+  preload(nextRoute: RouteLocationNormalized): Promise<any[]>;
+  getQueries(): Record<string, any>;
+};
+
+export type LoaderMap = Map<string | symbol, Loader>;
+
+export const loaders: LoaderMap = new Map();
 
 const bootstrapModules = (queryClient: QueryClient) => {
   const loaderModules = import.meta.globEager<LoaderModule>(
@@ -13,15 +28,18 @@ const bootstrapModules = (queryClient: QueryClient) => {
   );
 
   Object.values(loaderModules).forEach(module => {
-    module.default(queryClient);
+    const loader = module.default(queryClient);
+
+    loaders.set(loader.name, loader);
   });
 };
 
-const addRouterHook = (router: Router) => {
+const addRouterHook = (router: Router, isPreloading: Ref<boolean>) => {
   router.beforeEach(async (to, from, next) => {
     if (!to.name || !from.name) return next();
-
+    isPreloading.value = true;
     await loaders.get(to.name)?.preload(to);
+    isPreloading.value = false;
 
     next();
   });
@@ -29,7 +47,7 @@ const addRouterHook = (router: Router) => {
 
 export default {
   priority: 1,
-  install: ({ router, meta }: VitedgePluginContext) => {
+  install: ({ app, router, meta }: VitedgePluginContext) => {
     if (!meta.queryClient) {
       throw new Error(
         'LoaderPlugin: no queryClient found on vitedge context. The loader plugin needs to run after the vue query plugin.'
@@ -38,6 +56,12 @@ export default {
 
     bootstrapModules(meta.queryClient);
 
-    addRouterHook(router);
+    const isPreloading = ref(false);
+    addRouterHook(router, isPreloading);
+
+    if (!import.meta.env.TEST) {
+      app.provide(LOADERS_INJECTION_KEY, loaders);
+      app.provide(IS_PRELOADING_INJECTION_KEY, isPreloading);
+    }
   }
 };

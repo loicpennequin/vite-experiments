@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { inject } from 'vue';
 import { LocationAsRelativeRaw, useRouter } from 'vue-router';
+import { LOADERS_INJECTION_KEY } from '../../constants';
 
 const props = withDefaults(
   defineProps<{ prefetch?: boolean | number; to: LocationAsRelativeRaw }>(),
@@ -10,12 +11,12 @@ const props = withDefaults(
 );
 
 const { resolve } = useRouter();
-const loaders = inject('loaders', new Map());
+const loaders = inject(LOADERS_INJECTION_KEY, new Map());
 
 let timeout: ReturnType<typeof setTimeout>;
 
 const onMouseEnter = () => {
-  if (!props.prefetch) return;
+  if (props.prefetch === false) return;
   const duration = typeof props.prefetch === 'number' ? props.prefetch : 200;
 
   timeout = setTimeout(() => {
