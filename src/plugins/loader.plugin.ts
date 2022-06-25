@@ -1,7 +1,7 @@
-import { VitedgePluginContext } from '../types';
+import { ILoader, VitedgePluginContext } from '../types';
 import { createLoader } from '../factories/loader.factory';
 import { QueryClient } from 'vue-query';
-import { RouteLocationNormalized, Router } from 'vue-router';
+import { Router } from 'vue-router';
 import {
   IS_PRELOADING_INJECTION_KEY,
   LOADERS_INJECTION_KEY
@@ -12,15 +12,7 @@ type LoaderModule = {
   default: ReturnType<typeof createLoader>;
 };
 
-export type Loader = {
-  name: symbol | string;
-  preload(nextRoute: RouteLocationNormalized): Promise<any[]>;
-  getQueries(): Record<string, any>;
-};
-
-export type LoaderMap = Map<string | symbol, Loader>;
-
-export const loaders: LoaderMap = new Map();
+export const loaders = new Map<string | symbol, ILoader>();
 
 const bootstrapModules = (queryClient: QueryClient) => {
   const loaderModules = import.meta.globEager<LoaderModule>(

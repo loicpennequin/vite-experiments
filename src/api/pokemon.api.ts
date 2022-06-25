@@ -1,10 +1,4 @@
-import axios from 'axios';
-import { POKEMON_API_URL } from '../constants';
-
-const http = axios.create({
-  baseURL: POKEMON_API_URL,
-  responseType: 'json'
-});
+import { http } from './http.api';
 
 export type GetAllPokemonsOptions = {
   limit: number;
@@ -30,7 +24,6 @@ export const getPokemonByName = async (name: string) => {
 
   const { data: species } = await http.get(pokemon.species.url);
   pokemon.species = species;
-
   return {
     ...pokemon,
     species: species,
@@ -38,4 +31,23 @@ export const getPokemonByName = async (name: string) => {
       .find((entry: any) => entry.language.name === 'en')
       .flavor_text.replace('\u000C', ' ')
   };
+};
+
+export const getEvolutionChain = async (pokemon: any) => {
+  const { data } = await http.get(pokemon.species.evolution_chain.url);
+  const { chain } = data;
+
+  const pokemons: any[] = [];
+  pokemons.push([await getPokemonByName(chain.species.name)]);
+
+  let link = chain.evolves_to;
+  while (link.length) {
+    const evolutions = await Promise.all(
+      link.map((evolution: any) => getPokemonByName(evolution.species.name))
+    );
+
+    pokemons.push(evolutions);
+    link = link[0].evolves_to;
+  }
+  return pokemons;
 };

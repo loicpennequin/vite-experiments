@@ -2,10 +2,13 @@ import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import vitedgePlugin from 'vitedge/plugin.js';
 import Components from 'unplugin-vue-components/vite';
+import Icons from 'unplugin-icons/vite';
 import Unocss from 'unocss/vite';
-import { presetAttributify } from 'unocss';
 import presetWind from '@unocss/preset-wind';
+import { presetAttributify } from 'unocss';
 import transformerDirective from '@unocss/transformer-directives';
+import IconsResolver from 'unplugin-icons/resolver';
+import { FileSystemIconLoader } from 'unplugin-icons/loaders';
 
 export default defineConfig({
   plugins: [
@@ -17,8 +20,21 @@ export default defineConfig({
     }),
     Components({
       dts: 'src/typings/components.d.ts',
-      include: [/\.vue$/, /\.vue\?vue/, /\.md$/],
-      directives: true
+      dirs: ['./src/components'],
+      directives: true,
+      resolvers: [
+        IconsResolver({
+          customCollections: ['pkmn'],
+          prefix: 'icon'
+        })
+      ]
+    }),
+    Icons({
+      customCollections: {
+        pkmn: FileSystemIconLoader('./src/assets/icons', svg =>
+          svg.replace(/^<svg /, '<svg fill="currentColor" ')
+        )
+      }
     })
   ],
   test: {

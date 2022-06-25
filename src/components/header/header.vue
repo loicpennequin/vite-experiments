@@ -2,8 +2,8 @@
   <header
     flex
     items="center"
-    justify-between
     p="x-6 y-3"
+    lt-sm:pl="12"
     bg="red-400"
     shadow="md"
   >

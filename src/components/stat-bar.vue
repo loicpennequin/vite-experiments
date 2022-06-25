@@ -17,7 +17,7 @@ const width = computed(() => (props.stat.base_stat * 100) / 200 + '%');
 </script>
 
 <template>
-  <component :is="props.is" flex gap="2" w="10rem">
+  <component :is="props.is" flex gap="2" w="13rem">
     <span w="7ch">{{ label }}</span>
     <div flex-grow="1" class="stat-bar" pl="1" transition-all duration-500>
       {{ props.stat.base_stat }}

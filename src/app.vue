@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { useIsPreloading } from './composables/use-is-preloading';
+
 const isPreloading = useIsPreloading();
 </script>
 
@@ -9,16 +10,7 @@ const isPreloading = useIsPreloading();
     <Sidebar class="layout__sidebar" overflow-y-auto />
 
     <main flex justify-center bg="blue-1" p-y="8" p-x="2" relative>
-      <div
-        v-if="isPreloading"
-        w="8"
-        h="8"
-        bg="red-600"
-        rounded="full"
-        absolute
-        top="5"
-        right="5"
-      />
+      <Spinner v-if="isPreloading" absolute top="5" right="5" />
       <router-view />
     </main>
   </div>

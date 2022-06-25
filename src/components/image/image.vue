@@ -1,3 +1,7 @@
+<script lang="ts">
+export default { inheritAttrs: false };
+</script>
+
 <script lang="ts" setup>
 import { ref, watch } from 'vue';
 
@@ -7,24 +11,28 @@ const props = defineProps<{ src: string; alt: string }>();
 watch(
   () => props.src,
   () => {
-    console.log('reset');
     isLoaded.value = false;
   }
 );
 
 const onLoad = () => {
-  console.log('loaded');
   isLoaded.value = true;
 };
 </script>
 
 <template>
-  <img
-    :src="props.src"
-    :alt="props.alt"
-    :class="!isLoaded && '--is-loading'"
-    @load="onLoad"
-  />
+  <div grid place-items-center>
+    <Spinner col-start="1" row-start="1" w="12" h="12" v-if="!isLoaded" />
+    <img
+      :src="props.src"
+      :alt="props.alt"
+      :class="!isLoaded && '--is-loading'"
+      col-start="1"
+      row-start="1"
+      v-bind="$attrs"
+      @load="onLoad"
+    />
+  </div>
 </template>
 
 <style lang="scss" scoped>

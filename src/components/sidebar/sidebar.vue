@@ -41,15 +41,24 @@ const isExpanded = ref(isLargeScreen.value || import.meta.env.SSR);
     p-y="3"
     transition-all
     duration-300
-    min-w="3rem"
-    :class="{ expanded: isLargeScreen || isExpanded }"
+    :min-w="isLargeScreen || isExpanded ? '15rem' : '3rem'"
   >
     <button
       :title="isExpanded ? 'Hide list' : 'Show list'"
       md="hidden"
+      w="full"
+      flex
+      :justify="isExpanded ? 'start' : 'center'"
+      items="center"
+      gap="3"
+      px="3"
       @click="isExpanded = !isExpanded"
     >
-      List
+      <template v-if="isExpanded">
+        <icon-pkmn-arrows-right h="8" />
+        <span>Hide List</span>
+      </template>
+      <icon-pkmn-arrows-left v-else h="8" />
     </button>
     <transition name="pkmn-list">
       <div v-if="isExpanded || isLargeScreen">
@@ -88,9 +97,5 @@ const isExpanded = ref(isLargeScreen.value || import.meta.env.SSR);
 <style scoped>
 .router-link-exact-active {
   --at-apply: 'bg-red-500';
-}
-
-.expanded {
-  --at-apply: 'min-w-15rem';
 }
 </style>

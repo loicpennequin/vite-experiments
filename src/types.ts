@@ -1,5 +1,5 @@
 import { App } from 'vue';
-import { Router } from 'vue-router';
+import { RouteLocationNormalized, Router } from 'vue-router';
 
 export type VitedgePluginContext = {
   app: App;
@@ -16,3 +16,9 @@ export type PluginModule = {
     priority: number;
   };
 };
+
+export interface ILoader {
+  name: symbol | string;
+  preload(nextRoute: RouteLocationNormalized): Promise<any[]>;
+  getQueries(): Record<string, any>;
+}
