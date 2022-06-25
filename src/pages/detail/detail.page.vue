@@ -2,9 +2,9 @@
 import { computed } from 'vue';
 import { useLoader } from '../../composables/use-loader';
 
-const { pokemonQuery, evolutionChainQuery } = useLoader();
-const { isLoading, data: pokemon } = pokemonQuery;
-const { data: evolutionChain } = evolutionChainQuery;
+const { pokemonQuery, evolutionsQuery } = useLoader();
+const { isLoading: isPokemonLoading, data: pokemon } = pokemonQuery;
+const { isLoading: isEvolutionsLoading, data: evolutions } = evolutionsQuery;
 
 const typeLabel = computed(() =>
   pokemon.value.types?.map((t: any) => t.type.name).join(' / ')
@@ -13,7 +13,7 @@ const typeLabel = computed(() =>
 
 <template>
   <div space-y="4" w="screen-sm" max-w="full">
-    <template v-if="isLoading">
+    <template v-if="isPokemonLoading">
       <Surface h="17" animate-pulse />
       <Surface h="9.5rem" animate-pulse />
       <Surface h="26" animate-pulse />
@@ -25,6 +25,7 @@ const typeLabel = computed(() =>
       </Surface>
 
       <Surface rounded="lg">
+        <h3>Stats</h3>
         <div flex items="center" flex-wrap>
           <Image :src="pokemon.sprites.front_default" :alt="pokemon.name" />
 
@@ -41,24 +42,34 @@ const typeLabel = computed(() =>
       </Surface>
 
       <Surface rounded="lg">
+        <h3>Description</h3>
         <div p="3">{{ pokemon.description }}</div>
       </Surface>
 
-      <Surface rounded="lg" v-if="evolutionChain" flex gap="3">
-        <div v-for="(step, index) in evolutionChain" :key="index">
-          <div v-for="pokemon in step" :key="pokemon.id">
-            {{ pokemon.name }}
-          </div>
+      <Surface h="25" animate-pulse v-if="isEvolutionsLoading" />
+      <Surface
+        rounded="lg"
+        v-else-if="evolutions"
+        grid
+        :grid-cols="evolutions.length"
+        gap="3"
+      >
+        <h3 col-span="full">Evolution Chain</h3>
+        <div v-for="(step, index) in evolutions" :key="index">
+          <Link
+            v-for="pokemon in step"
+            :key="pokemon.id"
+            :to="{ name: 'Detail', params: { name: pokemon.name } }"
+          >
+            <figure>
+              <Image :src="pokemon.sprites.front_default" :alt="pokemon.name" />
+              <figcaption text-center>{{ pokemon.name }}</figcaption>
+            </figure>
+          </Link>
         </div>
       </Surface>
     </template>
   </div>
 </template>
 
-<style scoped lang="scss">
-.stat-bar {
-  background-color: hsl(var(--hue), 80%, 60%);
-  width: var(--width);
-  transition: all 0.5s;
-}
-</style>
+<style scoped lang="scss"></style>

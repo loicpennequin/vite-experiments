@@ -1,4 +1,4 @@
-import { computed, onServerPrefetch, reactive } from 'vue';
+import { computed, onServerPrefetch, reactive, watch } from 'vue';
 import {
   QueryClient,
   QueryFunction,
@@ -54,7 +54,6 @@ export class Loader implements ILoader {
   async preload(nextRoute: RouteLocationNormalized) {
     const requiredPreloads: Promise<any>[] = [];
     const allPreloads: Record<string, Promise<any>> = {};
-
     Object.entries(this.queriesOptions).forEach(([key, queryDef]) => {
       const {
         queryKey,
@@ -64,7 +63,6 @@ export class Loader implements ILoader {
         waitUntilPreloaded,
         dependsOn = []
       } = queryDef(nextRoute);
-
       const loadDependencies = async () => {
         await this.sleep(0);
         const deps = await Promise.all(
@@ -74,13 +72,10 @@ export class Loader implements ILoader {
         deps.forEach((result, i) => {
           depsObject[dependsOn[i]] = result;
         });
-
         return depsObject;
       };
-
       const promise = (async () => {
         const deps = await loadDependencies();
-
         return this.queryClient.fetchQuery(
           queryKey(deps),
           async context => queryFn(context, deps),
@@ -93,7 +88,6 @@ export class Loader implements ILoader {
       allPreloads[key] = promise;
       if (waitUntilPreloaded) requiredPreloads.push(promise);
     });
-
     return Promise.allSettled(requiredPreloads);
   }
 
@@ -111,22 +105,29 @@ export class Loader implements ILoader {
               dependsOn = [],
               ...options
             } = queryDef(route);
+
             const enabled =
               this.name === route.name &&
               dependsOn.every(key => !!resolvedData[key]);
 
-            return {
+            const q = {
               ...options,
               queryKey: queryKey(resolvedData),
               queryFn: (ctx: any) => queryFn(ctx, resolvedData),
-              onSuccess(data: any) {
-                resolvedData[key] = data;
-              },
               enabled
             };
+            return q;
           });
 
           const query = useQuery(queryOptions);
+          watch(
+            () => query.data,
+            data => {
+              resolvedData[key] = data;
+            },
+            { immediate: true }
+          );
+
           query.ssrPrefetch = queryDef(route).ssrPrefetch;
 
           return [[`${key}Query`, query]];

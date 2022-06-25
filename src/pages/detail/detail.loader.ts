@@ -11,11 +11,11 @@ export default createLoader('Detail', {
       waitUntilPreloaded: true
     };
   },
-  evolutionChain() {
+  evolutions() {
     return {
       queryKey: ({ pokemon }) => [
         'evolutionChain',
-        pokemon?.species.evolution_chain.url.split('/').reverse()[0]
+        pokemon?.species.evolution_chain.url.split('/').reverse()[1] // url ends with trailing slash
       ],
       queryFn: (ctx, { pokemon }) => {
         return getEvolutionChain(pokemon);
