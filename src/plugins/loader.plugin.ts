@@ -12,7 +12,7 @@ type LoaderModule = {
   default: ReturnType<typeof createLoader>;
 };
 
-export const loaders = new Map<string | symbol, ILoader>();
+export const loaders = new Map<string | symbol, ILoader<unknown>>();
 
 const bootstrapModules = (queryClient: QueryClient) => {
   const loaderModules = import.meta.globEager<LoaderModule>(

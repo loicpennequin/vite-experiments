@@ -1,4 +1,5 @@
 import { App } from 'vue';
+import { UseQueryReturnType } from 'vue-query';
 import { RouteLocationNormalized, Router } from 'vue-router';
 
 export type VitedgePluginContext = {
@@ -17,8 +18,10 @@ export type PluginModule = {
   };
 };
 
-export interface ILoader {
+export interface ILoader<T> {
   name: symbol | string;
-  preload(nextRoute: RouteLocationNormalized): Promise<any[]>;
-  getQueries(): Record<string, any>;
+  preload(nextRoute: RouteLocationNormalized): Promise<void>;
+  getQueries(): Record<string, UseQueryReturnType<T, any>>;
 }
+
+export type PromiseRecord = Record<string, Promise<any>>;

@@ -1,11 +1,11 @@
 import { QueryClient } from 'vue-query';
-import { Loader, RouteQueryMapFn } from '../models/loader.model';
+import { Loader, QueriesOptions } from '../models/loader.model';
 
-export const createLoader = (
+export const createLoader = <T = Record<string, any>>(
   name: string,
-  queriesOptions: Record<string, RouteQueryMapFn>
+  queriesOptions: QueriesOptions<T>
 ) => {
-  return (queryClient: QueryClient): Loader => {
-    return new Loader({ name, queriesOptions, queryClient });
+  return (queryClient: QueryClient): Loader<T> => {
+    return new Loader<T>({ name, queriesOptions, queryClient });
   };
 };

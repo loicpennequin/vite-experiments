@@ -71,5 +71,3 @@ const typeLabel = computed(() =>
     </template>
   </div>
 </template>
-
-<style scoped lang="scss"></style>
