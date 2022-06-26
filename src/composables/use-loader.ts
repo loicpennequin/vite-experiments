@@ -6,5 +6,10 @@ export const useLoader = () => {
   const route = useRoute();
   const loaders = inject(LOADERS_INJECTION_KEY, new Map());
 
-  return loaders.get(route.name)?.getQueries(route);
+  return Object.assign(
+    {},
+    ...route.matched
+      .map(({ name }) => loaders.get(name)?.getQueries())
+      .filter(Boolean)
+  );
 };
