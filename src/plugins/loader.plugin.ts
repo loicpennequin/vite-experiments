@@ -28,9 +28,14 @@ const bootstrapModules = (queryClient: QueryClient) => {
 
 const addRouterHook = (router: Router, isPreloading: Ref<boolean>) => {
   router.beforeEach(async (to, from, next) => {
-    if (!to.name || !from.name) return next();
+    if (!from.name) return next();
+
     isPreloading.value = true;
-    await loaders.get(to.name)?.preload(to);
+    await Promise.allSettled(
+      to.matched
+        .map(({ name }) => name && loaders.get(name)?.preload(to))
+        .filter(Boolean)
+    );
     isPreloading.value = false;
 
     next();
