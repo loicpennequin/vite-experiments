@@ -3,7 +3,7 @@
     "composite": true,
     "module": "esnext",
     "moduleResolution": "node",
-    "types": ["vitest/globals"]
+    "types": ["vitest/globals", "@intlify/vite-plugin-vue-i18n/client"]
   },
   "include": ["vite.config.ts"]
 }

@@ -12,7 +12,12 @@
     "esModuleInterop": true,
     "lib": ["esnext", "dom"],
     "skipLibCheck": true,
-    "types": ["vitest/globals", "@testing-library/jest-dom"]
+    "types": [
+      "vitest/globals",
+      "@testing-library/jest-dom",
+      "@intlify/vite-plugin-vue-i18n/client",
+      "vite-plugin-pages/client"
+    ]
   },
   "include": [
     "src/**/*.ts",

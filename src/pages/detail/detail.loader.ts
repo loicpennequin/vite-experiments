@@ -6,7 +6,7 @@ export default createLoader('Detail', {
     return {
       queryKey: () => ['pokemon', route.params.name],
       queryFn: () => getPokemonByName(route.params.name as string),
-      staleTime: 30_000,
+      staleTime: Infinity,
       ssrPrefetch: true,
       waitUntilPreloaded: true
     };
@@ -21,8 +21,8 @@ export default createLoader('Detail', {
         return getEvolutionChain(pokemon);
       },
       dependsOn: ['pokemon'],
-      staleTime: 30_000,
-      ssrPrefetch: true
+      staleTime: Infinity,
+      ssrPrefetch: false
     };
   }
 });

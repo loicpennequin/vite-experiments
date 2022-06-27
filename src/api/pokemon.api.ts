@@ -43,11 +43,18 @@ export const getEvolutionChain = async (pokemon: any) => {
   let link = chain.evolves_to;
   while (link.length) {
     const evolutions = await Promise.all(
-      link.map((evolution: any) => getPokemonByName(evolution.species.name))
+      link.map((evolution: any) => {
+        if (evolution.species.name === pokemon.name) {
+          return Promise.resolve(pokemon);
+        }
+
+        return getPokemonByName(evolution.species.name);
+      })
     );
 
     pokemons.push(evolutions);
     link = link[0].evolves_to;
   }
+
   return pokemons;
 };

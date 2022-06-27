@@ -70,4 +70,5 @@ export class QueryPreloader<T> {
     await Promise.all(this.requiredPreloads);
     this.isPreloading = false;
   }
+  private users: string[] = [];
 }

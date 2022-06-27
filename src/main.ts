@@ -1,13 +1,9 @@
-import { createApp } from 'vue';
-import { dehydrate, hydrate, VueQueryPlugin } from 'vue-query';
-import { createRouter, createWebHistory, Router } from 'vue-router';
-import App from './app.vue';
-import { routes } from './routes';
-import vitedge from 'vitedge';
-import { VitedgePluginContext } from './types';
 import 'uno.css';
-// import '@unocss/reset/normalize.css';
 import '@unocss/reset/tailwind.css';
+import vitedge from 'vitedge';
+import App from './app.vue';
+import { VitedgePluginContext } from './types';
+import routes from '~pages';
 
 export default vitedge(App, { routes }, baseCtx => {
   const ctx: VitedgePluginContext = { ...baseCtx, meta: {} };

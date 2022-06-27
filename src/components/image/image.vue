@@ -3,14 +3,21 @@ export default { inheritAttrs: false };
 </script>
 
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { onMounted, onServerPrefetch, ref } from 'vue';
 
-const isLoaded = ref(false);
+const image = ref<HTMLImageElement>();
+const isLoaded = ref(true);
 const props = defineProps<{ src: string; alt: string }>();
 
 const onLoad = () => {
   isLoaded.value = true;
 };
+
+onMounted(() => {
+  if (!image.value?.complete) {
+    isLoaded.value = false;
+  }
+});
 </script>
 
 <template>
@@ -18,6 +25,7 @@ const onLoad = () => {
     <Spinner col-start="1" row-start="1" w="12" h="12" v-if="!isLoaded" />
 
     <img
+      ref="image"
       :src="props.src"
       :alt="props.alt"
       :opacity="isLoaded ? 1000 : 0"

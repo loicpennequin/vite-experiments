@@ -1,15 +1,14 @@
+import { MockedFunction } from 'vitest';
 import { render } from '@testing-library/vue';
 import { App, Component, ref } from 'vue';
-import { VueQueryPlugin } from 'vue-query';
 import { createRouter, createWebHistory } from 'vue-router';
-import { routes as defaultRoutes } from '../routes';
 import nock, { Body } from 'nock';
+import defaultRoutes from '~pages';
 import {
   IS_PRELOADING_INJECTION_KEY,
   LOADERS_INJECTION_KEY,
   POKEMON_API_URL
 } from '../constants';
-import { MockedFunction } from 'vitest';
 import { createQueryClient } from '../factories/query-client.factory';
 import { PluginModule } from '../types';
 import { loaders } from '../plugins/loader.plugin';
@@ -22,7 +21,6 @@ export const renderWithPlugins = (
     history: createWebHistory(),
     routes
   });
-
   const queryClient = createQueryClient();
   queryClient.mount();
 
@@ -34,7 +32,7 @@ export const renderWithPlugins = (
     .sort((a, b) => b.priority - a.priority)
     .forEach(plugin => {
       plugin.install?.({
-        app: {} as App,
+        app: { use: () => ({}) } as unknown as App,
         router,
         isClient: true,
         initialState: undefined,

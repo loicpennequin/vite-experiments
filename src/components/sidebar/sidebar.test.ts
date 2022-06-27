@@ -47,9 +47,11 @@ describe('Sidebar Component', () => {
   });
 
   test('should display a link to detail page for each pokemon', async () => {
-    const { getByText } = await renderWithLoadedList({ isDesktop: true });
+    const { findByText } = await renderWithLoadedList({
+      isDesktop: true
+    });
 
-    const link = getByText('foo');
+    const link = await findByText('foo');
 
     expect(link).toBeInTheDocument();
     expect(link).toHaveAttribute('href', '/foo');
@@ -57,12 +59,11 @@ describe('Sidebar Component', () => {
 
   test('should hide the list on mobile', async () => {
     const { queryByText } = await renderWithLoadedList({ isDesktop: false });
-
     expect(queryByText('foo')).not.toBeInTheDocument();
   });
 
   test('should display list toggle on mobile', async () => {
-    const { getByTitle, queryByText } = await renderWithLoadedList({
+    const { getByTitle } = await renderWithLoadedList({
       isDesktop: false
     });
 
@@ -71,20 +72,15 @@ describe('Sidebar Component', () => {
   });
 
   test('should display/hide list when clicking on the toggle', async () => {
-    const { getByTitle, queryByText } = await renderWithLoadedList({
+    const { getByTitle, findByText } = await renderWithLoadedList({
       isDesktop: false
     });
-
     const toggle = getByTitle('Show list');
-
     await fireEvent.click(toggle);
-    const link = queryByText('foo');
-
+    const link = await findByText('foo');
     expect(link).toBeInTheDocument();
     expect(toggle).toHaveAttribute('title', 'Hide list');
-
     await fireEvent.click(toggle);
-
     expect(link).not.toBeInTheDocument();
     expect(toggle).toHaveAttribute('title', 'Show list');
   });

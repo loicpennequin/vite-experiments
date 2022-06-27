@@ -1,4 +1,8 @@
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n();
+</script>
 
 <template>
   <Surface
@@ -7,11 +11,28 @@
     items="center"
     justify="center"
     h-full
-    min-w="40rem"
+    min-w="at-sm:40rem"
     gap="5"
+    text-center
   >
-    <p text="3xl">Welcome to the online Pokédex !</p>
+    <p text="3xl">{{ t('title') }}</p>
 
-    <p text="xl">Click a pokemon to see its detail.</p>
+    <p text="xl">{{ t('subtitle') }}</p>
   </Surface>
 </template>
+
+<i18n lang="json">
+{
+  "en": {
+    "title": "Welcome to the online Pokédex !",
+    "subtitle": "Click on a pokemon in the sidebar to see its detail."
+  }
+}
+</i18n>
+
+<route lang="json">
+{
+  "path": "/",
+  "name": "Home"
+}
+</route>

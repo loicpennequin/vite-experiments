@@ -71,3 +71,10 @@ const typeLabel = computed(() =>
     </template>
   </div>
 </template>
+
+<route lang="json">
+{
+  "path": "/:name",
+  "name": "Detail"
+}
+</route>

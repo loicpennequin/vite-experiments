@@ -12,6 +12,7 @@ declare module '@vue/runtime-core' {
     Image: typeof import('./../components/image/image.vue')['default']
     InfiniteScroll: typeof import('./../components/infinite-scroll.vue')['default']
     Link: typeof import('./../components/link/link.vue')['default']
+    PokemonList: typeof import('./../components/pokemon-list/pokemon-list.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     Sidebar: typeof import('./../components/sidebar/sidebar.vue')['default']
