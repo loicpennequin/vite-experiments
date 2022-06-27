@@ -3,7 +3,7 @@ import { handleEvent, getEventType } from 'vitedge/node/index.js';
 
 export default async (req, res) => {
   const { default: functions } = await import(`./dist/functions.js`);
-  console.log(fs.readdirSync('./dist'));
+  console.log('dist folder content : ', fs.readdirSync('./dist'));
   const packageJson = fs.readJSONSync(`./dist/ssr/package.json`);
 
   const { default: router } = await import(`./dist/ssr/${packageJson.main}`);
