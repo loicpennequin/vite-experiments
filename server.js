@@ -1,7 +1,6 @@
 import path from 'path';
 import express from 'express';
 import compression from 'compression';
-import expressStaticGzip from 'express-static-gzip';
 import fs from 'fs-extra';
 import { handleEvent, getEventType } from 'vitedge/node/index.js';
 

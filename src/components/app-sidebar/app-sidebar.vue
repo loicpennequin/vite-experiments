@@ -1,34 +1,6 @@
 <script setup lang="ts">
-import { getAllPokemons } from '../../api/pokemon.api';
-import { onServerPrefetch, ref, watch } from 'vue';
-import { useInfiniteQuery } from 'vue-query';
+import { ref, watch } from 'vue';
 import { useMediaQuery } from '@vueuse/core';
-
-const {
-  data: pokemons,
-  fetchNextPage,
-  hasNextPage,
-  suspense
-} = useInfiniteQuery(
-  ['pokemons'],
-  ({ pageParam }) => getAllPokemons({ limit: 50, offset: pageParam }),
-
-  {
-    getNextPageParam: lastPage => {
-      if (!lastPage.next) return;
-      const { searchParams } = new URL(lastPage.next);
-      return searchParams.get('offset');
-    }
-  }
-);
-
-onServerPrefetch(suspense);
-
-const onLoadMore = () => {
-  if (hasNextPage?.value) {
-    fetchNextPage();
-  }
-};
 
 const scrollRoot = ref<HTMLElement>();
 const isExpanded = ref(true);

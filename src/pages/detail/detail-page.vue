@@ -14,60 +14,63 @@ const typeLabel = computed(() =>
 <template>
   <div space-y="4" w="screen-sm" max-w="full">
     <template v-if="isPokemonLoading">
-      <Surface h="17" animate-pulse />
-      <Surface h="9.5rem" animate-pulse />
-      <Surface h="26" animate-pulse />
+      <ContentSurface h="17" animate-pulse />
+      <ContentSurface h="9.5rem" animate-pulse />
+      <ContentSurface h="26" animate-pulse />
     </template>
 
     <template v-else-if="pokemon">
-      <Surface is="h2" text="3xl" font-bold capitalize rounded="lg">
+      <ContentSurface is="h2" text="3xl" font-bold capitalize rounded="lg">
         {{ pokemon.name }}
-      </Surface>
+      </ContentSurface>
 
-      <Surface rounded="lg">
+      <ContentSurface rounded="lg">
         <h3>Stats</h3>
         <div flex items="center" flex-wrap>
-          <Image :src="pokemon.sprites.front_default" :alt="pokemon.name" />
+          <LazyImage :src="pokemon.sprites.front_default" :alt="pokemon.name" />
 
           <ul grid grid-cols="1 lg:2  " gap="2">
             <StatBar
+              is="li"
               v-for="stat in pokemon.stats"
               :key="stat.stat.name"
-              is="li"
               :stat="stat"
             />
           </ul>
         </div>
         <div uppercase>{{ typeLabel }}</div>
-      </Surface>
+      </ContentSurface>
 
-      <Surface rounded="lg">
+      <ContentSurface rounded="lg">
         <h3>Description</h3>
         <div p="3">{{ pokemon.description }}</div>
-      </Surface>
+      </ContentSurface>
 
-      <Surface h="25" animate-pulse v-if="isEvolutionsLoading" />
-      <Surface
-        rounded="lg"
+      <ContentSurface v-if="isEvolutionsLoading" h="25" animate-pulse />
+      <ContentSurface
         v-else-if="evolutions"
+        rounded="lg"
         grid
         :grid-cols="evolutions.length"
         gap="3"
       >
         <h3 col-span="full">Evolution Chain</h3>
         <div v-for="(step, index) in evolutions" :key="index">
-          <Link
-            v-for="pokemon in step"
-            :key="pokemon.id"
-            :to="{ name: 'Detail', params: { name: pokemon.name } }"
+          <AppLink
+            v-for="evolution in step"
+            :key="evolution.id"
+            :to="{ name: 'Detail', params: { name: evolution.name } }"
           >
             <figure>
-              <Image :src="pokemon.sprites.front_default" :alt="pokemon.name" />
-              <figcaption text-center>{{ pokemon.name }}</figcaption>
+              <LazyImage
+                :src="evolution.sprites.front_default"
+                :alt="evolution.name"
+              />
+              <figcaption text-center>{{ evolution.name }}</figcaption>
             </figure>
-          </Link>
+          </AppLink>
         </div>
-      </Surface>
+      </ContentSurface>
     </template>
   </div>
 </template>

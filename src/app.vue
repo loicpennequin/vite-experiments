@@ -6,12 +6,12 @@ const isPreloading = useIsPreloading();
 
 <template>
   <div class="layout" font="sans" bg="red-400" grid max-w="screen">
-    <Header sticky top="0" col-span-full />
+    <AppHeader sticky top="0" col-span-full />
     <!-- <div /> -->
-    <Sidebar class="layout__sidebar" overflow-y-auto />
+    <AppSidebar class="layout__sidebar" overflow-y-auto />
 
     <main flex justify-center bg="blue-1" p-y="8" p-x="2" relative>
-      <Spinner v-if="isPreloading" absolute top="5" right="5" />
+      <LoadingSpinner v-if="isPreloading" absolute top="5" right="5" />
       <router-view />
     </main>
   </div>

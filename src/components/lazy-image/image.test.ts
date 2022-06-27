@@ -1,5 +1,5 @@
 import { renderWithPlugins } from '../../__test__/utils';
-import Image from './image.vue';
+import Image from './lazy-image.vue';
 
 describe('Image Component', () => {
   test('should mount component', async () => {

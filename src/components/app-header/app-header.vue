@@ -1,8 +1,3 @@
-<script setup lang="ts">
-import { useRoute } from 'vue-router';
-
-const route = useRoute();
-</script>
 <template>
   <header
     flex
@@ -15,7 +10,7 @@ const route = useRoute();
     gap="8"
   >
     <h1 m="0" text="2xl">
-      <Link :to="{ name: 'Home' }">Pokédex</Link>
+      <AppLink :to="{ name: 'Home' }">Pokédex</AppLink>
     </h1>
   </header>
 </template>

@@ -5,7 +5,7 @@ const { t } = useI18n();
 </script>
 
 <template>
-  <Surface
+  <ContentSurface
     flex
     flex-col
     items="center"
@@ -18,7 +18,7 @@ const { t } = useI18n();
     <p text="3xl">{{ t('title') }}</p>
 
     <p text="xl">{{ t('subtitle') }}</p>
-  </Surface>
+  </ContentSurface>
 </template>
 
 <i18n lang="json">

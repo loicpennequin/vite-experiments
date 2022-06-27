@@ -3,7 +3,7 @@ export default { inheritAttrs: false };
 </script>
 
 <script lang="ts" setup>
-import { onMounted, onServerPrefetch, ref } from 'vue';
+import { onMounted, ref } from 'vue';
 
 const image = ref<HTMLImageElement>();
 const isLoaded = ref(true);
@@ -22,7 +22,13 @@ onMounted(() => {
 
 <template>
   <div grid place-items-center>
-    <Spinner col-start="1" row-start="1" w="12" h="12" v-if="!isLoaded" />
+    <LoadingSpinner
+      v-if="!isLoaded"
+      col-start="1"
+      row-start="1"
+      w="12"
+      h="12"
+    />
 
     <img
       ref="image"

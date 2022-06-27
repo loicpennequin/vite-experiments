@@ -11,11 +11,14 @@ import transformerDirective from '@unocss/transformer-directives';
 import IconsResolver from 'unplugin-icons/resolver';
 import { FileSystemIconLoader } from 'unplugin-icons/loaders';
 import { vueI18n } from '@intlify/vite-plugin-vue-i18n';
+import eslintPlugin from 'vite-plugin-eslint';
+
 import Pages from 'vite-plugin-pages';
 
 export default defineConfig({
   plugins: [
     vitedgePlugin(),
+    eslintPlugin(),
     vue(),
     Pages({
       extensions: ['vue']

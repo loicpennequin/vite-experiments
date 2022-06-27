@@ -35,7 +35,7 @@ const root = computed(() => unref(props.root) || document);
 const initObserver = () => {
   if (!trigger.value) return;
 
-  observer.value = new window.IntersectionObserver(onIntersect, {
+  observer.value = new IntersectionObserver(onIntersect, {
     root: unref(root),
     rootMargin: `${props.buffer}px`
   });
