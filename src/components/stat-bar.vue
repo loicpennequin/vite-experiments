@@ -13,6 +13,7 @@ const label = computed(() => {
 });
 
 const hue = computed(() => (props.stat.base_stat * 120) / 200);
+
 const width = computed(() => (props.stat.base_stat * 100) / 200 + '%');
 </script>
 
