@@ -2,13 +2,11 @@ import fs from 'fs-extra';
 import { handleEvent, getEventType } from 'vitedge/node/index.js';
 
 export default async (req, res) => {
-  const { default: functions } = await import(`../dist/functions.js`);
-  const debug = fs.readdirSync('.');
-  console.log(debug);
-  const packageJson = fs.readJSONSync(`../dist/ssr/package.json`);
+  const { default: functions } = await import(`./dist/functions.js`);
+  const packageJson = fs.readJSONSync(`./dist/ssr/package.json`);
 
-  const { default: router } = await import(`../dist/ssr/${packageJson.main}`);
-  const manifest = fs.readJSONSync(`../dist/client/ssr-manifest.json`);
+  const { default: router } = await import(`./dist/ssr/${packageJson.main}`);
+  const manifest = fs.readJSONSync(`./dist/client/ssr-manifest.json`);
 
   // Generate a full URL
   const url = new URL(req.protocol + '://' + req.get('host') + req.originalUrl);
