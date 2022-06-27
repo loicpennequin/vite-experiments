@@ -11,6 +11,7 @@
     "preview": "vitedge preview",
     "preview:watch": "vitedge preview --build-watch",
     "build": "rm -rf dist && vitedge build",
+    "vercel-build": "yarn build ",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore src",
     "format": "prettier .  --write",
     "prepare": "husky install",

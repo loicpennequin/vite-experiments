@@ -2,7 +2,7 @@ import path from 'path';
 import express from 'express';
 import compression from 'compression';
 import fs from 'fs-extra';
-import { handleEvent, getEventType } from 'vitedge/node/index.js';
+import { handleEvent } from 'vitedge/node/index.js';
 
 async function main() {
   const { default: functions } = await import(`./dist/functions.js`);
@@ -22,7 +22,7 @@ async function main() {
     );
 
     try {
-      const type = getEventType({ url, functions }); // api | props | render
+      // const type = getEventType({ url, functions }); // api | props | render
 
       const { statusCode, body, headers } = await handleEvent(
         { url, functions, router, manifest, preload: true },
