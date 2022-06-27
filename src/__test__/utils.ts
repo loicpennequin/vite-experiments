@@ -9,9 +9,10 @@ import {
   LOADERS_INJECTION_KEY,
   POKEMON_API_URL
 } from '../constants';
-import { createQueryClient } from '../factories/query-client.factory';
+import { createQueryClient } from '../modules/app/factories/query-client.factory';
 import { PluginModule } from '../types';
-import { loaders } from '../plugins/loader.plugin';
+
+import { loaders } from '@/modules/app/plugins/loader.plugin';
 
 export const renderWithPlugins = (
   component: Component,

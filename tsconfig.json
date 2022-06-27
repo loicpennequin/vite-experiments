@@ -12,6 +12,10 @@
     "esModuleInterop": true,
     "lib": ["esnext", "dom"],
     "skipLibCheck": true,
+    "baseUrl": "./",
+    "paths": {
+      "@/*": ["./src/*"]
+    },
     "types": [
       "vitest/globals",
       "@testing-library/jest-dom",

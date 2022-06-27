@@ -21,7 +21,8 @@ export default defineConfig({
     eslintPlugin(),
     vue(),
     Pages({
-      extensions: ['vue']
+      extensions: ['vue'],
+      dirs: 'src/**/pages'
     }),
     vueI18n({
       include: path.resolve(__dirname, './src/locales/**'),
@@ -33,7 +34,7 @@ export default defineConfig({
     }),
     Components({
       dts: 'src/typings/components.d.ts',
-      dirs: ['./src/components'],
+      dirs: ['./src/**/components'],
       directives: true,
       resolvers: [
         IconsResolver({
@@ -50,6 +51,11 @@ export default defineConfig({
       }
     })
   ],
+  resolve: {
+    alias: {
+      '@': `${__dirname}/src`
+    }
+  },
   test: {
     globals: true,
     environment: 'jsdom',
