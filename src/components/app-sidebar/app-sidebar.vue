@@ -4,10 +4,17 @@ import { useMediaQuery } from '@vueuse/core';
 
 const scrollRoot = ref<HTMLElement>();
 const isExpanded = ref(true);
+
 const isLargeScreen = useMediaQuery('(min-width: 1024px)');
 watch(isLargeScreen, isLargeScreen => {
   if (isLargeScreen) isExpanded.value = true;
 });
+
+const onItemClick = () => {
+  if (!isLargeScreen.value) {
+    isExpanded.value = false;
+  }
+};
 </script>
 
 <template>
@@ -38,7 +45,7 @@ watch(isLargeScreen, isLargeScreen => {
 
     <transition name="pkmn-list">
       <div v-if="isExpanded">
-        <PokemonList @item-click="isExpanded = false" />
+        <PokemonList @item-click="onItemClick" />
       </div>
     </transition>
   </nav>

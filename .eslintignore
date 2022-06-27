@@ -2,3 +2,6 @@
 **/*.test.ts
 node_modules
 dist
+
+# virtual modules
+virtual:vitedge/index.js
