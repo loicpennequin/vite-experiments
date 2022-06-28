@@ -1,6 +1,7 @@
 **/*.d.ts
 **/*.test.ts
 node_modules
+vercel
 dist
 
 # virtual modules
