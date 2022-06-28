@@ -2,31 +2,29 @@
 # This is basically just a specific file structure in the "output" folder
 # Documentation: https://vercel.com/docs/file-system-api
 
-## Step 1: Cleanup
-rm -rf .output
 
-# Step 2: Build the app
+rm -rf .output
 yarn build
 
-# Step 3: Create output folder
 mkdir .output
-
-# Step 4: Copy static assets
 mkdir -p .output/static
 cp -a dist/client/. .output/static
-
-# Step 5: Bundle render function with it's depdendencies to the single javascript file
-# If you are using typescript, simply replace extension with ".ts"
+ 
 mkdir -p .output/functions/index.func
 yarn ncc build vercel/render.js --minify --out .output/functions/index.func
+cat > .output/functions/index.func/.vc-config.json << EOF
+{
+  "runtime": "nodejs14.x",
+  "handler": "index.js",
+  "launcherType": "Nodejs",
+  "shouldAddHelpers": true
+}
+EOF
 
 # Step 6: Make render function run on every request (catch all)
 cat > .output/config.json << EOF
 {
-  "version": 3,
-    "routes": [
-    "dest": "/api/index"
-  ]
+  "version": 3
 }
 EOF
 
