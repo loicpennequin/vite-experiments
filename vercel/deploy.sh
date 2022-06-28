@@ -17,20 +17,15 @@ cp -a dist/client/. .output/static
 
 # Step 5: Bundle render function with it's depdendencies to the single javascript file
 # If you are using typescript, simply replace extension with ".ts"
-mkdir -p .output/server/pages
-yarn ncc build vercel/render.js --minify --out .output/server/pages
+mkdir -p .output/functions/index.func
+yarn ncc build vercel/render.js --minify --out .output/functions/index.func
 
 # Step 6: Make render function run on every request (catch all)
-cat > .output/routes-manifest.json << EOF
+cat > .output/config.json << EOF
 {
   "version": 3,
-  "basePath": "/",
-  "pages404": false,
-  "dynamicRoutes": [
-    {
-      "page": "/",
-      "regex": "/((?!assets/).*)"
-    }
+    "routes": [
+    "dest": "/api/index"
   ]
 }
 EOF
