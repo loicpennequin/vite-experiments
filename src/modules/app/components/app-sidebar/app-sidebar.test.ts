@@ -9,6 +9,7 @@ type PokemonEntry = {
 type RenderWithLoadedListOptions = {
   results?: PokemonEntry[];
   isDesktop?: boolean;
+  isOpened?: boolean;
 };
 
 async function renderWithLoadedList({
