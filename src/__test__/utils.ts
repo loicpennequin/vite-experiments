@@ -13,6 +13,7 @@ import { createQueryClient } from '../modules/app/factories/query-client.factory
 import { PluginModule } from '../types';
 
 import { loaders } from '@/modules/app/plugins/loader.plugin';
+import { createI18n } from 'vue-i18n';
 
 export const renderWithPlugins = (
   component: Component,
@@ -22,6 +23,14 @@ export const renderWithPlugins = (
     history: createWebHistory(),
     routes
   });
+
+  const i18n = createI18n({
+    legacy: false,
+    locale: 'en',
+    messages: {},
+    silentFallbackWarn: false
+  });
+
   const queryClient = createQueryClient();
   queryClient.mount();
 
@@ -46,7 +55,7 @@ export const renderWithPlugins = (
 
   return render(component, {
     global: {
-      plugins: [router],
+      plugins: [router, i18n],
       provide: {
         VUE_QUERY_CLIENT: queryClient,
         [LOADERS_INJECTION_KEY]: loaders,
