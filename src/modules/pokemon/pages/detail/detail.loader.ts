@@ -4,7 +4,7 @@ import {
   getEvolutionChain,
   getPokemonByName
 } from '../../api/pokemon.api';
-import { Pokemon } from '../../models/pokemon.model';
+import { Pokemon } from '../../models/pokemon.resource';
 
 export type PokemonDetailLoader = {
   pokemon: Pokemon;

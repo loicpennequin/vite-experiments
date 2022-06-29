@@ -1,5 +1,5 @@
 import { http } from '@/modules/app/api/http.api';
-import { Pokemon } from '../models/pokemon.model';
+import { Pokemon } from '../models/pokemon.resource';
 
 export type GetAllPokemonsOptions = {
   limit: number;
@@ -28,7 +28,7 @@ export const getPokemonByName = async (name: string) => {
   const { data: species } = await http.get(pokemon.species.url);
   pokemon.species = species;
 
-  return new Pokemon(pokemon, species);
+  return new Pokemon({ pokemon, species });
 };
 
 export const getEvolutionChain = async (pokemon: Pokemon) => {

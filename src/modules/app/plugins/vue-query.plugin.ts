@@ -1,6 +1,35 @@
 import { dehydrate, hydrate, VueQueryPlugin } from 'vue-query';
 import { createQueryClient } from '../factories/query-client.factory';
 import { VitedgePluginContext } from '@/types';
+import {
+  ApiResourceConstructor,
+  QueryClientSerializer,
+  ResourceMap
+} from '../models/query-client-serializer';
+
+type ResourceModule = {
+  default: ApiResourceConstructor;
+};
+
+const makeResourceMap = () => {
+  const resourceModules = import.meta.globEager<ResourceModule>(
+    '../../**/*.resource.ts'
+  );
+
+  const map: ResourceMap = new Map();
+
+  Object.entries(resourceModules).forEach(([path, module]) => {
+    if (!module.default) {
+      throw new Error(
+        `the Api Resource at ${path} is missing a default export.`
+      );
+    }
+
+    map.set(module.default.name, module.default);
+  });
+
+  return map;
+};
 
 export default {
   priority: 10,
@@ -15,8 +44,16 @@ export default {
       // This is a placeholder that will return the VueQuery state during SSR:
       initialState.vueQueryState = { toJSON: () => dehydrate(queryClient) };
     } else {
-      // Hydrate the client in browser with existing state:
-      hydrate(queryClient, initialState.vueQueryState);
+      const resourceMap = makeResourceMap();
+      const serializer = new QueryClientSerializer(resourceMap);
+
+      if (initialState.vueQueryState) {
+        const serializedState = serializer.serialize(
+          initialState.vueQueryState
+        );
+        console.log(serializedState);
+        hydrate(queryClient, serializedState);
+      }
     }
   }
 };
