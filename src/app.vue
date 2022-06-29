@@ -47,6 +47,7 @@ onMounted(() => {
       bg="blue-1"
       col-start="2 lt-sm:1"
       col-span="1"
+      relative
       :overflow-x="isSidebarOpened && 'lt-sm:hidden'"
     >
       <LoadingSpinner v-if="isPreloading" absolute top="5" right="5" />

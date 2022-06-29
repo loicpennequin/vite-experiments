@@ -58,17 +58,17 @@ export class QueryPreloader<T> {
   }
 
   async run(nextRoute: RouteLocationNormalized) {
-    if (this.isPreloading) return;
-    this.isPreloading = true;
-
-    Object.entries(this.queriesOptions).forEach(
-      ([key, queryDef]: [string, any]) => {
-        this.preloadQuery(queryDef, nextRoute, key);
-      }
-    );
+    if (!this.isPreloading) {
+      this.isPreloading = true;
+      Object.entries(this.queriesOptions).forEach(
+        ([key, queryDef]: [string, any]) => {
+          this.preloadQuery(queryDef, nextRoute, key);
+        }
+      );
+    }
 
     await Promise.all(this.requiredPreloads);
     this.isPreloading = false;
+    this.requiredPreloads = [];
   }
-  private users: string[] = [];
 }
