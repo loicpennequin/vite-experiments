@@ -3,16 +3,25 @@
 # Documentation: https://vercel.com/docs/file-system-api
 
 
-rm -rf .output
+rm -rf .vercel/output
 yarn build
 
-mkdir .output
-mkdir -p .output/static
-cp -a dist/client/. .output/static
+mkdir .vercel/output
+mkdir -p .vercel/output/static
+cp -a dist/client/. .vercel/output/static
  
-mkdir -p .output/functions/index.func
-yarn ncc build vercel/render.js --minify --out .output/functions/index.func
-cat > .output/functions/index.func/.vc-config.json << EOF
+mkdir -p .vercel/output/functions/index.func
+cp dist/client/ssr-manifest.json .vercel/output/functions/index.func/ssr-manifest.json
+
+yarn ncc build vercel/render.js  --out .vercel/output/functions/index.func
+
+cat > .vercel/output/functions/index.func/package.json << EOF
+{
+  "type": "module"
+}
+EOF
+
+cat > .vercel/output/functions/index.func/.vc-config.json << EOF
 {
   "runtime": "nodejs14.x",
   "handler": "index.js",
@@ -21,15 +30,21 @@ cat > .output/functions/index.func/.vc-config.json << EOF
 }
 EOF
 
-# Step 6: Make render function run on every request (catch all)
-cat > .output/config.json << EOF
+cat > .vercel/output/config.json << EOF
 {
-  "version": 3
+  "version": 3,
+  "routes": [
+    { "handle": "filesystem" },
+    {
+      "src": "/(.*)",
+      "dest": "/"
+    }
+  ]
 }
 EOF
 
 # Step 7: (Optional) Function configuration
-# cat > .output/functions-manifest.json << EOF
+# cat > .vercel/output/functions-manifest.json << EOF
 # {
 #   "version": 1,
 #   "pages": {
