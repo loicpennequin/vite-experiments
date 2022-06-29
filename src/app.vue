@@ -29,13 +29,7 @@ onMounted(() => {
       type="checkbox"
       sr-only
     />
-    <AppHeader
-      sticky
-      z-1
-      top="0"
-      col-span="full"
-      @open-sidebar="isSidebarOpened = true"
-    />
+    <AppHeader sticky z-1 top="0" col-span="full" />
     <AppSidebar
       v-model:is-opened="isSidebarOpened"
       class="layout__sidebar"

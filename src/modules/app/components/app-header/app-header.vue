@@ -1,10 +1,6 @@
 <script lang="ts" setup>
 import { useI18n } from 'vue-i18n';
 
-const emit = defineEmits<{
-  (e: 'open-sidebar'): void;
-}>();
-
 const { t } = useI18n();
 </script>
 

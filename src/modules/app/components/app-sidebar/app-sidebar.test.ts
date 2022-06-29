@@ -59,17 +59,6 @@ describe('Sidebar Component', () => {
     expect(queryByText('foo')).not.toBeInTheDocument();
   });
 
-  test('should emit isOpened event on mount on mobile', async () => {
-    const { emitted } = await renderWithLoadedList({
-      isDesktop: false
-    });
-
-    const emits = emitted();
-    expect(emits).toHaveProperty('update:isOpened');
-    expect(emits['update:isOpened'].length).toBe(1);
-    expect(emits['update:isOpened'][0]).toEqual([false]);
-  });
-
   test('should display isOpened toggle on mobile', async () => {
     const { findByTitle } = await renderWithLoadedList({
       isDesktop: false
@@ -77,19 +66,5 @@ describe('Sidebar Component', () => {
 
     const toggle = await findByTitle('Hide list');
     expect(toggle).toBeInTheDocument();
-  });
-
-  test('should emit event on toggle click', async () => {
-    const { findByTitle, findByText, emitted } = await renderWithLoadedList({
-      isDesktop: false
-    });
-
-    const toggle = await findByTitle('Hide list');
-    await fireEvent.click(toggle);
-
-    const emits = emitted();
-    expect(emits).toHaveProperty('update:isOpened');
-    expect(emits['update:isOpened'].length).toBe(2);
-    expect(emits['update:isOpened'][0]).toEqual([false]);
   });
 });
