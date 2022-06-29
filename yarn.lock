@@ -4374,6 +4374,11 @@ vite-plugin-import-build@^0.1.3:
   resolved "https://registry.yarnpkg.com/vite-plugin-import-build/-/vite-plugin-import-build-0.1.3.tgz#2d5ac0f0a684776f16837e2aa092e8508d1a242f"
   integrity sha512-N4oRY6Mv5l1qVODcAw1W6Xw1hiW9y8uVs6vqBy0dCTayCu5/7IRmUmjpc+wrBdSS2b/cZYkLX/xHgFyjXlaXtg==
 
+vite-plugin-pages-sitemap@^1.2.2:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/vite-plugin-pages-sitemap/-/vite-plugin-pages-sitemap-1.2.2.tgz#e0aa37899bd724a23c17725823a1106906c4aeca"
+  integrity sha512-5ZY6ahezIsb0+O0WpRdJ9o6GbBALbPD/ClYX1fna2JgyVbAelvgrl89dnU0NGY76w3+tCDjj02HamjKwhcNU+g==
+
 vite-plugin-pages@^0.24.2:
   version "0.24.2"
   resolved "https://registry.yarnpkg.com/vite-plugin-pages/-/vite-plugin-pages-0.24.2.tgz#9b7201fac8f58d6d5a295a4898b14aec11d061c8"
