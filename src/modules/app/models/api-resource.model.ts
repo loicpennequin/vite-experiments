@@ -4,6 +4,8 @@ export const isDehydratedModel = (x: unknown): x is DehydratedModel =>
   typeof x === 'object' && x !== null && '__model' in x;
 
 export abstract class ApiResource<T> {
+  static modelId: string;
+
   protected initialize(dto: DehydratedModel | T) {
     if (isDehydratedModel(dto)) {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars

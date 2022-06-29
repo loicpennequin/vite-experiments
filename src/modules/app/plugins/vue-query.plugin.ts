@@ -25,7 +25,7 @@ const makeResourceMap = () => {
       );
     }
 
-    map.set(module.default.name, module.default);
+    map.set(module.default.modelId, module.default);
   });
 
   return map;
@@ -51,7 +51,6 @@ export default {
         const serializedState = serializer.serialize(
           initialState.vueQueryState
         );
-        console.log(serializedState);
         hydrate(queryClient, serializedState);
       }
     }

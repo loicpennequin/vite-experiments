@@ -21,6 +21,8 @@ export type PokemonDto = {
 };
 
 export class Pokemon extends ApiResource<PokemonDto> {
+  static modelId = 'Pokemon';
+
   id!: number;
 
   name!: string;

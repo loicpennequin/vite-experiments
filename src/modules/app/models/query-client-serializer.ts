@@ -6,6 +6,7 @@ const isObject = (x: unknown): x is Record<string, any> =>
 
 export interface ApiResourceConstructor {
   new (dto: any): ApiResource<any>;
+  modelId: string;
 }
 
 export type ResourceMap = Map<string, ApiResourceConstructor>;
