@@ -4,7 +4,7 @@ import { handleEvent } from 'vitedge/node/index.js';
 export default async function (req, res) {
   const manifest = JSON.parse(fs.readFileSync(`./ssr-manifest.json`));
   const { default: functions } = await import('../../dist/functions.js');
-  const { default: router } = await import('../dist/ssr/main.js');
+  const { default: router } = await import('../../dist/ssr/main.js');
 
   // Generate a full URL
   const protocol =

@@ -1,5 +1,5 @@
+import { VitedgePluginContext } from '@/types';
 import { createI18n } from 'vue-i18n';
-import { VitedgePluginContext } from '../types';
 
 export default {
   priority: 1,

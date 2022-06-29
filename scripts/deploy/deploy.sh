@@ -13,7 +13,7 @@ cp -a dist/client/. .vercel/output/static
 mkdir -p .vercel/output/functions/index.func
 cp dist/client/ssr-manifest.json .vercel/output/functions/index.func/ssr-manifest.json
 
-yarn ncc build vercel/render.js  --out .vercel/output/functions/index.func
+yarn ncc build scripts/deploy/render.js  --out .vercel/output/functions/index.func
 
 cat > .vercel/output/functions/index.func/package.json << EOF
 {
