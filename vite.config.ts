@@ -65,7 +65,8 @@ export default defineConfig({
 
     Unocss({
       presets: [presetAttributify(), presetWind()],
-      transformers: [transformerDirective()]
+      transformers: [transformerDirective()],
+      safelist: ['[lt-sm~="-translate-x-full"]']
     }),
 
     Icons({

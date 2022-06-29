@@ -8,6 +8,7 @@ declare module '@vue/runtime-core' {
     AppHeader: typeof import('./../modules/app/components/app-header/app-header.vue')['default']
     AppLink: typeof import('./../modules/app/components/app-link/app-link.vue')['default']
     AppSidebar: typeof import('./../modules/app/components/app-sidebar/app-sidebar.vue')['default']
+    AppSidebarToggle: typeof import('./../modules/app/components/app-sidebar-toggle/app-sidebar-toggle.vue')['default']
     ContentSurface: typeof import('./../modules/app/components/content-surface.vue')['default']
     IconPkmnArrowsRight: typeof import('~icons/pkmn/arrows-right')['default']
     IconPkmnBars: typeof import('~icons/pkmn/bars')['default']

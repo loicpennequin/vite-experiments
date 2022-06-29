@@ -1,20 +1,34 @@
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import { useIsPreloading } from './modules/app/composables/use-is-preloading';
 
 const isPreloading = useIsPreloading();
 const isSidebarOpened = ref(false);
+
+const isSSR = ref(false);
+onMounted(() => {
+  isSSR.value = false;
+});
 </script>
 
 <template>
   <div
     class="layout"
+    :class="{
+      'layout--is-ssr': isSSR
+    }"
     font="sans"
     bg="red-400"
     grid
     max-w="screen"
     min-h="screen"
   >
+    <input
+      id="sidebar-toggle"
+      v-model="isSidebarOpened"
+      type="checkbox"
+      sr-only
+    />
     <AppHeader
       sticky
       z-1
@@ -26,7 +40,11 @@ const isSidebarOpened = ref(false);
       v-model:is-opened="isSidebarOpened"
       class="layout__sidebar"
       overflow-y-auto
-      lt-sm="fixed top-0 h-screen"
+      top="lt-sm:0"
+      h="lt-sm:screen"
+      lt-sm="fixed"
+      transition-transform
+      transition-duration="0 lt-sm:300"
       col-start-1
       z-2
     />
@@ -39,6 +57,7 @@ const isSidebarOpened = ref(false);
     >
       <LoadingSpinner v-if="isPreloading" absolute top="5" right="5" />
       <div
+        class="layout__page-wrapper"
         :translate-x="isSidebarOpened ? 'lt-sm:15rem' : 0"
         p="y-8 x-2"
         flex
@@ -68,6 +87,16 @@ const isSidebarOpened = ref(false);
 
   @media screen and (min-width: 640px) {
     height: calc(100vh - 56px);
+  }
+}
+
+#sidebar-toggle {
+  &:not(:checked) ~ .layout__sidebar {
+    transform: translateX(-100%);
+  }
+
+  &:checked ~ .layout__sidebar {
+    transform: none;
   }
 }
 </style>

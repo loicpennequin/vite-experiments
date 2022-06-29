@@ -2,7 +2,7 @@ import { VitedgePluginContext } from '@/types';
 
 export default {
   priority: 1,
-  install: ({ isClient, router }: VitedgePluginContext) => {
+  install: ({ isClient }: VitedgePluginContext) => {
     if (!isClient) return;
     if (import.meta.env.TEST) return;
 
