@@ -9,8 +9,9 @@ declare module '@vue/runtime-core' {
     AppLink: typeof import('./../modules/app/components/app-link/app-link.vue')['default'];
     AppSidebar: typeof import('./../modules/app/components/app-sidebar/app-sidebar.vue')['default'];
     ContentSurface: typeof import('./../modules/app/components/content-surface.vue')['default'];
-    IconPkmnArrowsLeft: typeof import('~icons/pkmn/arrows-left')['default'];
+    IconPkmnArrowsBars: typeof import('~icons/pkmn/arrows-bars')['default'];
     IconPkmnArrowsRight: typeof import('~icons/pkmn/arrows-right')['default'];
+    IconPkmnBars: typeof import('~icons/pkmn/bars')['default'];
     IconPkmnSpinner: typeof import('~icons/pkmn/spinner')['default'];
     InfiniteScroll: typeof import('./../modules/app/components/infinite-scroll.vue')['default'];
     LazyImage: typeof import('./../modules/app/components/lazy-image/lazy-image.vue')['default'];

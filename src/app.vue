@@ -1,33 +1,54 @@
 <script lang="ts" setup>
+import { ref } from 'vue';
 import { useIsPreloading } from './modules/app/composables/use-is-preloading';
 
 const isPreloading = useIsPreloading();
+const isSidebarOpened = ref(false);
 </script>
 
 <template>
-  <div class="layout" font="sans" bg="red-400" grid max-w="screen">
-    <AppHeader sticky top="0" col-span="full" row-start-1 row-span-1 />
-    <!-- <div /> -->
+  <div
+    class="layout"
+    font="sans"
+    bg="red-400"
+    grid
+    max-w="screen"
+    min-h="screen"
+  >
+    <AppHeader
+      sticky
+      z-1
+      top="0"
+      col-span="full"
+      @open-sidebar="isSidebarOpened = true"
+    />
     <AppSidebar
+      v-model:is-opened="isSidebarOpened"
       class="layout__sidebar"
       overflow-y-auto
-      row-span="lt-sm:full"
+      lt-sm="fixed top-0 h-screen"
       col-start-1
-      z-1
+      z-2
     />
 
     <main
-      flex
-      justify-center
       bg="blue-1"
-      p="y-8 x-2"
-      relative
-      row-start="2"
       col-start="2 lt-sm:1"
-      col-span="1 lt-sm:full"
+      col-span="1"
+      :overflow-x="isSidebarOpened && 'lt-sm:hidden'"
     >
       <LoadingSpinner v-if="isPreloading" absolute top="5" right="5" />
-      <router-view />
+      <div
+        :translate-x="isSidebarOpened ? 'lt-sm:15rem' : 0"
+        p="y-8 x-2"
+        flex
+        justify-center
+        transition-transform
+        transition-duration-300
+        h-full
+      >
+        <router-view />
+      </div>
     </main>
   </div>
 </template>
@@ -36,6 +57,10 @@ const isPreloading = useIsPreloading();
 .layout {
   grid-template-columns: auto minmax(0, 1fr);
   grid-template-rows: 56px 1fr;
+
+  @media screen and (max-width: 640px) {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }
 
 .layout__sidebar {

@@ -2,62 +2,76 @@
 import { onMounted, ref, watch } from 'vue';
 import { useMediaQuery } from '@vueuse/core';
 
+const props = defineProps<{ isOpened: boolean }>();
+const emit = defineEmits<{
+  (e: 'update:isOpened', value: boolean): void;
+}>();
+
 const scrollRoot = ref<HTMLElement>();
-const isExpanded = ref(true);
 
 const isLargeScreen = useMediaQuery('(min-width: 1024px)');
 watch(isLargeScreen, isLargeScreen => {
-  isExpanded.value = isLargeScreen;
+  emit('update:isOpened', isLargeScreen);
 });
 
 onMounted(() => {
-  isExpanded.value = isLargeScreen.value;
+  emit('update:isOpened', isLargeScreen.value);
 });
 
 const onItemClick = () => {
   if (!isLargeScreen.value) {
-    isExpanded.value = false;
+    emit('update:isOpened', false);
   }
 };
 </script>
 
 <template>
-  <nav
-    ref="scrollRoot"
-    p-y="3"
-    transition-all
-    duration-300
-    :min-w="isExpanded ? '15rem' : '3rem'"
-  >
-    <button
-      md="hidden"
-      :title="isExpanded ? 'Hide list' : 'Show list'"
-      w="full"
-      flex
-      :justify="isExpanded ? 'start' : 'center'"
-      items="center"
-      gap="3"
+  <transition>
+    <nav
+      v-if="props.isOpened"
+      ref="scrollRoot"
+      p-y="3"
       bg="red-400"
-      px="3"
-      @click="isExpanded = !isExpanded"
+      transition-all
+      duration-300
+      min-w="15rem"
     >
-      <template v-if="isExpanded">
+      <button
+        title="Hide list"
+        md="hidden"
+        w="full"
+        flex
+        justify="start"
+        items="center"
+        gap="3"
+        bg="red-400"
+        px="3"
+        @click="emit('update:isOpened', !props.isOpened)"
+      >
         <icon-pkmn-arrows-right h="8" />
         <span>Hide list</span>
-      </template>
-      <icon-pkmn-arrows-left v-else h="8" />
-    </button>
+      </button>
 
-    <transition name="pkmn-list">
-      <div v-if="isExpanded" bg="red-400">
-        <PokemonList @item-click="onItemClick" />
-      </div>
-    </transition>
-  </nav>
+      <PokemonList @item-click="onItemClick" />
+    </nav>
+  </transition>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 .router-link-exact-active {
   --at-apply: 'bg-red-500';
+}
+
+.v-enter-active,
+.v-leave-active {
+  --at-apply: 'transition-transform transition-duration-300';
+}
+
+.v-enter-from,
+.v-leave-to {
+  @media screen and (min-width: 640px) {
+    transform: none;
+  }
+  transform: translateX(-100%);
 }
 </style>
