@@ -25,3 +25,8 @@ export interface ILoader<T> {
 }
 
 export type PromiseRecord = Record<string, Promise<any>>;
+
+export type NamedApiResource = {
+  name: string;
+  url: string;
+};

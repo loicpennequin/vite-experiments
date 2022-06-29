@@ -1,9 +1,12 @@
 import { http } from '@/modules/app/api/http.api';
+import { Pokemon } from '../models/pokemon.model';
 
 export type GetAllPokemonsOptions = {
   limit: number;
   offset?: number;
 };
+
+export type EvoltutionChain = Pokemon[][];
 
 export const getAllPokemons = async ({
   limit,
@@ -24,20 +27,17 @@ export const getPokemonByName = async (name: string) => {
 
   const { data: species } = await http.get(pokemon.species.url);
   pokemon.species = species;
-  return {
-    ...pokemon,
-    species: species,
-    description: species.flavor_text_entries
-      .find((entry: any) => entry.language.name === 'en')
-      .flavor_text.replace('\u000C', ' ')
-  };
+
+  return new Pokemon(pokemon, species);
 };
 
-export const getEvolutionChain = async (pokemon: any) => {
-  const { data } = await http.get(pokemon.species.evolution_chain.url);
+export const getEvolutionChain = async (pokemon: Pokemon) => {
+  const { data } = await http.get(
+    `/evolution-chain/${pokemon.evolutionChainId}`
+  );
   const { chain } = data;
 
-  const pokemons: any[] = [];
+  const pokemons: EvoltutionChain = [];
   pokemons.push([await getPokemonByName(chain.species.name)]);
 
   let link = chain.evolves_to;

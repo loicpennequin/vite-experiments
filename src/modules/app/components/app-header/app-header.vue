@@ -13,7 +13,7 @@ const { t } = useI18n();
     bg="red-400"
     shadow="md"
   >
-    <AppSidebarToggle sm="hidden" p="4" :title="t('toggle')">
+    <AppSidebarToggle p="4" :title="t('toggle')">
       <icon-pkmn-bars h="8" />
     </AppSidebarToggle>
     <h1 m="0" text="2xl">

@@ -1,13 +1,15 @@
 <script lang="ts" setup>
 import { computed } from 'vue';
 import { useLoader } from '@/modules/app/composables/use-loader';
+import { PokemonDetailLoader } from './detail.loader';
 
-const { pokemonQuery, evolutionsQuery } = useLoader();
-const { isLoading: isPokemonLoading, data: pokemon } = pokemonQuery;
-const { isLoading: isEvolutionsLoading, data: evolutions } = evolutionsQuery;
+const {
+  pokemon: { isLoading: isPokemonLoading, data: pokemon },
+  evolutions: { isLoading: isEvolutionsLoading, data: evolutions }
+} = useLoader<PokemonDetailLoader>();
 
 const typeLabel = computed(() =>
-  pokemon.value.types?.map((t: any) => t.type.name).join(' / ')
+  pokemon.value?.types?.map(t => t.name).join(' / ')
 );
 </script>
 
@@ -27,13 +29,13 @@ const typeLabel = computed(() =>
       <ContentSurface rounded="lg">
         <h3>Stats</h3>
         <div flex items="center" flex-wrap>
-          <LazyImage :src="pokemon.sprites.front_default" :alt="pokemon.name" />
+          <LazyImage :src="pokemon.sprites.default" :alt="pokemon.name" />
 
           <ul grid grid-cols="1 lg:2  " gap="2">
             <StatBar
               is="li"
               v-for="stat in pokemon.stats"
-              :key="stat.stat.name"
+              :key="stat.name"
               :stat="stat"
             />
           </ul>
@@ -63,7 +65,7 @@ const typeLabel = computed(() =>
           >
             <figure>
               <LazyImage
-                :src="evolution.sprites.front_default"
+                :src="evolution.sprites.default"
                 :alt="evolution.name"
               />
               <figcaption text-center>{{ evolution.name }}</figcaption>

@@ -1,7 +1,17 @@
 import { createLoader } from '@/modules/app/factories/loader.factory';
-import { getEvolutionChain, getPokemonByName } from '../../api/pokemon.api';
+import {
+  EvoltutionChain,
+  getEvolutionChain,
+  getPokemonByName
+} from '../../api/pokemon.api';
+import { Pokemon } from '../../models/pokemon.model';
 
-export default createLoader('Detail', {
+export type PokemonDetailLoader = {
+  pokemon: Pokemon;
+  evolutions: EvoltutionChain;
+};
+
+export default createLoader<PokemonDetailLoader>('Detail', {
   pokemon(route) {
     return {
       queryKey: () => ['pokemon', route.params.name],
@@ -15,7 +25,7 @@ export default createLoader('Detail', {
     return {
       queryKey: ({ pokemon }) => [
         'evolutionChain',
-        pokemon?.species.evolution_chain.url.split('/').reverse()[1] // url ends with trailing slash
+        pokemon?.evolutionChainId // url ends with trailing slash
       ],
       queryFn: (ctx, { pokemon }) => {
         return getEvolutionChain(pokemon);

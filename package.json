@@ -31,6 +31,7 @@
     "express-static-gzip": "^2.1.7",
     "fs-extra": "^10.1.0",
     "husky": "^8.0.1",
+    "pokeapi-typescript": "^2.1.0",
     "vite-plugin-ssr": "^0.3.64",
     "vitedge": "^0.19.0",
     "vue": "^3.2.25",

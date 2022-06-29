@@ -21,7 +21,7 @@ export class QueryLoader<T> {
     ).map(([key, queryDef]) => {
       const query = this.getQuery(queryDef, route, key, ssrQueries);
 
-      return [`${key}Query`, query];
+      return [key, query];
     });
 
     return Object.fromEntries(entries);
