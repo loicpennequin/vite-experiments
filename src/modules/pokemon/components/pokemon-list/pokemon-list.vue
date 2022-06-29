@@ -23,9 +23,11 @@ const {
       if (!lastPage.next) return;
       const { searchParams } = new URL(lastPage.next);
       return searchParams.get('offset');
-    }
+    },
+    staleTime: Infinity
   }
 );
+
 onServerPrefetch(suspense);
 
 const onLoadMore = () => {

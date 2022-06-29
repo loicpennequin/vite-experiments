@@ -13,7 +13,7 @@ const { t } = useI18n();
     flex
     items="center"
     justify="space-between"
-    p="3"
+    p="2"
     bg="red-400"
     shadow="md"
   >

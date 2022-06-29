@@ -23,17 +23,23 @@ const onIntersect: IntersectionObserverCallback = entries => {
   });
 };
 
-const root = computed(() => unref(props.root) || document);
+const root = computed(() => {
+  if (import.meta.env.SSR) return null;
+
+  return unref(props.root) || document;
+});
 
 const initObserver = () => {
   if (!trigger.value) return;
+  const rootElement = unref(root);
+  if (!rootElement) return;
 
   observer.value = new IntersectionObserver(onIntersect, {
-    root: unref(root),
+    root: rootElement,
     rootMargin: `${props.buffer}px`
   });
 
-  cleanup(unref(root));
+  cleanup(rootElement);
   observer.value.observe(trigger.value);
 };
 
@@ -45,12 +51,14 @@ watch(
   root,
   (root, oldRoot) => {
     if (oldRoot) cleanup(oldRoot);
+    if (!root) return;
+
     unref(root).addEventListener('scroll', initObserver);
   },
   { immediate: true }
 );
 
-onBeforeUnmount(() => cleanup(root.value));
+onBeforeUnmount(() => root.value && cleanup(root.value));
 </script>
 
 <template>
