@@ -11,6 +11,8 @@ const {
   data: pokemons,
   fetchNextPage,
   hasNextPage,
+  isFetching,
+  isLoading,
   suspense
 } = useInfiniteQuery(
   ['pokemons'],
@@ -27,6 +29,7 @@ const {
 onServerPrefetch(suspense);
 
 const onLoadMore = () => {
+  console.log('load more');
   if (hasNextPage?.value) {
     fetchNextPage();
   }
@@ -36,8 +39,12 @@ const scrollRoot = ref<HTMLElement>();
 </script>
 
 <template>
-  <InfiniteScroll :root="scrollRoot" :buffer="100" @load-more="onLoadMore">
-    <ul v-if="pokemons">
+  <InfiniteScroll
+    :root="scrollRoot?.parentElement"
+    :buffer="100"
+    @load-more="onLoadMore"
+  >
+    <ul v-if="pokemons" ref="scrollRoot">
       <template v-for="(page, pageIndex) in pokemons.pages" :key="pageIndex">
         <li v-for="(pokemon, index) in page.results" :key="pokemon.name">
           <AppLink
@@ -55,6 +62,7 @@ const scrollRoot = ref<HTMLElement>();
         </li>
       </template>
     </ul>
+    <LoadingSpinner v-if="isFetching && !isLoading" m-x="auto" />
   </InfiniteScroll>
 </template>
 

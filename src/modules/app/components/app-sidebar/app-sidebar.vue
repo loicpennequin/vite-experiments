@@ -1,13 +1,11 @@
 <script setup lang="ts">
-import { onMounted, ref, watch } from 'vue';
+import { onMounted, watch } from 'vue';
 import { useMediaQuery } from '@vueuse/core';
 
 const props = defineProps<{ isOpened: boolean }>();
 const emit = defineEmits<{
   (e: 'update:isOpened', value: boolean): void;
 }>();
-
-const scrollRoot = ref<HTMLElement>();
 
 const isLargeScreen = useMediaQuery('(min-width: 1024px)');
 watch(isLargeScreen, isLargeScreen => {
@@ -29,7 +27,6 @@ const onItemClick = () => {
   <transition>
     <nav
       v-if="props.isOpened"
-      ref="scrollRoot"
       p-y="3"
       bg="red-400"
       transition-all

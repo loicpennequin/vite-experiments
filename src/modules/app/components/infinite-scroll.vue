@@ -1,12 +1,5 @@
 <script setup lang="ts">
-import {
-  onMounted,
-  onBeforeUnmount,
-  ref,
-  unref,
-  computed,
-  nextTick
-} from 'vue';
+import { onBeforeUnmount, ref, unref, computed, watch } from 'vue';
 
 const props = withDefaults(
   defineProps<{
@@ -39,21 +32,25 @@ const initObserver = () => {
     root: unref(root),
     rootMargin: `${props.buffer}px`
   });
-  cleanup();
+
+  cleanup(unref(root));
   observer.value.observe(trigger.value);
 };
 
-const cleanup = () => {
-  unref(root).removeEventListener('scroll', initObserver);
+const cleanup = (root: HTMLElement | Document) => {
+  root.removeEventListener('scroll', initObserver);
 };
 
-onMounted(() => {
-  nextTick(() => {
-    unref(root).addEventListener('scroll', initObserver, { passive: true });
-  });
-});
+watch(
+  root,
+  (root, oldRoot) => {
+    if (oldRoot) cleanup(oldRoot);
+    unref(root).addEventListener('scroll', initObserver);
+  },
+  { immediate: true }
+);
 
-onBeforeUnmount(cleanup);
+onBeforeUnmount(() => cleanup(root.value));
 </script>
 
 <template>
