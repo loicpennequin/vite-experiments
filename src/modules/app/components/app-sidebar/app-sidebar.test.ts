@@ -13,7 +13,8 @@ type RenderWithLoadedListOptions = {
 
 async function renderWithLoadedList({
   results = [{ name: 'foo' }],
-  isDesktop = false
+  isDesktop = false,
+  isOpened = true
 }: RenderWithLoadedListOptions = {}) {
   if (isDesktop) {
     setDeviceWidth(1920);
@@ -27,7 +28,7 @@ async function renderWithLoadedList({
     }
   });
 
-  const wrapper = renderWithPlugins(Sidebar);
+  const wrapper = renderWithPlugins(Sidebar, { props: { isOpened } });
   await waitFor(() => expect(request.isDone()).toBeTruthy());
 
   return wrapper;
@@ -57,26 +58,37 @@ describe('Sidebar Component', () => {
     expect(queryByText('foo')).not.toBeInTheDocument();
   });
 
-  test('should display list toggle on mobile', async () => {
+  test('should emit isOpened event on mount on mobile', async () => {
+    const { emitted } = await renderWithLoadedList({
+      isDesktop: false
+    });
+
+    const emits = emitted();
+    expect(emits).toHaveProperty('update:isOpened');
+    expect(emits['update:isOpened'].length).toBe(1);
+    expect(emits['update:isOpened'][0]).toEqual([false]);
+  });
+
+  test('should display isOpened toggle on mobile', async () => {
     const { findByTitle } = await renderWithLoadedList({
       isDesktop: false
     });
 
-    const toggle = await findByTitle('Show list');
+    const toggle = await findByTitle('Hide list');
     expect(toggle).toBeInTheDocument();
   });
 
-  test('should display/hide list when clicking on the toggle', async () => {
-    const { findByTitle, findByText } = await renderWithLoadedList({
+  test('should emit event on toggle click', async () => {
+    const { findByTitle, findByText, emitted } = await renderWithLoadedList({
       isDesktop: false
     });
-    const toggle = await findByTitle('Show list');
+
+    const toggle = await findByTitle('Hide list');
     await fireEvent.click(toggle);
-    const link = await findByText('foo');
-    expect(link).toBeInTheDocument();
-    expect(toggle).toHaveAttribute('title', 'Hide list');
-    await fireEvent.click(toggle);
-    expect(link).not.toBeInTheDocument();
-    expect(toggle).toHaveAttribute('title', 'Show list');
+
+    const emits = emitted();
+    expect(emits).toHaveProperty('update:isOpened');
+    expect(emits['update:isOpened'].length).toBe(2);
+    expect(emits['update:isOpened'][0]).toEqual([false]);
   });
 });

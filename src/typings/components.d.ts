@@ -9,7 +9,6 @@ declare module '@vue/runtime-core' {
     AppLink: typeof import('./../modules/app/components/app-link/app-link.vue')['default'];
     AppSidebar: typeof import('./../modules/app/components/app-sidebar/app-sidebar.vue')['default'];
     ContentSurface: typeof import('./../modules/app/components/content-surface.vue')['default'];
-    IconPkmnArrowsBars: typeof import('~icons/pkmn/arrows-bars')['default'];
     IconPkmnArrowsRight: typeof import('~icons/pkmn/arrows-right')['default'];
     IconPkmnBars: typeof import('~icons/pkmn/bars')['default'];
     IconPkmnSpinner: typeof import('~icons/pkmn/spinner')['default'];
