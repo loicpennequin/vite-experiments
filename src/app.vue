@@ -85,12 +85,14 @@ onMounted(() => {
 }
 
 #sidebar-toggle {
-  &:not(:checked) ~ .layout__sidebar {
-    transform: translateX(-100%);
-  }
+  @media screen and (max-width: 640px) {
+    &:not(:checked) ~ .layout__sidebar {
+      transform: translateX(-100%);
+    }
 
-  &:checked ~ .layout__sidebar {
-    transform: none;
+    &:checked ~ .layout__sidebar {
+      transform: none;
+    }
   }
 }
 </style>
