@@ -1,8 +1,13 @@
 <script lang="ts" setup>
+import { useI18n } from 'vue-i18n';
+
 const emit = defineEmits<{
   (e: 'open-sidebar'): void;
 }>();
+
+const { t } = useI18n();
 </script>
+
 <template>
   <header
     flex
@@ -12,7 +17,12 @@ const emit = defineEmits<{
     bg="red-400"
     shadow="md"
   >
-    <button sm="hidden" p="4" @click="emit('open-sidebar')">
+    <button
+      sm="hidden"
+      p="4"
+      :title="t('toggle')"
+      @click="emit('open-sidebar')"
+    >
       <icon-pkmn-bars h="8" />
     </button>
     <h1 m="0" text="2xl">
@@ -20,3 +30,11 @@ const emit = defineEmits<{
     </h1>
   </header>
 </template>
+
+<i18n lang="json">
+{
+  "en": {
+    "toggle": "Open menu"
+  }
+}
+</i18n>
