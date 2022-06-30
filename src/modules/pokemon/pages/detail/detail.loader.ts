@@ -17,7 +17,7 @@ export default createLoader<PokemonDetailLoader>('Detail', {
       queryKey: () => ['pokemon', route.params.name],
       queryFn: () => getPokemonByName(route.params.name as string),
       staleTime: Infinity,
-      ssrPrefetch: false,
+      ssrPrefetch: true,
       waitUntilPreloaded: true
     };
   },
