@@ -7,6 +7,7 @@ import { ClientOnly } from 'vitedge';
 const props = defineProps<{ pokemon: Pokemon }>();
 const input = ref<HTMLInputElement>();
 const isToggled = ref(false);
+const isSSR = import.meta.env.SSR;
 </script>
 
 <template>
@@ -25,22 +26,27 @@ const isToggled = ref(false);
       />
     </div>
 
-    <ClientOnly>
-      <div flex items-center gap-xs text-xs class="label__wrapper">
-        Normal
-        <label
-          :for="input?.id"
-          border="solid 1 gray-400"
-          w="10"
-          h="5"
-          rounded-full
-          relative
-          p-x="1"
-          cursor-pointer
-        />
-        Shiny
-      </div>
-    </ClientOnly>
+    <div
+      flex
+      items-center
+      gap-xs
+      text-xs
+      class="label__wrapper"
+      :invisible="isSSR"
+    >
+      Normal
+      <label
+        :for="input?.id"
+        border="solid 1 gray-400"
+        w="10"
+        h="5"
+        rounded-full
+        relative
+        p-x="1"
+        cursor-pointer
+      />
+      Shiny
+    </div>
   </div>
 </template>
 
