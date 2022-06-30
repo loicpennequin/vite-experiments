@@ -32,7 +32,7 @@ const typeLabel = computed(() =>
           <LazyImage :src="pokemon.sprites.default" :alt="pokemon.name" />
 
           <ul grid grid-cols="1 lg:2  " gap="2">
-            <StatBar
+            <PokemonStatBar
               is="li"
               v-for="stat in pokemon.stats"
               :key="stat.name"

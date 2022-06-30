@@ -17,9 +17,9 @@ declare module '@vue/runtime-core' {
     LazyImage: typeof import('./../modules/app/components/lazy-image/lazy-image.vue')['default']
     LoadingSpinner: typeof import('./../modules/app/components/app-header/loading-spinner/loading-spinner.vue')['default']
     PokemonList: typeof import('./../modules/pokemon/components/pokemon-list/pokemon-list.vue')['default']
+    PokemonStatBar: typeof import('./../modules/pokemon/components/pokemon-stat-bar/pokemon-stat-bar.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
-    StatBar: typeof import('./../modules/pokemon/components/pokemon-list/stat-bar.vue')['default']
   }
 }
 

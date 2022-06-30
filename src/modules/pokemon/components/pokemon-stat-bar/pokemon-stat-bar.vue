@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { computed } from 'vue';
 import { STATS } from '@/constants';
-import { PokemonStat } from '../../models/pokemon.model';
+import { PokemonStat } from '../../models/pokemon.resource';
 
 const props = withDefaults(defineProps<{ is?: string; stat: PokemonStat }>(), {
   is: 'div'
