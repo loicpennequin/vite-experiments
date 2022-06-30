@@ -1261,6 +1261,13 @@
     estree-walker "^2.0.1"
     picomatch "^2.2.2"
 
+"@shimyshack/uid@^0.1.6":
+  version "0.1.6"
+  resolved "https://registry.yarnpkg.com/@shimyshack/uid/-/uid-0.1.6.tgz#71fb63c84c0dea756aae0d4a5c4aece10800cdf9"
+  integrity sha512-e4PVj04I7OnUHXUCM4GTkGLK6xij3BBH38hqGSLC4xsm9W2cojRc1LoL0YmFfcQ/430vfbLCct0J9zF3LmXZjg==
+  dependencies:
+    vue "^3.2.25"
+
 "@sinclair/typebox@^0.23.3":
   version "0.23.5"
   resolved "https://registry.yarnpkg.com/@sinclair/typebox/-/typebox-0.23.5.tgz#93f7b9f4e3285a7a9ade7557d9a8d36809cbc47d"

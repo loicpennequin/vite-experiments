@@ -1,16 +1,35 @@
 <script lang="ts" setup>
-import { computed } from 'vue';
 import { useLoader } from '@/modules/app/composables/use-loader';
 import { PokemonDetailLoader } from './detail.loader';
+import { useI18n } from 'vue-i18n';
+
+const POKEMON_TYPE_COLORS = {
+  normal: '#A8A77A',
+  fire: '#EE8130',
+  water: '#6390F0',
+  electric: '#F7D02C',
+  grass: '#7AC74C',
+  ice: '#96D9D6',
+  fighting: '#C22E28',
+  poison: '#A33EA1',
+  ground: '#E2BF65',
+  flying: '#A98FF3',
+  psychic: '#F95587',
+  bug: '#A6B91A',
+  rock: '#B6A136',
+  ghost: '#735797',
+  dragon: '#6F35FC',
+  dark: '#705746',
+  steel: '#B7B7CE',
+  fairy: '#D685AD'
+};
 
 const {
   pokemon: { isLoading: isPokemonLoading, data: pokemon },
   evolutions: { isLoading: isEvolutionsLoading, data: evolutions }
 } = useLoader<PokemonDetailLoader>();
 
-const typeLabel = computed(() =>
-  pokemon.value?.types?.map(t => t.name).join(' / ')
-);
+const { t } = useI18n();
 </script>
 
 <template>
@@ -24,12 +43,23 @@ const typeLabel = computed(() =>
     <template v-else-if="pokemon">
       <ContentSurface is="h2" text="3xl" font-bold capitalize rounded="lg">
         {{ pokemon.name }}
+
+        <span uppercase float-right space-x="2" text="xl">
+          <span
+            v-for="pkmnType in pokemon.types"
+            :key="pkmnType.name"
+            p-2
+            rounded-xl
+            :style="{ backgroundColor: POKEMON_TYPE_COLORS[pkmnType.name as keyof typeof POKEMON_TYPE_COLORS] }"
+          >
+            {{ pkmnType.name }}
+          </span>
+        </span>
       </ContentSurface>
 
-      <ContentSurface rounded="lg">
-        <h3>Stats</h3>
-        <div flex items="center" flex-wrap>
-          <LazyImage :src="pokemon.sprites.default" :alt="pokemon.name" />
+      <ContentBlock rounded="lg" :title="t('headings.stats')">
+        <div flex items="center" flex-wrap gap="3">
+          <PokemonSprites :pokemon="pokemon" />
 
           <ul grid grid-cols="1 lg:2  " gap="2">
             <PokemonStatBar
@@ -40,43 +70,35 @@ const typeLabel = computed(() =>
             />
           </ul>
         </div>
-        <div uppercase>{{ typeLabel }}</div>
-      </ContentSurface>
+      </ContentBlock>
 
-      <ContentSurface rounded="lg">
-        <h3>Description</h3>
-        <div p="3">{{ pokemon.description }}</div>
-      </ContentSurface>
+      <ContentBlock rounded="lg" :title="t('headings.description')">
+        {{ pokemon.description }}
+      </ContentBlock>
 
       <ContentSurface v-if="isEvolutionsLoading" h="25" animate-pulse />
-      <ContentSurface
+      <ContentBlock
         v-else-if="evolutions"
         rounded="lg"
-        grid
-        :grid-cols="evolutions.length"
-        gap="3"
+        :title="t('headings.evolution')"
       >
-        <h3 col-span="full">Evolution Chain</h3>
-        <div v-for="(step, index) in evolutions" :key="index">
-          <AppLink
-            v-for="evolution in step"
-            :key="evolution.id"
-            :to="{ name: 'Detail', params: { name: evolution.name } }"
-          >
-            <figure>
-              <LazyImage
-                :src="evolution.sprites.default"
-                :alt="evolution.name"
-              />
-              <figcaption text-center>{{ evolution.name }}</figcaption>
-            </figure>
-          </AppLink>
-        </div>
-      </ContentSurface>
+        <PokemonEvolutionChain :evolution-chain="evolutions" />
+      </ContentBlock>
     </template>
   </div>
 </template>
 
+<i18n lang="json">
+{
+  "en": {
+    "headings": {
+      "stats": "Stats",
+      "description": "Description",
+      "evolution": "Evolution Chain"
+    }
+  }
+}
+</i18n>
 <route lang="json">
 {
   "path": "/:name",
