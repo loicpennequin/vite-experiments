@@ -29,7 +29,7 @@ export type LoaderOptions<T> = {
   queriesOptions: QueriesOptions<T>;
 };
 
-type QueryKeyFunction<T> = (deps: T) => QueryKey;
+type QueryKeyFunction<T> = (deps: Partial<T>) => QueryKey;
 type ExtendedQueryFn<TDeps, TData> = (
   ctx: any,
   deps: TDeps

@@ -16,7 +16,7 @@ export class QueryLoader<T> {
   }
 
   private getQueries(route: RouteLocationNormalizedLoaded, ssrQueries: any[]) {
-    const entries = Object.entries<RouteQueryMapFn<any>>(
+    const entries = Object.entries<RouteQueryMapFn<any, any>>(
       this.queriesOptions
     ).map(([key, queryDef]) => {
       const query = this.getQuery(queryDef, route, key, ssrQueries);
@@ -28,7 +28,7 @@ export class QueryLoader<T> {
   }
 
   private getQuery(
-    queryDef: RouteQueryMapFn<any>,
+    queryDef: RouteQueryMapFn<any, any>,
     route: RouteLocationNormalizedLoaded,
     key: string,
     ssrQueries: any[]
@@ -53,7 +53,7 @@ export class QueryLoader<T> {
   }
 
   private getQueryOptions(
-    queryDef: RouteQueryMapFn<any>,
+    queryDef: RouteQueryMapFn<any, any>,
     route: RouteLocationNormalizedLoaded
   ) {
     const { queryFn, queryKey, dependsOn = [], ...options } = queryDef(route);
