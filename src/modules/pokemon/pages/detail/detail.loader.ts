@@ -23,13 +23,8 @@ export default createLoader<PokemonDetailLoader>('Detail', {
   },
   evolutions() {
     return {
-      queryKey: ({ pokemon }) => [
-        'evolutionChain',
-        pokemon?.evolutionChainId // url ends with trailing slash
-      ],
-      queryFn: (ctx, { pokemon }) => {
-        return getEvolutionChain(pokemon);
-      },
+      queryKey: ({ pokemon }) => ['evolutionChain', pokemon.evolutionChainId],
+      queryFn: (_ctx, { pokemon }) => getEvolutionChain(pokemon),
       dependsOn: ['pokemon'],
       staleTime: Infinity,
       ssrPrefetch: false

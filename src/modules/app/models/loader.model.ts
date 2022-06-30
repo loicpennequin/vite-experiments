@@ -9,19 +9,18 @@ import { ILoader } from '@/types';
 import { QueryPreloader } from './query-preloader.model';
 import { QueryLoader } from './query.loader.model';
 
-export type RouteQueryMapFn<T> = (nextRoute: RouteLocationNormalized) => Omit<
-  UseQueryOptions,
-  'queryFn' | 'queryKey'
-> & {
-  queryKey: QueryKeyFunction;
-  queryFn: ExtendedQueryFn<T>;
+export type RouteQueryMapFn<TDeps, TData> = (
+  nextRoute: RouteLocationNormalized
+) => Omit<UseQueryOptions, 'queryFn' | 'queryKey'> & {
+  queryKey: QueryKeyFunction<TDeps>;
+  queryFn: ExtendedQueryFn<TDeps, TData>;
   ssrPrefetch?: boolean;
   waitUntilPreloaded?: boolean;
   dependsOn?: string[];
 };
 
 export type QueriesOptions<T> = {
-  [Property in keyof T]: RouteQueryMapFn<T[Property]>;
+  [Property in keyof T]: RouteQueryMapFn<T, T[Property]>;
 };
 
 export type LoaderOptions<T> = {
@@ -30,8 +29,11 @@ export type LoaderOptions<T> = {
   queriesOptions: QueriesOptions<T>;
 };
 
-type QueryKeyFunction = (deps: any) => QueryKey;
-type ExtendedQueryFn<T> = (ctx: any, deps: any) => ReturnType<QueryFunction<T>>;
+type QueryKeyFunction<T> = (deps: T) => QueryKey;
+type ExtendedQueryFn<TDeps, TData> = (
+  ctx: any,
+  deps: TDeps
+) => ReturnType<QueryFunction<TData>>;
 
 export class Loader<T> implements ILoader<T> {
   name: string;
