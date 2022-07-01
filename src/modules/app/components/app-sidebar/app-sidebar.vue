@@ -14,7 +14,7 @@ const onItemClick = () => {
 </script>
 
 <template>
-  <nav p-y="3" bg="white" min-w="15rem">
+  <nav p-y="3" bg="white dark:dark-100" min-w="15rem" flex flex-col shadow-md>
     <app-sidebar-toggle
       title="Hide list"
       w="full"
@@ -28,6 +28,8 @@ const onItemClick = () => {
       <span>Hide list</span>
     </app-sidebar-toggle>
 
-    <PokemonList @item-click="onItemClick" />
+    <div flex="1" overflow-y-auto>
+      <PokemonList @item-click="onItemClick" />
+    </div>
   </nav>
 </template>

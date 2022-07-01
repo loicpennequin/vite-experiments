@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue';
 import { useIsPreloading } from './modules/app/composables/use-is-preloading';
+import { vClickOutside } from './modules/app/directives/click-outside';
 
 const isPreloading = useIsPreloading();
 const isSidebarOpened = ref(false);
@@ -9,6 +10,10 @@ const isSSR = ref(false);
 onMounted(() => {
   isSSR.value = false;
 });
+
+const onClickOutside = () => {
+  isSidebarOpened.value = false;
+};
 </script>
 
 <template>
@@ -18,7 +23,8 @@ onMounted(() => {
       'layout--is-ssr': isSSR
     }"
     font="sans"
-    bg="light-400"
+    bg="light-400 dark:dark-300"
+    color="black dark:white"
     grid
     max-w="screen"
     min-h="screen"
@@ -32,8 +38,8 @@ onMounted(() => {
     <AppHeader sticky z-1 top="0" col-span="full" />
     <AppSidebar
       v-model:is-opened="isSidebarOpened"
+      v-click-outside="onClickOutside"
       class="layout__sidebar"
-      overflow-y-auto
       top="lt-sm:0"
       h="lt-sm:screen"
       lt-sm="fixed"
@@ -104,7 +110,7 @@ onMounted(() => {
   scrollbar-width: 12px;
   /* Chrome */
   ::-webkit-scrollbar {
-    --at-apply: 'bg-blue-300';
+    --at-apply: 'bg-slate-300 dark-bg-slate-600';
     width: 10px;
     height: 10px;
     border-radius: 4px;
@@ -112,7 +118,7 @@ onMounted(() => {
   }
 
   ::-webkit-scrollbar-thumb {
-    --at-apply: 'bg-blue-400';
+    --at-apply: 'bg-slate-600 dark-bg-slate-300';
     border-radius: 10px;
   }
 }

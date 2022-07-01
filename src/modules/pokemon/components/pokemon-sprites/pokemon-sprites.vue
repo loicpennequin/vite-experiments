@@ -1,17 +1,21 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
 import { Pokemon } from '../../models/pokemon.resource';
-import { vUid } from '@/modules/app/directives/unique-id';
 
 const props = defineProps<{ pokemon: Pokemon }>();
-const input = ref<HTMLInputElement>();
 const isToggled = ref(false);
 const isSSR = import.meta.env.SSR;
 </script>
 
 <template>
   <div grid justify-center>
-    <input ref="input" v-model="isToggled" v-uid type="checkbox" sr-only />
+    <input
+      id="pokemon-sprite-toggle"
+      ref="input"
+      v-model="isToggled"
+      type="checkbox"
+      sr-only
+    />
     <div col-start-1 row-start-1 class="default-sprite">
       <LazyImage
         :src="props.pokemon.sprites.default"
@@ -35,7 +39,7 @@ const isSSR = import.meta.env.SSR;
     >
       Normal
       <label
-        :for="input?.id"
+        for="pokemon-sprite-toggle"
         border="solid 1 gray-400"
         w="10"
         h="5"
@@ -73,7 +77,7 @@ input[type='checkbox'] {
 }
 
 label::after {
-  --at-apply: 'absolute top-0  w-4 h-4 rounded-full bg-blue-400 duration-200';
+  --at-apply: 'absolute top-0  w-4 h-4 rounded-full bg-slate-600 dark:bg-slate-300 duration-200';
   content: '';
   margin-top: 1px;
   margin-left: 1px;

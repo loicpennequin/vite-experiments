@@ -2,7 +2,6 @@
 import { useLoader } from '@/modules/app/composables/use-loader';
 import { PokemonDetailLoader } from './detail.loader';
 import { useI18n } from 'vue-i18n';
-import { POKEMON_TYPE_COLORS } from '@/constants';
 
 const {
   pokemon: { isLoading: isPokemonLoading, data: pokemon },
@@ -33,7 +32,7 @@ const { t } = useI18n();
             :key="pkmnType.name"
             p-2
             rounded-xl
-            :style="{ backgroundColor: POKEMON_TYPE_COLORS[pkmnType.name as keyof typeof POKEMON_TYPE_COLORS] }"
+            :style="{ backgroundColor: pkmnType.color }"
           >
             {{ pkmnType.name }}
           </span>
@@ -42,7 +41,7 @@ const { t } = useI18n();
 
       <ContentBlock rounded="lg" :title="t('headings.stats')">
         <div flex items="center" flex-wrap gap="3">
-          <PokemonSprites :pokemon="pokemon" />
+          <PokemonSprites :pokemon="pokemon" mx="lt-sm:auto" />
 
           <ul grid grid-cols="1 lg:2  " gap="2">
             <PokemonStatBar

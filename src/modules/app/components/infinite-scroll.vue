@@ -52,7 +52,6 @@ watch(
   (root, oldRoot) => {
     if (oldRoot) cleanup(oldRoot);
     if (!root) return;
-
     unref(root).addEventListener('scroll', initObserver);
   },
   { immediate: true }

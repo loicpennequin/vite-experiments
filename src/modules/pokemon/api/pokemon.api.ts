@@ -16,14 +16,15 @@ export type EvoltutionChain = Pokemon[][];
 
 const ENDPOINTS = {
   POKEMON: '/pokemon',
-  EVOLUTION_CHAIN: '/evolution-chain'
+  EVOLUTION_CHAIN: '/evolution-chain',
+  POKEMON_SPECIES: '/pokemon-species'
 };
 
 export const getAllPokemons = async ({
   limit,
   offset = 0
 }: GetAllPokemonsOptions) => {
-  const { data } = await http.get(ENDPOINTS.POKEMON, {
+  const { data } = await http.get(ENDPOINTS.POKEMON_SPECIES, {
     params: {
       limit,
       offset

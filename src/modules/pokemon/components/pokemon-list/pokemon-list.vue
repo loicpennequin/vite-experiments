@@ -46,7 +46,7 @@ const scrollRoot = ref<HTMLElement>();
     :buffer="100"
     @load-more="onLoadMore"
   >
-    <ul v-if="pokemons" ref="scrollRoot">
+    <ul v-if="pokemons" ref="scrollRoot" overflow-y-auto>
       <template v-for="(page, pageIndex) in pokemons.pages" :key="pageIndex">
         <li v-for="(pokemon, index) in page.results" :key="pokemon.name">
           <AppLink
@@ -70,6 +70,6 @@ const scrollRoot = ref<HTMLElement>();
 
 <style scoped>
 .router-link-exact-active {
-  --at-apply: 'bg-light-300';
+  --at-apply: 'bg-light-300 dark:bg-dark-200';
 }
 </style>

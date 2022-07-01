@@ -5,7 +5,7 @@ const props = withDefaults(defineProps<{ is?: string }>(), {
 </script>
 
 <template>
-  <component :is="props.is" bg="white" p="4">
+  <component :is="props.is" bg="white dark:dark-100" color="inherit" p="4">
     <slot />
   </component>
 </template>

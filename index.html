@@ -20,6 +20,28 @@
     />
   </head>
   <body>
+    <script>
+      (() => {
+        let colorMode;
+        const persistedColorPreference =
+          window.localStorage.getItem('color-mode');
+        const hasPersistedPreference =
+          typeof persistedColorPreference === 'string';
+
+        if (hasPersistedPreference) {
+          document.body.classList.add(persistedColorPreference);
+          return;
+        }
+
+        const mql = window.matchMedia('(prefers-color-scheme: dark)');
+        const hasMediaQueryPreference = typeof mql.matches === 'boolean';
+        if (hasMediaQueryPreference) {
+          document.body.classList.add(mql.matches ? 'dark' : 'light');
+        }
+
+        document.body.classList.add('light');
+      })();
+    </script>
     <div id="app"></div>
     <script type="module" src="/src/main.ts"></script>
   </body>

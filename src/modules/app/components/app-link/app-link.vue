@@ -18,7 +18,7 @@ let timeout: ReturnType<typeof setTimeout>;
 const onMouseEnter = () => {
   if (props.prefetch === false) return;
 
-  const duration = typeof props.prefetch === 'number' ? props.prefetch : 200;
+  const duration = typeof props.prefetch === 'number' ? props.prefetch : 250;
   timeout = setTimeout(() => {
     const { name } = props.to;
     if (!name) return;

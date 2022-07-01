@@ -1,3 +1,4 @@
+import { POKEMON_TYPE_COLORS } from '@/constants';
 import { ApiResource } from '@/modules/app/models/api-resource.model';
 import { NamedApiResource } from '@/types';
 import type {
@@ -35,7 +36,7 @@ export class Pokemon extends ApiResource<PokemonDto> {
 
   description!: string;
 
-  types!: NamedApiResource[];
+  types!: (NamedApiResource & { color: string })[];
 
   stats!: PokemonStat[];
 
@@ -52,7 +53,11 @@ export class Pokemon extends ApiResource<PokemonDto> {
     this.name = pokemon.name;
     this.height = pokemon.height;
     this.weight = pokemon.weight;
-    this.types = pokemon.types.map(type => type.type);
+    this.types = pokemon.types.map(type => ({
+      ...type.type,
+      color:
+        POKEMON_TYPE_COLORS[type.type.name as keyof typeof POKEMON_TYPE_COLORS]
+    }));
     this.stats = pokemon.stats.map(stat => ({
       baseStat: stat.base_stat,
       ...stat.stat
