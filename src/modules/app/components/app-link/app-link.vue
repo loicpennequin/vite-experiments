@@ -15,15 +15,29 @@ const loaders = inject(LOADERS_INJECTION_KEY, new Map());
 
 let timeout: ReturnType<typeof setTimeout>;
 
+const preloadData = () => {
+  resolve(props.to).matched.forEach(match => {
+    loaders.get(match.name).preload(resolve(props.to));
+  });
+};
+
+const preloadAssets = () => {
+  resolve(props.to).matched.forEach(match => {
+    Object.values(match.components).forEach(fn => {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      typeof fn === 'function' && fn();
+    });
+  });
+};
+
 const onMouseEnter = () => {
   if (props.prefetch === false) return;
 
   const duration = typeof props.prefetch === 'number' ? props.prefetch : 250;
   timeout = setTimeout(() => {
-    const { name } = props.to;
-    if (!name) return;
-    const loader = loaders.get(name);
-    loader?.preload(resolve(props.to));
+    preloadData();
+    preloadAssets();
   }, duration);
 };
 
@@ -36,7 +50,6 @@ const onMouseLeave = () => {
 <template>
   <router-link
     :to="props.to"
-    no-underline
     color="inherit"
     @mouseenter="onMouseEnter"
     @mouseleave="onMouseLeave"

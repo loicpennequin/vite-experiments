@@ -77,7 +77,9 @@ export default defineConfig({
 
     Icons({
       customCollections: {
-        pkmn: FileSystemIconLoader('./src/generated/icons')
+        pkmn: FileSystemIconLoader('./src/generated/icons', svg =>
+          svg.replace(/^<svg /, '<svg fill="currentColor" ')
+        )
       }
     }),
 

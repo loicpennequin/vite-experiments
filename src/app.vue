@@ -61,6 +61,7 @@ const onClickOutside = () => {
         :translate-x="isSidebarOpened ? 'lt-sm:15rem' : 0"
         p="y-8 x-2"
         flex
+        flex-col
         justify-center
         transition-transform
         transition-duration-300
