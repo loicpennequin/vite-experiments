@@ -24,7 +24,7 @@ const onItemClick = () => {
       gap="3"
       px="3"
     >
-      <icon-pkmn-arrows-right h="8" />
+      <icon-pkmn-arrows-right h="8" fill="dark:white" />
       <span>Hide list</span>
     </app-sidebar-toggle>
 
