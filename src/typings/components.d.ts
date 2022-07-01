@@ -12,7 +12,6 @@ declare module '@vue/runtime-core' {
     ContentBlock: typeof import('./../modules/app/components/content-block/content-block.vue')['default']
     ContentSurface: typeof import('./../modules/app/components/content-surface.vue')['default']
     IconPkmnArrowsRight: typeof import('~icons/pkmn/arrows-right')['default']
-    IconPkmnBars: typeof import('~icons/pkmn/bars')['default']
     IconPkmnCheckDouble: typeof import('~icons/pkmn/check-double')['default']
     IconPkmnSpinner: typeof import('~icons/pkmn/spinner')['default']
     InfiniteScroll: typeof import('./../modules/app/components/infinite-scroll.vue')['default']
