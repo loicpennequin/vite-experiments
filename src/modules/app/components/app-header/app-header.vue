@@ -14,7 +14,7 @@ const { t } = useI18n();
     shadow="md"
   >
     <AppSidebarToggle p="4" :title="t('toggle')">
-      <icon-pkmn-check-double h="8" />
+      <icon-pkmn-bars h="8" />
     </AppSidebarToggle>
     <h1 m="0" text="2xl">
       <AppLink :to="{ name: 'Home' }">Pokédex</AppLink>

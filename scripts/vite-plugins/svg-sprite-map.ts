@@ -68,9 +68,11 @@ export default function ({
       })) as string
     ).replace('<?xml version="1.0" encoding="utf-8"?>', '');
 
-    fs.writeFileSync(path.join(process.cwd(), 'public', spriteDest), spriteMap);
-    fs.ensureDirSync(linksDest);
+    const dest = path.join(process.cwd(), 'public', spriteDest);
+    fs.ensureDirSync(dest);
+    fs.writeFileSync(dest, spriteMap);
 
+    fs.ensureDirSync(linksDest);
     filePaths.forEach(filePath => {
       const fileName = filePath.split('/').reverse()[0];
       const id = fileName.replace('.svg', '');

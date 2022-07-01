@@ -13,6 +13,9 @@ dist-ssr
 tmp
 *.local
 ssr-manifest.json
+
+# generated files
+public/assets/svg/svg-sprite-map.generated.svg
 src/generated
 
 .vercel
