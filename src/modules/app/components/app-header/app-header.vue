@@ -10,8 +10,9 @@ const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
 const COLOR_MODE_KEY = 'color-mode';
 const isDarkMode = computed({
   get() {
-    const persistedColorPreference =
-      window.localStorage.getItem(COLOR_MODE_KEY);
+    const persistedColorPreference = import.meta.env.SSR
+      ? false
+      : localStorage.getItem(COLOR_MODE_KEY);
     const hasPersistedPreference = typeof persistedColorPreference === 'string';
 
     if (hasPersistedPreference) {
