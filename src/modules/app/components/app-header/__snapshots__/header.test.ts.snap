@@ -1,7 +1,0 @@
-// Vitest Snapshot v1
-
-exports[`Header Component > should mount component 1`] = `
-<header flex="" items="center" justify="space-between" p="x-6 y-3" pl="lt-sm:12" bg="red-400" shadow="md" gap="8">
-  <h1 m="0" text="2xl"><a href="/" class="" no-underline="" color="inherit">Pokédex</a></h1>
-</header>
-`;

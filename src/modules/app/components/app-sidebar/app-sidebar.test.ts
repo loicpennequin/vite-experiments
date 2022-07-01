@@ -22,7 +22,7 @@ async function renderWithLoadedList({
   }
 
   const request = httpMock({
-    url: '/pokemon?limit=50&offset=0',
+    url: '/pokemon-species?limit=50&offset=0',
     response: {
       count: 50,
       results

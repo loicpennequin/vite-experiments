@@ -1,9 +1,11 @@
 // Vitest Snapshot v1
 
 exports[`Sidebar Component > should mount component 1`] = `
-<nav p-y="3" bg="red-400" min-w="15rem" data-v-8d1ae9b2=""><label for="sidebar-toggle" sm="sr-only" title="Hide list" w="full" flex="" justify="start" items="center" gap="3" bg="red-400" px="3" data-v-8d1ae9b2=""><svg width="1.2em" height="1.2em" viewBox="0 0 100 100" h="8" data-v-8d1ae9b2="">
+<nav p-y="3" bg="white dark:dark-100" min-w="15rem" flex="" flex-col="" shadow-md=""><label for="sidebar-toggle" sm="sr-only" title="Hide list" w="full" flex="" justify="start" items="center" gap="3" px="3"><svg width="1.2em" height="1.2em" viewBox="0 0 100 100" h="8">
       <use xlink:href="/assets/svg/svg-sprite-map.generated.svg#arrows-right"></use>
-    </svg><span data-v-8d1ae9b2="">Hide list</span></label>
-  <div class="infinite-scroll-trigger" data-v-dc2cc908=""></div>
+    </svg><span>Hide list</span></label>
+  <div flex="1" overflow-y-auto="">
+    <div class="infinite-scroll-trigger" data-v-dc2cc908=""></div>
+  </div>
 </nav>
 `;
