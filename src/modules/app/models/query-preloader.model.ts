@@ -33,7 +33,9 @@ export class QueryPreloader<T> {
     return Object.fromEntries(dependsOn.map((depKey, i) => [depKey, deps[i]]));
   }
 
-  private async getPreloadPromise(options: ReturnType<RouteQueryMapFn<any>>) {
+  private async getPreloadPromise(
+    options: ReturnType<RouteQueryMapFn<any, any>>
+  ) {
     await this.sleep(0);
     const { queryKey, queryFn, staleTime, cacheTime, dependsOn = [] } = options;
     const deps = await this.preloadDependencies(dependsOn);
@@ -46,7 +48,7 @@ export class QueryPreloader<T> {
   }
 
   private preloadQuery(
-    queryDef: RouteQueryMapFn<any>,
+    queryDef: RouteQueryMapFn<any, any>,
     nextRoute: RouteLocationNormalized,
     key: string
   ) {
@@ -57,18 +59,26 @@ export class QueryPreloader<T> {
     if (options.waitUntilPreloaded) this.requiredPreloads.push(promise);
   }
 
+  private async flushRequiredPreloads() {
+    await Promise.all(this.requiredPreloads);
+    this.requiredPreloads = [];
+  }
+
+  private startPreloads(nextRoute: RouteLocationNormalized) {
+    Object.entries(this.queriesOptions).forEach(
+      ([key, queryDef]: [string, any]) => {
+        this.preloadQuery(queryDef, nextRoute, key);
+      }
+    );
+  }
+
   async run(nextRoute: RouteLocationNormalized) {
     if (!this.isPreloading) {
       this.isPreloading = true;
-      Object.entries(this.queriesOptions).forEach(
-        ([key, queryDef]: [string, any]) => {
-          this.preloadQuery(queryDef, nextRoute, key);
-        }
-      );
+      this.startPreloads(nextRoute);
     }
 
-    await Promise.all(this.requiredPreloads);
+    await this.flushRequiredPreloads();
     this.isPreloading = false;
-    this.requiredPreloads = [];
   }
 }

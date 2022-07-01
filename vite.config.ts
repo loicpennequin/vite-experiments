@@ -14,12 +14,18 @@ import { vueI18n } from '@intlify/vite-plugin-vue-i18n';
 import eslintPlugin from 'vite-plugin-eslint';
 import Pages from 'vite-plugin-pages';
 import { VitePWA } from 'vite-plugin-pwa';
+import GenerateIcons from './scripts/vite-plugins/svg-sprite-map';
 
 export default defineConfig({
   plugins: [
     vitedgePlugin(),
     eslintPlugin(),
     vue(),
+    GenerateIcons({
+      src: './src/assets/icons/*.svg',
+      spriteDest: '/assets/svg/svg-sprite-map.generated.svg',
+      linksDest: path.join(process.cwd(), 'src/generated/icons')
+    }),
     VitePWA({
       includeAssets: [
         'favicon.svg',
@@ -71,9 +77,7 @@ export default defineConfig({
 
     Icons({
       customCollections: {
-        pkmn: FileSystemIconLoader('./src/assets/icons', svg =>
-          svg.replace(/^<svg /, '<svg fill="currentColor" ')
-        )
+        pkmn: FileSystemIconLoader('./src/generated/icons')
       }
     }),
 

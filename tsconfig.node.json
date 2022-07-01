@@ -5,5 +5,5 @@
     "moduleResolution": "node",
     "types": ["vitest/globals", "@intlify/vite-plugin-vue-i18n/client"]
   },
-  "include": ["vite.config.ts"]
+  "include": ["vite.config.ts", "scripts/vite-plugins/*.ts"]
 }

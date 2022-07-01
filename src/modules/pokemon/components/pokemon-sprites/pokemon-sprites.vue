@@ -2,7 +2,6 @@
 import { ref } from 'vue';
 import { Pokemon } from '../../models/pokemon.resource';
 import { vUid } from '@/modules/app/directives/unique-id';
-import { ClientOnly } from 'vitedge';
 
 const props = defineProps<{ pokemon: Pokemon }>();
 const input = ref<HTMLInputElement>();

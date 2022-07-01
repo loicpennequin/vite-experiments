@@ -2,27 +2,7 @@
 import { useLoader } from '@/modules/app/composables/use-loader';
 import { PokemonDetailLoader } from './detail.loader';
 import { useI18n } from 'vue-i18n';
-
-const POKEMON_TYPE_COLORS = {
-  normal: '#A8A77A',
-  fire: '#EE8130',
-  water: '#6390F0',
-  electric: '#F7D02C',
-  grass: '#7AC74C',
-  ice: '#96D9D6',
-  fighting: '#C22E28',
-  poison: '#A33EA1',
-  ground: '#E2BF65',
-  flying: '#A98FF3',
-  psychic: '#F95587',
-  bug: '#A6B91A',
-  rock: '#B6A136',
-  ghost: '#735797',
-  dragon: '#6F35FC',
-  dark: '#705746',
-  steel: '#B7B7CE',
-  fairy: '#D685AD'
-};
+import { POKEMON_TYPE_COLORS } from '@/constants';
 
 const {
   pokemon: { isLoading: isPokemonLoading, data: pokemon },
@@ -38,6 +18,7 @@ const { t } = useI18n();
       <ContentSurface h="17" animate-pulse />
       <ContentSurface h="9.5rem" animate-pulse />
       <ContentSurface h="26" animate-pulse />
+      <ContentSurface h="30" animate-pulse />
     </template>
 
     <template v-else-if="pokemon">
@@ -76,7 +57,7 @@ const { t } = useI18n();
         {{ pokemon.description }}
       </ContentBlock>
 
-      <ContentSurface v-if="isEvolutionsLoading" h="25" animate-pulse />
+      <ContentSurface v-if="isEvolutionsLoading" h="30" animate-pulse />
       <ContentBlock
         v-else-if="evolutions"
         rounded="lg"
@@ -99,6 +80,7 @@ const { t } = useI18n();
   }
 }
 </i18n>
+
 <route lang="json">
 {
   "path": "/:name",

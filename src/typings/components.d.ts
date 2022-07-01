@@ -13,6 +13,7 @@ declare module '@vue/runtime-core' {
     ContentSurface: typeof import('./../modules/app/components/content-surface.vue')['default']
     IconPkmnArrowsRight: typeof import('~icons/pkmn/arrows-right')['default']
     IconPkmnBars: typeof import('~icons/pkmn/bars')['default']
+    IconPkmnCheckDouble: typeof import('~icons/pkmn/check-double')['default']
     IconPkmnSpinner: typeof import('~icons/pkmn/spinner')['default']
     InfiniteScroll: typeof import('./../modules/app/components/infinite-scroll.vue')['default']
     LazyImage: typeof import('./../modules/app/components/lazy-image/lazy-image.vue')['default']

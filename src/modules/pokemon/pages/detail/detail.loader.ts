@@ -27,7 +27,8 @@ export default createLoader<PokemonDetailLoader>('Detail', {
       queryFn: (_ctx, { pokemon }) => getEvolutionChain(pokemon),
       dependsOn: ['pokemon'],
       staleTime: Infinity,
-      ssrPrefetch: false
+      ssrPrefetch: false,
+      waitUntilPreloaded: false
     };
   }
 });
