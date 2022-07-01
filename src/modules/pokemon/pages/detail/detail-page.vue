@@ -22,10 +22,12 @@ const { t } = useI18n();
     </template>
 
     <template v-else-if="pokemon">
-      <ContentSurface is="h2" text="3xl" font-bold capitalize rounded="lg">
-        {{ pokemon.name }}
+      <ContentSurface rounded="lg" flex justify-between lt-sm="flex-col" gap-4>
+        <h3 font-bold capitalize text-3xl>
+          {{ pokemon.id }} - {{ pokemon.name }}
+        </h3>
 
-        <span uppercase float-right space-x="2" text="xl">
+        <span uppercase space-x="2" text="xl lt-sm:base">
           <span
             v-for="pkmnType in pokemon.types"
             :key="pkmnType.name"

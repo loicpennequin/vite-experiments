@@ -69,7 +69,13 @@ export default function ({
     ).replace('<?xml version="1.0" encoding="utf-8"?>', '');
 
     const dest = path.join(process.cwd(), 'public', spriteDest);
-    fs.ensureDirSync(dest);
+    const destDirectory = dest
+      .split('/')
+      .reverse()
+      .slice(1, -1)
+      .reverse()
+      .join('/');
+    fs.ensureDirSync(destDirectory);
     fs.writeFileSync(dest, spriteMap);
 
     fs.ensureDirSync(linksDest);

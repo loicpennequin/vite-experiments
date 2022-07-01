@@ -70,6 +70,6 @@ const scrollRoot = ref<HTMLElement>();
 
 <style scoped>
 .router-link-exact-active {
-  --at-apply: 'bg-red-500';
+  --at-apply: 'bg-light-300';
 }
 </style>

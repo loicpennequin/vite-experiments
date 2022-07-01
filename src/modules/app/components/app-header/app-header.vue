@@ -10,10 +10,10 @@ const { t } = useI18n();
     items="center"
     justify="space-between"
     p="2"
-    bg="red-400"
+    bg="white"
     shadow="md"
   >
-    <AppSidebarToggle p="4" :title="t('toggle')">
+    <AppSidebarToggle p="4" :title="t('toggle')" color-dark-400>
       <icon-pkmn-bars h="8" />
     </AppSidebarToggle>
     <h1 m="0" text="2xl">

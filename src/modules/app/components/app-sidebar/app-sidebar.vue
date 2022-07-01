@@ -14,7 +14,7 @@ const onItemClick = () => {
 </script>
 
 <template>
-  <nav p-y="3" bg="red-400" min-w="15rem">
+  <nav p-y="3" bg="white" min-w="15rem">
     <app-sidebar-toggle
       title="Hide list"
       w="full"
@@ -22,7 +22,6 @@ const onItemClick = () => {
       justify="start"
       items="center"
       gap="3"
-      bg="red-400"
       px="3"
     >
       <icon-pkmn-arrows-right h="8" />
@@ -32,9 +31,3 @@ const onItemClick = () => {
     <PokemonList @item-click="onItemClick" />
   </nav>
 </template>
-
-<style scoped lang="scss">
-.router-link-exact-active {
-  --at-apply: 'bg-red-500';
-}
-</style>

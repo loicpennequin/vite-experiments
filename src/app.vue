@@ -18,7 +18,7 @@ onMounted(() => {
       'layout--is-ssr': isSSR
     }"
     font="sans"
-    bg="red-400"
+    bg="light-400"
     grid
     max-w="screen"
     min-h="screen"
@@ -44,7 +44,6 @@ onMounted(() => {
     />
 
     <main
-      bg="blue-1"
       col-start="2 lt-sm:1"
       col-span="1"
       relative
