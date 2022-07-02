@@ -46,25 +46,22 @@ const filteredPokemons = computed(() =>
     v-if="pokemons"
     v-slot="{ item: pokemon }"
     h-full
-    :item-size="32"
+    item-size="32"
     :items="filteredPokemons"
     key-field="name"
-    overflow-y-auto
-    :prerender="filteredPokemons.length"
   >
-    <div style="height: 32px">
-      <AppLink
-        block
-        capitalize
-        p="3"
-        prefetch
-        space-x="1"
-        :to="{ name: 'Detail', params: { name: pokemon.name } }"
-        @click="emit('item-click')"
-      >
-        {{ pokemon.name }}
-      </AppLink>
-    </div>
+    <AppLink
+      block
+      capitalize
+      h="32px"
+      p-x="3"
+      prefetch
+      space-x="1"
+      :to="{ name: 'Detail', params: { name: pokemon.name } }"
+      @click="emit('item-click')"
+    >
+      {{ pokemon.name }}
+    </AppLink>
   </RecycleScroller>
 </template>
 
