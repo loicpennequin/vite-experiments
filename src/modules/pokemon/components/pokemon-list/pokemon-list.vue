@@ -46,7 +46,7 @@ const filteredPokemons = computed(() =>
     v-if="pokemons"
     v-slot="{ item: pokemon }"
     h-full
-    item-size="32"
+    :item-size="32"
     :items="filteredPokemons"
     key-field="name"
   >

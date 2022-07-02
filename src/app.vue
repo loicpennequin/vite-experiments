@@ -1,28 +1,23 @@
 <script lang="ts" setup>
-import { onMounted, ref } from 'vue';
+import { ref } from 'vue';
+import { useI18n } from 'vue-i18n';
 import { useIsPreloading } from './modules/app/composables/use-is-preloading';
 import { vClickOutside } from './modules/app/directives/click-outside';
 
 const isPreloading = useIsPreloading();
 const isSidebarOpened = ref(false);
 
-const isSSR = ref(false);
-onMounted(() => {
-  isSSR.value = false;
-});
-
 const onClickOutside = () => {
   isSidebarOpened.value = false;
 };
+
+const { t } = useI18n();
 </script>
 
 <template>
   <div
     bg="light-400 dark:dark-300"
     class="layout"
-    :class="{
-      'layout--is-ssr': isSSR
-    }"
     color="black dark:white"
     font="sans"
     grid
@@ -36,6 +31,7 @@ const onClickOutside = () => {
       type="checkbox"
     />
     <AppHeader col-span="full" sticky top="0" z-1 />
+    <a href="#main" sr-only>{{ t('skip') }}</a>
     <AppSidebar
       v-model:is-opened="isSidebarOpened"
       v-click-outside="onClickOutside"
@@ -50,6 +46,7 @@ const onClickOutside = () => {
     />
 
     <main
+      id="main"
       col-span="1"
       col-start="2 lt-sm:1"
       :overflow-x="isSidebarOpened && 'lt-sm:hidden'"
@@ -124,3 +121,11 @@ const onClickOutside = () => {
   }
 }
 </style>
+
+<i18n lang="json">
+{
+  "en": {
+    "skip": "Skip to main content"
+  }
+}
+</i18n>

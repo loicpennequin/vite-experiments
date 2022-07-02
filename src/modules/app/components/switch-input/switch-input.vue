@@ -20,7 +20,15 @@ const inputEl = ref<HTMLInputElement>();
 </script>
 
 <template>
-  <div flex gap-xs items-center text-xs>
+  <div
+    flex
+    gap-xs
+    items-center
+    outline="4 solid transparent focus-within:slate-300"
+    p="1"
+    rounded="full"
+    text-xs
+  >
     <input v-model="vModel" ref="inputEl" v-uid sr-only type="checkbox" />
     <slot name="off" />
     <label
@@ -53,10 +61,6 @@ input[type='checkbox'] {
   }
 
   &:checked {
-    ~ .default-sprite {
-      opacity: 0;
-    }
-
     ~ label::after {
       left: calc(100% - 18px);
     }
