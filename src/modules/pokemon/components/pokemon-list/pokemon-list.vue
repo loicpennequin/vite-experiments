@@ -34,7 +34,7 @@ const {
     const offset = (page.value - 1) * SSR_RESULT_PER_PAGE;
     return {
       ...data,
-      result: data.results.slice(offset, offset + SSR_RESULT_PER_PAGE)
+      results: data.results.slice(offset, offset + SSR_RESULT_PER_PAGE)
     };
   },
   {
