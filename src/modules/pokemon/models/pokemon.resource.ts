@@ -36,7 +36,7 @@ export class Pokemon extends ApiResource<PokemonDto> {
 
   description!: string;
 
-  types!: (NamedApiResource & { color: string })[];
+  types!: (NamedApiResource & { bg: string; color: string })[];
 
   stats!: PokemonStat[];
 
@@ -55,8 +55,7 @@ export class Pokemon extends ApiResource<PokemonDto> {
     this.weight = pokemon.weight;
     this.types = pokemon.types.map(type => ({
       ...type.type,
-      color:
-        POKEMON_TYPE_COLORS[type.type.name as keyof typeof POKEMON_TYPE_COLORS]
+      ...POKEMON_TYPE_COLORS[type.type.name as keyof typeof POKEMON_TYPE_COLORS]
     }));
     this.stats = pokemon.stats.map(stat => ({
       baseStat: stat.base_stat,

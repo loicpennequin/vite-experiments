@@ -7,104 +7,61 @@ const props = defineProps<{ pokemon: Pokemon }>();
 
 const { t } = useI18n();
 const isToggled = ref(false);
-const isSSR = import.meta.env.SSR;
 </script>
 
 <template>
-  <div grid justify-center>
-    <input
-      v-model="isToggled"
-      id="pokemon-sprite-toggle"
-      ref="input"
-      sr-only
-      type="checkbox"
-    />
-    <div class="default-sprite" col-start-1 row-start-1>
-      <LazyImage
-        v-if="props.pokemon.sprites.default"
-        :alt="`${pokemon.name}`"
-        :src="props.pokemon.sprites.default"
+  <div grid justify-items-center>
+    <transition-group>
+      <PokemonSprite
+        v-if="!isToggled"
+        key="default"
+        :alt="props.pokemon.name"
+        col-start-1
+        row-start-1
+        :sprite="props.pokemon.sprites.default"
+        w="25"
       />
-      <p v-else m-x="auto" text="sm" text-center w="15">
-        {{ t('unavailable') }}
-      </p>
-    </div>
 
-    <div class="shiny-sprite" col-start-1 row-start-1>
-      <LazyImage
-        v-if="props.pokemon.sprites.shiny"
-        :alt="`${pokemon.name}`"
-        :src="props.pokemon.sprites.shiny"
+      <PokemonSprite
+        v-else
+        key="shiny"
+        :alt="t('shinyAlt', { name: props.pokemon.name })"
+        col-start-1
+        row-start-1
+        :sprite="props.pokemon.sprites.shiny"
+        w="25"
       />
-      <p v-else m-x="auto" text="sm" text-center w="15">
-        {{ t('unavailable') }}
-      </p>
-    </div>
+    </transition-group>
 
-    <div
-      class="label__wrapper"
-      flex
-      gap-xs
-      :invisible="isSSR"
-      items-center
-      text-xs
-    >
-      Normal
-      <label
-        border="solid 1 gray-400"
-        cursor-pointer
-        for="pokemon-sprite-toggle"
-        h="5"
-        p-x="1"
-        relative
-        rounded-full
-        w="10"
-      />
-      Shiny
-    </div>
+    <ClientOnly>
+      <SwitchInput v-model="isToggled">
+        <template #off>{{ t('labels.normal') }}</template>
+        <template #on>{{ t('labels.shiny') }}</template>
+      </SwitchInput>
+
+      <template #fallback><div h="10" /></template>
+    </ClientOnly>
   </div>
 </template>
 
-<style lang="scss" scoped>
-input[type='checkbox'] {
-  &:not(:checked) {
-    ~ .shiny-sprite {
-      opacity: 0;
-    }
-
-    ~ .label__wrapper label::after {
-      left: 0;
-    }
-  }
-
-  &:checked {
-    ~ .default-sprite {
-      opacity: 0;
-    }
-
-    ~ .label__wrapper label::after {
-      left: calc(100% - 18px);
-    }
-  }
-}
-
-label::after {
-  --at-apply: 'absolute top-0  w-4 h-4 rounded-full bg-slate-600 dark:bg-slate-300 duration-200';
-  content: '';
-  margin-top: 1px;
-  margin-left: 1px;
-}
-
-.default-sprite,
-.shiny-sprite {
+<style scoped>
+.v-enter-active,
+.v-leave-active {
   --at-apply: 'transition-opacity duration-300';
 }
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
+}
 </style>
-
 <i18n lang="json">
 {
   "en": {
-    "unavailable": "Sprite not available"
+    "shinyAlt": "{name} shiny",
+    "labels": {
+      "normal": "Normal",
+      "shiny": "Shiny"
+    }
   }
 }
 </i18n>

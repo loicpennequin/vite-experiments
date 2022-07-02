@@ -22,9 +22,9 @@ const { t } = useI18n();
 
     <template v-else-if="pokemon">
       <ContentSurface flex gap-4 justify-between lt-sm="flex-col" rounded="lg">
-        <h3 capitalize font-bold text-3xl>
+        <h2 capitalize font-bold text-3xl>
           {{ pokemon.id }} - {{ pokemon.name }}
-        </h3>
+        </h2>
 
         <span space-x="2" text="xl lt-sm:base" uppercase>
           <span
@@ -32,7 +32,7 @@ const { t } = useI18n();
             :key="pkmnType.name"
             p-2
             rounded-xl
-            :style="{ backgroundColor: pkmnType.color }"
+            :style="{ backgroundColor: pkmnType.bg, color: pkmnType.color }"
           >
             {{ pkmnType.name }}
           </span>
