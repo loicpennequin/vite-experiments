@@ -13,6 +13,7 @@ declare module '@vue/runtime-core' {
     ContentSurface: typeof import('./../modules/app/components/content-surface.vue')['default']
     IconPkmnArrowsRight: typeof import('~icons/pkmn/arrows-right')['default']
     IconPkmnBars: typeof import('~icons/pkmn/bars')['default']
+    IconPkmnChevronRight: typeof import('~icons/pkmn/chevron-right')['default']
     IconPkmnMoon: typeof import('~icons/pkmn/moon')['default']
     IconPkmnSpinner: typeof import('~icons/pkmn/spinner')['default']
     IconPkmnSun: typeof import('~icons/pkmn/sun')['default']

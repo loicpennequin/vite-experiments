@@ -44,17 +44,6 @@ describe('Sidebar Component', () => {
     expect(html()).toMatchSnapshot();
   });
 
-  test('should display a link to detail page for each pokemon', async () => {
-    const { findByText } = await renderWithLoadedList({
-      isDesktop: true
-    });
-
-    const link = await findByText('foo');
-
-    expect(link).toBeInTheDocument();
-    expect(link).toHaveAttribute('href', '/foo');
-  });
-
   test('should hide the list on mobile', async () => {
     const { queryByText } = await renderWithLoadedList({ isDesktop: false });
     expect(queryByText('foo')).not.toBeInTheDocument();

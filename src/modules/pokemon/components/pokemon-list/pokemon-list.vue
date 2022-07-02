@@ -4,6 +4,8 @@ import { onServerPrefetch, ref, computed } from 'vue';
 import { useQuery } from 'vue-query';
 import { NamedApiResource } from '@/types';
 import { useI18n } from 'vue-i18n';
+import { RecycleScroller } from 'vue-virtual-scroller';
+import 'vue-virtual-scroller/dist/vue-virtual-scroller.css';
 
 const emit = defineEmits<{
   (e: 'item-click'): void;
@@ -29,7 +31,7 @@ onServerPrefetch(suspense);
 </script>
 
 <template>
-  <ContentSurface p="2" sticky top="0">
+  <ContentSurface p="2" sticky top="0" z-1>
     <input
       v-model="search"
       :aria-label="t('searchLabel')"
@@ -39,24 +41,32 @@ onServerPrefetch(suspense);
       :placeholder="t('searchLabel')"
     />
   </ContentSurface>
+
   <LoadingSpinner v-if="isLoading" h-full m-x="auto" />
-  <template v-if="pokemons">
-    <ul overflow-y-auto>
-      <li v-for="pokemon in filteredPokemons" :key="pokemon.name">
-        <AppLink
-          block
-          capitalize
-          p="3"
-          prefetch
-          space-x="1"
-          :to="{ name: 'Detail', params: { name: pokemon.name } }"
-          @click="emit('item-click')"
-        >
-          {{ pokemon.name }}
-        </AppLink>
-      </li>
-    </ul>
-  </template>
+  <RecycleScroller
+    v-if="pokemons"
+    v-slot="{ item: pokemon }"
+    h-full
+    :item-size="32"
+    :items="filteredPokemons"
+    key-field="name"
+    overflow-y-auto
+    :prerender="filteredPokemons.length"
+  >
+    <div style="height: 32px">
+      <AppLink
+        block
+        capitalize
+        p="3"
+        prefetch
+        space-x="1"
+        :to="{ name: 'Detail', params: { name: pokemon.name } }"
+        @click="emit('item-click')"
+      >
+        {{ pokemon.name }}
+      </AppLink>
+    </div>
+  </RecycleScroller>
 </template>
 
 <style scoped>
