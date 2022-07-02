@@ -8,5 +8,8 @@ exports[`Sidebar Component > should mount component 1`] = `
     <use xlink:href="/assets/svg/svg-sprite-map.generated.svg#spinner"></use>
   </svg>
   <!--v-if-->
+  <div flex="" justify-between="" p="2" underline="" data-v-82a45ada="">
+    <!--v-if--><a href="/?sidebar_page=2" class="" data-v-82a45ada="">Next</a>
+  </div>
 </nav>
 `;
