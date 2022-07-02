@@ -31,13 +31,11 @@ const addRouterHook = (router: Router, isPreloading: Ref<boolean>) => {
     if (!from.name) return next();
 
     isPreloading.value = true;
-    console.log('starting preload from router');
     await Promise.allSettled(
       to.matched
         .map(({ name }) => name && loaders.get(name)?.preload(to))
         .filter(Boolean)
     );
-    console.log('finished preload from router');
     isPreloading.value = false;
 
     next();

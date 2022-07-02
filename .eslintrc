@@ -21,7 +21,20 @@
     "vue/attributes-order": [
       "warn",
       {
-        "alphabetical": false
+        "order": [
+          "DEFINITION",
+          "LIST_RENDERING",
+          "CONDITIONALS",
+          "RENDER_MODIFIERS",
+          "TWO_WAY_BINDING",
+          "GLOBAL",
+          ["UNIQUE", "SLOT"],
+          "OTHER_DIRECTIVES",
+          "OTHER_ATTR",
+          "EVENTS",
+          "CONTENT"
+        ],
+        "alphabetical": true
       }
     ]
   }

@@ -25,20 +25,20 @@ onMounted(() => {
     <LoadingSpinner
       v-if="!isLoaded"
       col-start="1"
+      h="12"
       row-start="1"
       w="12"
-      h="12"
     />
 
     <img
       ref="image"
-      :src="props.src"
       :alt="props.alt"
-      :opacity="isLoaded ? 1000 : 0"
-      transition-opacity
-      duration-200
       col-start="1"
+      duration-200
+      :opacity="isLoaded ? 1000 : 0"
       row-start="1"
+      :src="props.src"
+      transition-opacity
       v-bind="$attrs"
       @load="onLoad"
     />

@@ -12,21 +12,21 @@ const { t } = useI18n();
 </script>
 
 <template>
-  <div space-y="4" w="screen-sm" max-w="full">
+  <div max-w="full" space-y="4" w="screen-sm">
     <template v-if="isPokemonLoading">
-      <ContentSurface h="17" animate-pulse />
-      <ContentSurface h="42" animate-pulse />
-      <ContentSurface h="26" animate-pulse />
-      <ContentSurface h="30" animate-pulse />
+      <ContentSurface animate-pulse h="17" />
+      <ContentSurface animate-pulse h="42" />
+      <ContentSurface animate-pulse h="26" />
+      <ContentSurface animate-pulse h="30" />
     </template>
 
     <template v-else-if="pokemon">
-      <ContentSurface rounded="lg" flex justify-between lt-sm="flex-col" gap-4>
-        <h3 font-bold capitalize text-3xl>
+      <ContentSurface flex gap-4 justify-between lt-sm="flex-col" rounded="lg">
+        <h3 capitalize font-bold text-3xl>
           {{ pokemon.id }} - {{ pokemon.name }}
         </h3>
 
-        <span uppercase space-x="2" text="xl lt-sm:base">
+        <span space-x="2" text="xl lt-sm:base" uppercase>
           <span
             v-for="pkmnType in pokemon.types"
             :key="pkmnType.name"
@@ -40,10 +40,10 @@ const { t } = useI18n();
       </ContentSurface>
 
       <ContentBlock rounded="lg" :title="t('headings.stats')">
-        <div flex items="center" flex-wrap gap="3">
-          <PokemonSprites :pokemon="pokemon" mx="lt-sm:auto" />
+        <div flex flex-wrap gap="3" items="center">
+          <PokemonSprites mx="lt-sm:auto" :pokemon="pokemon" />
 
-          <ul grid grid-cols="1 lg:2  " gap="2">
+          <ul gap="2" grid grid-cols="1 lg:2  ">
             <PokemonStatBar
               is="li"
               v-for="stat in pokemon.stats"
@@ -58,7 +58,7 @@ const { t } = useI18n();
         {{ pokemon.description }}
       </ContentBlock>
 
-      <ContentSurface v-if="isEvolutionsLoading" h="30" animate-pulse />
+      <ContentSurface v-if="isEvolutionsLoading" animate-pulse h="30" />
       <ContentBlock
         v-else-if="evolutions"
         rounded="lg"

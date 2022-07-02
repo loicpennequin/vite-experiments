@@ -14,17 +14,17 @@ const onItemClick = () => {
 </script>
 
 <template>
-  <nav bg="white dark:dark-100" min-w="15rem" flex flex-col shadow-md>
+  <nav bg="white dark:dark-100" flex flex-col min-w="15rem" shadow-md>
     <app-sidebar-toggle
+      flex
+      gap="3"
+      items="center"
+      justify="start"
+      px="3"
       title="Hide list"
       w="full"
-      flex
-      justify="start"
-      items="center"
-      gap="3"
-      px="3"
     >
-      <icon-pkmn-arrows-right h="8" fill="dark:white" />
+      <icon-pkmn-arrows-right fill="dark:white" h="8" />
       <span>Hide list</span>
     </app-sidebar-toggle>
 

@@ -20,19 +20,19 @@ const inputEl = ref<HTMLInputElement>();
 </script>
 
 <template>
-  <div flex items-center gap-xs text-xs>
-    <input ref="inputEl" v-model="vModel" v-uid type="checkbox" sr-only />
+  <div flex gap-xs items-center text-xs>
+    <input v-model="vModel" ref="inputEl" v-uid sr-only type="checkbox" />
     <slot name="off" />
     <label
-      :for="inputEl?.id"
-      un-after="absolute top-0  w-4 h-4 rounded-full bg-slate-600 dark:bg-slate-300 duration-200"
       border="solid 1 gray-400 dark:gray-500"
-      w="10"
-      h="5"
-      rounded-full
-      relative
-      p-x="1"
       cursor-pointer
+      :for="inputEl?.id"
+      h="5"
+      p-x="1"
+      relative
+      rounded-full
+      un-after="absolute top-0  w-4 h-4 rounded-full bg-slate-600 dark:bg-slate-300 duration-200"
+      w="10"
     />
     <slot name="on" />
   </div>

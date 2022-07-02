@@ -1,6 +1,6 @@
 import { POKEMON_TYPE_COLORS } from '@/constants';
 import { ApiResource } from '@/modules/app/models/api-resource.model';
-import { NamedApiResource } from '@/types';
+import { Maybe, NamedApiResource } from '@/types';
 import type {
   IPokemon,
   IPokemonSpecies,
@@ -28,7 +28,7 @@ export class Pokemon extends ApiResource<PokemonDto> {
 
   name!: string;
 
-  evolutionChainId!: number;
+  evolutionChainId!: Maybe<number>;
 
   height!: number;
 
@@ -50,7 +50,7 @@ export class Pokemon extends ApiResource<PokemonDto> {
   mapFromDtoToModel(dto: PokemonDto): void {
     const { pokemon, species } = dto;
     this.id = pokemon.id;
-    this.name = pokemon.name;
+    this.name = species.name;
     this.height = pokemon.height;
     this.weight = pokemon.weight;
     this.types = pokemon.types.map(type => ({
@@ -71,9 +71,9 @@ export class Pokemon extends ApiResource<PokemonDto> {
         (entry: any) => entry.language.name === 'en'
       ) as IFlavorText
     ).flavor_text.replace('\u000C', ' ');
-    this.evolutionChainId = parseInt(
-      species.evolution_chain.url.split('/').reverse()[1]
-    );
+    this.evolutionChainId = species.evolution_chain
+      ? parseInt(species.evolution_chain.url.split('/').reverse()[1])
+      : null;
   }
 }
 

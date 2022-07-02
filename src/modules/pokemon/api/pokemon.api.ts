@@ -17,7 +17,7 @@ export type EvoltutionChain = Pokemon[][];
 const ENDPOINTS = {
   POKEMON: '/pokemon',
   EVOLUTION_CHAIN: '/evolution-chain',
-  POKEMON_SPECIES: '/pokemon-species'
+  SPECIES: '/pokemon-species'
 };
 
 const SPECIES_COUNT = 905;
@@ -26,7 +26,7 @@ export const getAllPokemons = async ({
   limit,
   offset = 0
 }: GetAllPokemonsOptions) => {
-  const { data } = await http.get(ENDPOINTS.POKEMON_SPECIES, {
+  const { data } = await http.get(ENDPOINTS.SPECIES, {
     params: {
       limit,
       offset
@@ -37,12 +37,11 @@ export const getAllPokemons = async ({
 };
 
 export const getPokemonByName = async (name: string) => {
-  const { data: pokemon } = await http.get<IPokemon>(
-    `${ENDPOINTS.POKEMON}/${name}`
-  );
-
   const { data: species } = await http.get<IPokemonSpecies>(
-    pokemon.species.url
+    `${ENDPOINTS.SPECIES}/${name}`
+  );
+  const { data: pokemon } = await http.get<IPokemon>(
+    species.varieties[0].pokemon.url
   );
 
   return new Pokemon({ pokemon, species });
@@ -71,6 +70,8 @@ export const getPokemonsByEvolutionLink = (
 };
 
 export const getEvolutionChain = async (pokemon: Pokemon) => {
+  if (!pokemon.evolutionChainId) return [];
+
   const { data } = await http.get<IEvolutionChain>(
     `${ENDPOINTS.EVOLUTION_CHAIN}/${pokemon.evolutionChainId}`
   );

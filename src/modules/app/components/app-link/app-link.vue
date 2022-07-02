@@ -49,8 +49,8 @@ const onMouseLeave = () => {
 
 <template>
   <router-link
-    :to="props.to"
     color="inherit"
+    :to="props.to"
     @mouseenter="onMouseEnter"
     @mouseleave="onMouseLeave"
   >

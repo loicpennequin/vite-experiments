@@ -18,54 +18,54 @@ const onClickOutside = () => {
 
 <template>
   <div
+    bg="light-400 dark:dark-300"
     class="layout"
     :class="{
       'layout--is-ssr': isSSR
     }"
-    font="sans"
-    bg="light-400 dark:dark-300"
     color="black dark:white"
+    font="sans"
     grid
     max-w="screen"
     min-h="screen"
   >
     <input
-      id="sidebar-toggle"
       v-model="isSidebarOpened"
-      type="checkbox"
+      id="sidebar-toggle"
       sr-only
+      type="checkbox"
     />
-    <AppHeader sticky z-1 top="0" col-span="full" />
+    <AppHeader col-span="full" sticky top="0" z-1 />
     <AppSidebar
       v-model:is-opened="isSidebarOpened"
       v-click-outside="onClickOutside"
       class="layout__sidebar"
-      top="lt-sm:0"
+      col-start-1
       h="lt-sm:screen"
       lt-sm="fixed"
-      transition-transform
+      top="lt-sm:0"
       transition-duration="0 lt-sm:300"
-      col-start-1
+      transition-transform
       z="lt-sm:2"
     />
 
     <main
-      col-start="2 lt-sm:1"
       col-span="1"
-      relative
+      col-start="2 lt-sm:1"
       :overflow-x="isSidebarOpened && 'lt-sm:hidden'"
+      relative
     >
-      <LoadingSpinner v-if="isPreloading" absolute top="5" right="5" />
+      <LoadingSpinner v-if="isPreloading" absolute right="5" top="5" />
       <div
         class="layout__page-wrapper"
-        :translate-x="isSidebarOpened ? 'lt-sm:15rem' : 0"
-        p="y-8 x-2"
         flex
         flex-col
-        items-center
-        transition-transform
-        transition-duration-300
         h-full
+        items-center
+        p="y-8 x-2"
+        transition-duration-300
+        transition-transform
+        :translate-x="isSidebarOpened ? 'lt-sm:15rem' : 0"
       >
         <router-view />
       </div>

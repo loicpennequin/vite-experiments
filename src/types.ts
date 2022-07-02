@@ -2,6 +2,8 @@ import { App } from 'vue';
 import { UseQueryReturnType } from 'vue-query';
 import { RouteLocationNormalized, Router } from 'vue-router';
 
+export type Maybe<T> = T | null;
+
 export type VitedgePluginContext = {
   app: App;
   router: Router;

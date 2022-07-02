@@ -11,13 +11,13 @@ const {
 </script>
 
 <template>
-  <div space-y="4" w="screen-sm" max-w="full">
+  <div max-w="full" space-y="4" w="screen-sm">
     <ContentSurface
       flex
       flex-col
+      gap="5"
       items="center"
       justify="center"
-      gap="5"
       p-y="15"
       text-center
     >
@@ -27,41 +27,41 @@ const {
     </ContentSurface>
 
     <ContentSurface space-y="3">
-      <h2 text="2xl" weight-bold lt-sm="text-center">{{ t('potd.title') }}</h2>
+      <h2 lt-sm="text-center" text="2xl" weight-bold>{{ t('potd.title') }}</h2>
       <div mx="auto" space-y="5">
         <figure capitalize flex gap="3" lt-sm="flex-wrap">
           <div m-x="auto" w="sm:full">
             <div
               v-if="isLoading"
-              w="35"
+              animate-pulse
               aspect-square
               bg="light-300 dark:dark-300"
-              animate-pulse
+              w="35"
             />
             <LazyImage
               v-else-if="pokemonOfTheDay"
-              :src="pokemonOfTheDay.sprites.default"
               :alt="pokemonOfTheDay.name"
-              w="35"
               aspect-square
               bg="light-300 dark:dark-300"
+              :src="pokemonOfTheDay.sprites.default"
+              w="35"
             />
           </div>
 
           <figcaption v-if="pokemonOfTheDay" max-w="40ch">
-            <div text="xl" lt-sm="text-center">
+            <div lt-sm="text-center" text="xl">
               {{ pokemonOfTheDay.name }}
             </div>
             <p>{{ pokemonOfTheDay.description }}</p>
 
             <AppLink
-              :to="{ name: 'Detail', params: { name: pokemonOfTheDay.name } }"
-              prefetch
-              underline
+              flex
               float-right
               gap="4"
-              flex
               items-center
+              prefetch
+              :to="{ name: 'Detail', params: { name: pokemonOfTheDay.name } }"
+              underline
             >
               See more
               <icon-pkmn-chevron-right />

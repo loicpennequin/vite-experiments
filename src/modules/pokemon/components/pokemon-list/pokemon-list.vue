@@ -29,27 +29,27 @@ onServerPrefetch(suspense);
 </script>
 
 <template>
-  <ContentSurface sticky p="2" top="0">
+  <ContentSurface p="2" sticky top="0">
     <input
       v-model="search"
-      bg="white dark:dark-300"
-      p="2"
-      border="1 solid slate-400 dark:slate-600"
-      :placeholder="t('searchLabel')"
       :aria-label="t('searchLabel')"
+      bg="white dark:dark-300"
+      border="1 solid slate-400 dark:slate-600"
+      p="2"
+      :placeholder="t('searchLabel')"
     />
   </ContentSurface>
-  <LoadingSpinner v-if="isLoading" m-x="auto" h-full />
+  <LoadingSpinner v-if="isLoading" h-full m-x="auto" />
   <template v-if="pokemons">
     <ul overflow-y-auto>
       <li v-for="pokemon in filteredPokemons" :key="pokemon.name">
         <AppLink
-          :to="{ name: 'Detail', params: { name: pokemon.name } }"
-          capitalize
-          space-x="1"
-          p="3"
           block
+          capitalize
+          p="3"
           prefetch
+          space-x="1"
+          :to="{ name: 'Detail', params: { name: pokemon.name } }"
           @click="emit('item-click')"
         >
           {{ pokemon.name }}

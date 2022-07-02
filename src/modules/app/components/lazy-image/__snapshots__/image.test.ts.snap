@@ -2,6 +2,6 @@
 
 exports[`Image Component > should mount component 1`] = `
 <div grid="" place-items-center="" data-v-506b2405="">
-  <!--v-if--><img src="/img/my-src.png" alt="alt" opacity="1000" transition-opacity="" duration-200="" col-start="1" row-start="1" data-v-506b2405="">
+  <!--v-if--><img alt="alt" col-start="1" duration-200="" opacity="1000" row-start="1" src="/img/my-src.png" transition-opacity="" data-v-506b2405="">
 </div>
 `;

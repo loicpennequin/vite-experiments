@@ -1,3 +1,3 @@
 <template>
-  <icon-pkmn-spinner text="3xl" animate-spin />
+  <icon-pkmn-spinner animate-spin text="3xl" />
 </template>

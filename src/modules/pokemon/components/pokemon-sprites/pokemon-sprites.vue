@@ -1,8 +1,11 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
+import { useI18n } from 'vue-i18n';
 import { Pokemon } from '../../models/pokemon.resource';
 
 const props = defineProps<{ pokemon: Pokemon }>();
+
+const { t } = useI18n();
 const isToggled = ref(false);
 const isSSR = import.meta.env.SSR;
 </script>
@@ -10,43 +13,51 @@ const isSSR = import.meta.env.SSR;
 <template>
   <div grid justify-center>
     <input
+      v-model="isToggled"
       id="pokemon-sprite-toggle"
       ref="input"
-      v-model="isToggled"
-      type="checkbox"
       sr-only
+      type="checkbox"
     />
-    <div col-start-1 row-start-1 class="default-sprite">
+    <div class="default-sprite" col-start-1 row-start-1>
       <LazyImage
-        :src="props.pokemon.sprites.default"
+        v-if="props.pokemon.sprites.default"
         :alt="`${pokemon.name}`"
+        :src="props.pokemon.sprites.default"
       />
+      <p v-else m-x="auto" text="sm" text-center w="15">
+        {{ t('unavailable') }}
+      </p>
     </div>
-    <div col-start-1 row-start-1 class="shiny-sprite">
+    <div class="shiny-sprite" col-start-1 row-start-1>
       <LazyImage
+        v-if="props.pokemon.sprites.shiny"
+        :alt="`${pokemon.name}`"
         :src="props.pokemon.sprites.shiny"
-        :alt="`${pokemon.name} shiny`"
       />
+      <p v-else m-x="auto" text="sm" text-center w="15">
+        {{ t('unavailable') }}
+      </p>
     </div>
 
     <div
-      flex
-      items-center
-      gap-xs
-      text-xs
       class="label__wrapper"
+      flex
+      gap-xs
       :invisible="isSSR"
+      items-center
+      text-xs
     >
       Normal
       <label
-        for="pokemon-sprite-toggle"
         border="solid 1 gray-400"
-        w="10"
-        h="5"
-        rounded-full
-        relative
-        p-x="1"
         cursor-pointer
+        for="pokemon-sprite-toggle"
+        h="5"
+        p-x="1"
+        relative
+        rounded-full
+        w="10"
       />
       Shiny
     </div>
@@ -88,3 +99,11 @@ label::after {
   --at-apply: 'transition-opacity duration-300';
 }
 </style>
+
+<i18n lang="json">
+{
+  "en": {
+    "unavailable": "Sprite not available"
+  }
+}
+</i18n>

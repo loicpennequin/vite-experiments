@@ -42,16 +42,16 @@ const isDarkMode = computed({
 
 <template>
   <header
+    bg="white dark:dark-100"
     flex
     items="center"
     justify="between"
     p="2"
     px="sm:10"
-    bg="white dark:dark-100"
     shadow="md"
   >
-    <AppSidebarToggle p="4" :title="t('toggle')" color-dark-400>
-      <icon-pkmn-bars h="8" fill="dark:white" />
+    <AppSidebarToggle color-dark-400 p="4" :title="t('toggle')">
+      <icon-pkmn-bars fill="dark:white" h="8" />
     </AppSidebarToggle>
     <h1 m="0" text="2xl">
       <AppLink :to="{ name: 'Home' }">Pokédex</AppLink>
