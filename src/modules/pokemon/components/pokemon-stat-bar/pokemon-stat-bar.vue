@@ -15,7 +15,7 @@ const label = computed(() => {
 
 const hue = computed(() => (props.stat.baseStat * 120) / 200);
 
-const width = computed(() => (props.stat.baseStat * 100) / 200 + '%');
+const width = computed(() => (props.stat.baseStat * 100) / 250 + '%');
 </script>
 
 <template>

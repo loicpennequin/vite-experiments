@@ -29,6 +29,7 @@ const isSSR = import.meta.env.SSR;
         {{ t('unavailable') }}
       </p>
     </div>
+
     <div class="shiny-sprite" col-start-1 row-start-1>
       <LazyImage
         v-if="props.pokemon.sprites.shiny"
