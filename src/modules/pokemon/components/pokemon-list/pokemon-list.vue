@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { getAllPokemons } from '../../api/pokemon.api';
-import { onServerPrefetch, ref, computed } from 'vue';
+import { ref, computed } from 'vue';
 import { useQuery } from 'vue-query';
 import { NamedApiResource } from '@/types';
 import { useI18n } from 'vue-i18n';
@@ -13,13 +13,13 @@ const emit = defineEmits<{
 
 const { t } = useI18n();
 
-const {
-  data: pokemons,
-  isLoading,
-  suspense
-} = useQuery(['pokemons'], () => getAllPokemons({ limit: 905, offset: 0 }), {
-  staleTime: Infinity
-});
+const { data: pokemons, isLoading } = useQuery(
+  ['pokemons'],
+  () => getAllPokemons({ limit: 905, offset: 0 }),
+  {
+    staleTime: Infinity
+  }
+);
 
 const search = ref('');
 const filteredPokemons = computed(() =>
@@ -27,7 +27,6 @@ const filteredPokemons = computed(() =>
     pokemon.name.includes(search.value.toLocaleLowerCase())
   )
 );
-onServerPrefetch(suspense);
 </script>
 
 <template>
