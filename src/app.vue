@@ -62,7 +62,7 @@ const onClickOutside = () => {
         p="y-8 x-2"
         flex
         flex-col
-        justify-center
+        items-center
         transition-transform
         transition-duration-300
         h-full

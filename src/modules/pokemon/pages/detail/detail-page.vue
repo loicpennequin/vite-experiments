@@ -12,10 +12,10 @@ const { t } = useI18n();
 </script>
 
 <template>
-  <div space-y="4" w="screen-sm" max-w="full" m-x="auto">
+  <div space-y="4" w="screen-sm" max-w="full">
     <template v-if="isPokemonLoading">
       <ContentSurface h="17" animate-pulse />
-      <ContentSurface h="9.5rem" animate-pulse />
+      <ContentSurface h="42" animate-pulse />
       <ContentSurface h="26" animate-pulse />
       <ContentSurface h="30" animate-pulse />
     </template>

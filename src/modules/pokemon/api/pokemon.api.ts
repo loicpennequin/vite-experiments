@@ -4,8 +4,7 @@ import {
   IPokemon,
   IPokemonSpecies,
   IEvolutionChain,
-  IChainLink,
-  INamedApiResourceList
+  IChainLink
 } from 'pokeapi-typescript';
 
 export type GetAllPokemonsOptions = {
@@ -20,6 +19,8 @@ const ENDPOINTS = {
   EVOLUTION_CHAIN: '/evolution-chain',
   POKEMON_SPECIES: '/pokemon-species'
 };
+
+const SPECIES_COUNT = 905;
 
 export const getAllPokemons = async ({
   limit,
@@ -51,11 +52,7 @@ export const getPokemonOfTheDay = async () => {
   const now = new Date();
   const seed = now.getFullYear() + now.getMonth() + now.getDay();
 
-  const { data: species } = await http.get<
-    INamedApiResourceList<IPokemonSpecies>
-  >(ENDPOINTS.POKEMON_SPECIES, { params: { limit: 1 } });
-
-  return getPokemonByName(String(seed % species.count));
+  return getPokemonByName(String(seed % SPECIES_COUNT));
 };
 
 export const getPokemonsByEvolutionLink = (

@@ -11,7 +11,7 @@ const {
 </script>
 
 <template>
-  <div space-y="4" w="screen-sm" max-w="full" m-x="auto">
+  <div space-y="4" w="screen-sm" max-w="full">
     <ContentSurface
       flex
       flex-col
@@ -27,19 +27,19 @@ const {
     </ContentSurface>
 
     <ContentSurface space-y="3">
-      <h2 text="2xl" weight-bold lt-sm="text-center">Pokemon of the day</h2>
+      <h2 text="2xl" weight-bold lt-sm="text-center">{{ t('potd.title') }}</h2>
       <div mx="auto" space-y="5">
-        <LoadingSpinner v-if="isLoading" w="15" h="15" />
-
-        <figure
-          v-if="pokemonOfTheDay"
-          capitalize
-          flex
-          gap="3"
-          lt-sm="flex-wrap"
-        >
+        <figure capitalize flex gap="3" lt-sm="flex-wrap">
           <div m-x="auto" w="sm:full">
+            <div
+              v-if="isLoading"
+              w="35"
+              aspect-square
+              bg="light-300 dark:dark-300"
+              animate-pulse
+            />
             <LazyImage
+              v-else-if="pokemonOfTheDay"
               :src="pokemonOfTheDay.sprites.default"
               :alt="pokemonOfTheDay.name"
               w="35"
@@ -48,7 +48,7 @@ const {
             />
           </div>
 
-          <figcaption max-w="40ch">
+          <figcaption v-if="pokemonOfTheDay" max-w="40ch">
             <div text="xl" lt-sm="text-center">
               {{ pokemonOfTheDay.name }}
             </div>
@@ -77,7 +77,10 @@ const {
 {
   "en": {
     "title": "Welcome to the online Pokédex !",
-    "subtitle": "Click on a pokemon in the sidebar to see its detail."
+    "subtitle": "Click on a pokemon in the sidebar to see its detail.",
+    "potd": {
+      "title": "Pokémon of the day"
+    }
   }
 }
 </i18n>

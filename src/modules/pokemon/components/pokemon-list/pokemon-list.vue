@@ -16,7 +16,7 @@ const {
   suspense
 } = useInfiniteQuery(
   ['pokemons'],
-  ({ pageParam }) => getAllPokemons({ limit: 50, offset: pageParam }),
+  ({ pageParam }) => getAllPokemons({ limit: 905, offset: pageParam }),
 
   {
     getNextPageParam: lastPage => {
