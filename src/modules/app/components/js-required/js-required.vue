@@ -1,9 +1,9 @@
 <script lang="ts" setup>
 import { ref, onMounted } from 'vue';
-const isHidden = ref(false);
+const isHidden = ref(true);
 
 onMounted(() => {
-  isHidden.value = true;
+  isHidden.value = false;
 });
 </script>
 >
