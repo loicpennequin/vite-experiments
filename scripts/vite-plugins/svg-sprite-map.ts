@@ -75,7 +75,7 @@ export default function ({
       .slice(1, -1)
       .reverse()
       .join('/');
-    fs.ensureDirSync(destDirectory);
+    fs.ensureFileSync(dest);
     fs.writeFileSync(dest, spriteMap);
 
     fs.ensureDirSync(linksDest);

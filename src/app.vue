@@ -46,7 +46,7 @@ const onClickOutside = () => {
       transition-transform
       transition-duration="0 lt-sm:300"
       col-start-1
-      z-2
+      z="lt-sm:2"
     />
 
     <main

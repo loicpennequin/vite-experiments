@@ -14,7 +14,7 @@ const onItemClick = () => {
 </script>
 
 <template>
-  <nav p-y="3" bg="white dark:dark-100" min-w="15rem" flex flex-col shadow-md>
+  <nav bg="white dark:dark-100" min-w="15rem" flex flex-col shadow-md>
     <app-sidebar-toggle
       title="Hide list"
       w="full"

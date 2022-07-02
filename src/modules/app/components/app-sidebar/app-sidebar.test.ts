@@ -22,7 +22,8 @@ async function renderWithLoadedList({
   }
 
   const request = httpMock({
-    url: '/pokemon-species?limit=905&offset=0',
+    url: '/pokemon-species',
+    query: true,
     response: {
       count: 905,
       results

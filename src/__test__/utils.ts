@@ -71,6 +71,7 @@ type HttpMockOptions<T> = {
   url: string;
   statusCode?: number;
   response?: T;
+  query?: boolean | Record<string, any>;
   method?: 'get' | 'post' | 'put' | 'delete';
 };
 
@@ -78,6 +79,7 @@ export const httpMock = <T extends Body>({
   url,
   statusCode = 200,
   response,
+  query,
   method = 'get'
 }: HttpMockOptions<T>) => {
   const mock = nock(POKEMON_API_URL).defaultReplyHeaders({
@@ -85,7 +87,9 @@ export const httpMock = <T extends Body>({
     'access-control-allow-credentials': 'true'
   });
 
-  mock[method](url).reply(statusCode, response);
+  mock[method](url)
+    .query(query ?? false)
+    .reply(statusCode, response);
 
   return mock;
 };
