@@ -3,6 +3,7 @@ import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useIsPreloading } from './modules/app/composables/use-is-preloading';
 import { vClickOutside } from './modules/app/directives/click-outside';
+import ServiceWorkerPrompt from './modules/app/components/service-worker-prompt/service-worker-prompt.vue';
 
 const isPreloading = useIsPreloading();
 const isSidebarOpened = ref(false);
@@ -18,8 +19,6 @@ const { t } = useI18n();
   <div
     bg="light-400 dark:dark-300"
     class="layout"
-    color="black dark:white"
-    font="sans"
     grid
     max-w="screen"
     min-h="screen"
@@ -68,6 +67,7 @@ const { t } = useI18n();
       </div>
     </main>
   </div>
+  <ServiceWorkerPrompt />
 </template>
 
 <style lang="scss" scoped>
@@ -119,6 +119,10 @@ const { t } = useI18n();
     --at-apply: 'bg-slate-600 dark-bg-slate-300';
     border-radius: 10px;
   }
+}
+
+#app {
+  --at-apply: 'color-black dark:color-white font-sans';
 }
 </style>
 

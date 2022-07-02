@@ -14,7 +14,6 @@ declare module '@vue/runtime-core' {
     ContentSurface: typeof import('./../modules/app/components/content-surface.vue')['default']
     IconPkmnArrowsRight: typeof import('~icons/pkmn/arrows-right')['default']
     IconPkmnBars: typeof import('~icons/pkmn/bars')['default']
-    IconPkmnChevronRight: typeof import('~icons/pkmn/chevron-right')['default']
     IconPkmnMoon: typeof import('~icons/pkmn/moon')['default']
     IconPkmnSpinner: typeof import('~icons/pkmn/spinner')['default']
     IconPkmnSun: typeof import('~icons/pkmn/sun')['default']
@@ -29,6 +28,7 @@ declare module '@vue/runtime-core' {
     PokemonStatBar: typeof import('./../modules/pokemon/components/pokemon-stat-bar/pokemon-stat-bar.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    ServiceWorkerPrompt: typeof import('./../modules/app/components/service-worker-prompt/service-worker-prompt.vue')['default']
     SwitchInput: typeof import('./../modules/app/components/switch-input/switch-input.vue')['default']
   }
 }

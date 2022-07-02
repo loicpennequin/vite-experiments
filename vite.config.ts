@@ -38,6 +38,12 @@ export default defineConfig({
         'robots.txt',
         'apple-touch-icon.png'
       ],
+      registerType: 'prompt',
+      injectRegister: 'script',
+      workbox: {
+        globPatterns: ['**/*{js,css,html,ico,png,svg}'],
+        cleanupOutdatedCaches: true
+      },
       manifest: {
         name: 'Vite Pokédex',
         short_name: 'Pokédex',
