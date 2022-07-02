@@ -15,14 +15,16 @@ import eslintPlugin from 'vite-plugin-eslint';
 import Pages from 'vite-plugin-pages';
 import { VitePWA } from 'vite-plugin-pwa';
 import GenerateIcons from './scripts/vite-plugins/svg-sprite-map';
-import { minifyHtml } from 'vite-plugin-html';
+import { createHtmlPlugin } from 'vite-plugin-html';
 
 export default defineConfig({
   plugins: [
     vitedgePlugin(),
     eslintPlugin(),
     vue(),
-    minifyHtml(),
+    createHtmlPlugin({
+      minify: true
+    }),
     GenerateIcons({
       src: './src/assets/icons/*.svg',
       spriteDest: '/assets/svg/svg-sprite-map.generated.svg',
