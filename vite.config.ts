@@ -23,6 +23,7 @@ export default defineConfig({
     eslintPlugin(),
     vue(),
     createHtmlPlugin({
+      entry: '/src/main.ts',
       minify: true
     }),
     GenerateIcons({
