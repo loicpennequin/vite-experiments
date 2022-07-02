@@ -8,5 +8,5 @@ onMounted(() => {
 </script>
 >
 <template>
-  <div :class="isHidden && 'invisible'"><slot v-if="isHidden" /></div>
+  <div :class="isHidden && 'invisible'"><slot /></div>
 </template>
