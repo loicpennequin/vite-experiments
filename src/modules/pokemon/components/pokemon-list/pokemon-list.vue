@@ -13,34 +13,44 @@ const emit = defineEmits<{
 }>();
 
 const { t } = useI18n();
+const route = useRoute();
+const page = computed(() => Number(route.query.sidebar_page ?? 1));
+
+const SSR_RESULT_PER_PAGE = 35;
+const ITEM_HEIGHT = 32;
 
 const {
   data: pokemons,
   suspense,
   isLoading
-} = useQuery(['pokemons'], () => getAllPokemons({ limit: 905, offset: 0 }), {
-  staleTime: Infinity
-});
+} = useQuery(
+  ['pokemons'],
+  async () => {
+    const data = await getAllPokemons({ limit: 905, offset: 0 });
+    // we filter only the elements visible on screen to avoid inlining too much state in the html file during SSR
+    // this would result in a html file way too heavy
+    if (!import.meta.env.SSR) return data;
+
+    const offset = (page.value - 1) * SSR_RESULT_PER_PAGE;
+    return {
+      ...data,
+      result: data.results.slice(offset, offset + SSR_RESULT_PER_PAGE)
+    };
+  },
+  {
+    staleTime: 0
+  }
+);
 
 onServerPrefetch(suspense);
 
-const SSR_RESULT_PER_PAGE = 35;
-const ITEM_HEIGHT = 32;
-
 const search = ref('');
-const route = useRoute();
-const page = computed(() => Number(route.query.sidebar_page ?? 1));
 
-const filteredPokemons = computed(() => {
-  if (import.meta.env.SSR) {
-    const offset = (page.value - 1) * SSR_RESULT_PER_PAGE;
-    return pokemons.value?.results.slice(offset, offset + SSR_RESULT_PER_PAGE);
-  }
-
-  return pokemons.value?.results.filter((pokemon: NamedApiResource) =>
+const filteredPokemons = computed(() =>
+  pokemons.value?.results.filter((pokemon: NamedApiResource) =>
     pokemon.name.includes(search.value.toLocaleLowerCase())
-  );
-});
+  )
+);
 
 const virtualScrollRoot = ref<any>();
 onMounted(() => {

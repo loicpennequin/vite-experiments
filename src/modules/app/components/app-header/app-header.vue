@@ -56,14 +56,12 @@ const isDarkMode = computed({
     <h1 m="0" text="2xl">
       <AppLink :to="{ name: 'Home' }">Pokédex</AppLink>
     </h1>
-    <ClientOnly>
+    <JsRequired>
       <SwitchInput v-model="isDarkMode">
         <template #off><icon-pkmn-sun fill="dark:white" /></template>
         <template #on><icon-pkmn-moon fill="dark:white" /></template>
       </SwitchInput>
-
-      <template #fallback><div /></template>
-    </ClientOnly>
+    </JsRequired>
   </header>
 </template>
 

@@ -33,14 +33,12 @@ const isToggled = ref(false);
       />
     </transition-group>
 
-    <ClientOnly>
+    <JsRequired>
       <SwitchInput v-model="isToggled">
         <template #off>{{ t('labels.normal') }}</template>
         <template #on>{{ t('labels.shiny') }}</template>
       </SwitchInput>
-
-      <template #fallback><div h="10" /></template>
-    </ClientOnly>
+    </JsRequired>
   </div>
 </template>
 

@@ -5,6 +5,8 @@ exports[`Header Component > should mount component 1`] = `
       <use xlink:href="/assets/svg/svg-sprite-map.generated.svg#bars"></use>
     </svg></label>
   <h1 m="0" text="2xl"><a href="/" class="" color="inherit">Pokédex</a></h1>
-  <div></div>
+  <div class="">
+    <!--v-if-->
+  </div>
 </header>
 `;

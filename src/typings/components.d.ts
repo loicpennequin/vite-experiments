@@ -19,6 +19,7 @@ declare module '@vue/runtime-core' {
     IconPkmnSpinner: typeof import('~icons/pkmn/spinner')['default']
     IconPkmnSun: typeof import('~icons/pkmn/sun')['default']
     InfiniteScroll: typeof import('./../modules/app/components/infinite-scroll.vue')['default']
+    JsRequired: typeof import('./../modules/app/components/js-required/js-required.vue')['default']
     LazyImage: typeof import('./../modules/app/components/lazy-image/lazy-image.vue')['default']
     LoadingSpinner: typeof import('./../modules/app/components/app-header/loading-spinner/loading-spinner.vue')['default']
     PokemonEvolutionChain: typeof import('./../modules/pokemon/components/pokemon-evolution-chain/pokemon-evolution-chain.vue')['default']
