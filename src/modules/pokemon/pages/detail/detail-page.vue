@@ -4,7 +4,7 @@ import { PokemonDetailLoader } from './detail.loader';
 import { useI18n } from 'vue-i18n';
 
 const {
-  pokemon: { isLoading: isPokemonLoading, data: pokemon },
+  pokemon: { isLoading: isPokemonLoading, data: pokemon, error },
   evolutions: { isLoading: isEvolutionsLoading, data: evolutions }
 } = useLoader<PokemonDetailLoader>();
 
@@ -18,6 +18,10 @@ const { t } = useI18n();
       <ContentSurface animate-pulse h="42" />
       <ContentSurface animate-pulse h="26" />
       <ContentSurface animate-pulse h="30" />
+    </template>
+
+    <template v-else-if="error">
+      <ContentSurface>{{ t('error') }}</ContentSurface>
     </template>
 
     <template v-else-if="pokemon">
@@ -77,7 +81,8 @@ const { t } = useI18n();
       "stats": "Stats",
       "description": "Description",
       "evolution": "Evolution Chain"
-    }
+    },
+    "error": "Could not get the pokémon information"
   }
 }
 </i18n>

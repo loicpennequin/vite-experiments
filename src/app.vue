@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { onMounted, ref } from 'vue';
+import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useIsPreloading } from './modules/app/composables/use-is-preloading';
 import { vClickOutside } from './modules/app/directives/click-outside';
@@ -16,11 +16,6 @@ const onClickOutside = () => {
 const { t } = useI18n();
 
 const route = useRoute();
-const isOfflineShell = ref(!!route.query.offline);
-
-onMounted(() => {
-  isOfflineShell.value = false;
-});
 </script>
 
 <template>
@@ -71,12 +66,13 @@ onMounted(() => {
         transition-transform
         :translate-x="isSidebarOpened ? 'lt-sm:15rem' : 0"
       >
-        <router-view v-if="!isOfflineShell" />
+        <router-view v-if="!route.query.offline" />
       </div>
     </main>
   </div>
   <ClientOnly>
     <ServiceWorkerPrompt />
+    <NetworkStatus />
   </ClientOnly>
 </template>
 

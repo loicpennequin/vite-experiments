@@ -73,6 +73,11 @@ export class QueryPreloader<T> {
   }
 
   async run(nextRoute: RouteLocationNormalized) {
+    if (!window.navigator.onLine) {
+      this.isPreloading = false;
+      return;
+    }
+
     if (!this.isPreloading) {
       this.isPreloading = true;
       this.startPreloads(nextRoute);
