@@ -54,14 +54,6 @@ registerRoute(
   })
 );
 
-// Static api handling
-registerRoute(
-  ({ url }) => url.toString().startsWith(POKEMON_API_URL),
-  new NetworkFirst({
-    cacheName: 'vite-pokedex-api-v1'
-  })
-);
-
 // Cloud served images
 // routing for cloud served images
 registerRoute(

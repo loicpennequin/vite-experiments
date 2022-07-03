@@ -16,8 +16,6 @@ declare module '@vue/runtime-core' {
     IconPkmnBars: typeof import('~icons/pkmn/bars')['default']
     IconPkmnChevronRight: typeof import('~icons/pkmn/chevron-right')['default']
     IconPkmnMoon: typeof import('~icons/pkmn/moon')['default']
-    IconPkmnOffline: typeof import('~icons/pkmn/offline')['default']
-    IconPkmnOnline: typeof import('~icons/pkmn/online')['default']
     IconPkmnSpinner: typeof import('~icons/pkmn/spinner')['default']
     IconPkmnSun: typeof import('~icons/pkmn/sun')['default']
     InfiniteScroll: typeof import('./../modules/app/components/infinite-scroll.vue')['default']
