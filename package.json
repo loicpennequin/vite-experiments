@@ -6,6 +6,7 @@
   "scripts": {
     "test": "vitest",
     "serve": "node server.js",
+    "preserve": "vercel build && cp ./.vercel/output/static/ssr-manifest.json ./ssr-manifest.json",
     "dev": "vitedge --ssr",
     "dev:spa": "vitedge",
     "preview": "vitedge preview",
@@ -81,7 +82,9 @@
     "vitest": "^0.15.2",
     "vue-i18n": "^9.1.10",
     "vue-tsc": "^0.34.7",
+    "workbox-cacheable-response": "^6.5.3",
     "workbox-core": "^6.5.3",
+    "workbox-expiration": "^6.5.3",
     "workbox-precaching": "^6.5.3",
     "workbox-routing": "^6.5.3"
   },

@@ -45,12 +45,12 @@ export default defineConfig({
       devOptions: {
         enabled: true,
         type: 'module',
-        navigateFallback: '/?offline'
+        navigateFallback: '/offline-shell'
       },
       injectManifest: {
         globPatterns: ['**/*.{js,css,svg,png}'],
         templatedURLs: {
-          '/?offline': new Date().toString()
+          '/offline-shell': new Date().toString()
         }
       },
       manifest: {

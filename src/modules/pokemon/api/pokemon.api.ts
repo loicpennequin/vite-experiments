@@ -37,7 +37,6 @@ export const getAllPokemons = async ({
 };
 
 export const getPokemonByName = async (name: string) => {
-  console.log('get pokemon by name', name);
   const { data: species } = await http.get<IPokemonSpecies>(
     `${ENDPOINTS.SPECIES}/${name}`
   );
