@@ -2,7 +2,11 @@
 import { useRegisterSW } from 'virtual:pwa-register/vue';
 import { useI18n } from 'vue-i18n';
 
-const { offlineReady, needRefresh, updateServiceWorker } = useRegisterSW();
+const { offlineReady, needRefresh, updateServiceWorker } = useRegisterSW({
+  onRegistered() {
+    console.log('SW registered');
+  }
+});
 
 const close = async () => {
   offlineReady.value = false;

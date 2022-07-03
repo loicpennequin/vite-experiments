@@ -39,10 +39,19 @@ export default defineConfig({
         'apple-touch-icon.png'
       ],
       registerType: 'prompt',
-      injectRegister: 'script',
-      workbox: {
-        globPatterns: ['**/*{js,css,html,ico,png,svg}'],
-        cleanupOutdatedCaches: true
+      srcDir: 'src',
+      filename: 'sw.ts',
+      strategies: 'injectManifest',
+      devOptions: {
+        enabled: true,
+        type: 'module',
+        navigateFallback: '/?offline'
+      },
+      injectManifest: {
+        globPatterns: ['**/*.{js,css,svg,png}'],
+        templatedURLs: {
+          '/?offline': new Date().toString()
+        }
       },
       manifest: {
         name: 'Vite Pokédex',

@@ -84,7 +84,7 @@ const { t } = useI18n();
 
 <route lang="json">
 {
-  "path": "/:name",
+  "path": "/pokemon/:name",
   "name": "Detail"
 }
 </route>

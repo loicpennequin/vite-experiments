@@ -1,9 +1,10 @@
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useIsPreloading } from './modules/app/composables/use-is-preloading';
 import { vClickOutside } from './modules/app/directives/click-outside';
 import ServiceWorkerPrompt from './modules/app/components/service-worker-prompt/service-worker-prompt.vue';
+import { useRoute } from 'vue-router';
 
 const isPreloading = useIsPreloading();
 const isSidebarOpened = ref(false);
@@ -13,6 +14,13 @@ const onClickOutside = () => {
 };
 
 const { t } = useI18n();
+
+const route = useRoute();
+const isOfflineShell = ref(!!route.query.offline);
+
+onMounted(() => {
+  isOfflineShell.value = false;
+});
 </script>
 
 <template>
@@ -63,11 +71,13 @@ const { t } = useI18n();
         transition-transform
         :translate-x="isSidebarOpened ? 'lt-sm:15rem' : 0"
       >
-        <router-view />
+        <router-view v-if="!isOfflineShell" />
       </div>
     </main>
   </div>
-  <ServiceWorkerPrompt />
+  <ClientOnly>
+    <ServiceWorkerPrompt />
+  </ClientOnly>
 </template>
 
 <style lang="scss" scoped>
